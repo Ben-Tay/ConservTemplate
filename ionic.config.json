@@ -1,5 +1,7 @@
 {
   "name": "Appointments",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

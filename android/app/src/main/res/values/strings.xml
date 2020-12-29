@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ConservTemplate</string>
+    <string name="title_activity_main">ConservTemplate</string>
+    <string name="package_name">com.nyp.ConservTemplate</string>
+    <string name="custom_url_scheme">com.nyp.ConservTemplate</string>
+</resources>
