@@ -19,7 +19,7 @@ https://gitforwindows.org/
 1. git init  (initializes empty repository)
 2. git add . (adds all files that have been changed to commit list)
 3. git commit -m '' (commits all added files with a message)
-4. git remote add origin https://github.com/Ben-Tay/Conserv-Inc.git
+4. git remote add origin https://github.com/Ben-Tay/ConservTemplate.git
 5. git push origin master -f (need to do force push for some reason but doesnt affect)
 
 **Section B: All Sections except A should be done by everyone**
@@ -30,7 +30,7 @@ Section B should only be done once at the start
 
 ##### Import codes from Github repository into local environment: 
 
-1. git clone https://github.com/Ben-Tay/Conserv-Inc.git (do this in D:\IonicApps)
+1. git clone https://github.com/Ben-Tay/ConservTemplate.git (do this in D:\IonicApps)
 2. cd Conserv-Inc
 3. git pull origin master (may or may not need but will not affect codes since only importing on first time) 
 4. npm install (to install all dependencies)
