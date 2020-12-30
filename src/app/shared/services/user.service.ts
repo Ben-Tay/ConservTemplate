@@ -16,19 +16,12 @@ export class UserService {
   }
 
   signup(p: User)	{	
-    return firebase.auth().createUserWithEmailAndPassword(email,	password);
+    return firebase.auth().createUserWithEmailAndPassword(p.email,	p.password);
   }
 
-  signupcontinue(p: User){
-    var data = {
-      name: p.name,
-      gender: p.gender,
-      address: p.address,
-      email: p.email,
-      password: p.password,
-      phoneno: p.phoneno,
-      birthday: new Date(p.birthday)
-    }
-    firebase.firestore().collection('users').add(data)
+  signupContinue(p: User){
+    var data ={email: p.email,
+              password: p.password}
+    firebase.firestore().collection('users').doc(p.email).set(data)
   }
 }

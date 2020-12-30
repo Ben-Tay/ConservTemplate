@@ -33,11 +33,11 @@ export class SignupPage implements OnInit {
   ngOnInit() {
   }
 
-  submit(){
+  register(){
     var formvalue = this.SignupForm.value
-    this.data = new User(formvalue.name, formvalue.gender, formvalue.birthday, " ", formvalue.email, formvalue.password, formvalue.phoneno, formvalue.address)
+    this.data = new User(formvalue.name, formvalue.gender, formvalue.birthday, formvalue.email, formvalue.password, formvalue.phoneno, formvalue.address)
     this.userService.signup(this.data).then(user=>{
-      this.userService.signupcontinue(this.data)
+      this.userService.signupContinue(this.data)
     })
     
   }
