@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { IonSlides } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -7,16 +8,25 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  slideOptions = {
+    initialSlide: 1,
+    speed: 500,
+  };
+  constructor(private router: Router) { }
 
-  constructor(private navCtrl: NavController) {}
 
-  navigateBookAppointment () 
-  {
-    this.navCtrl.navigateForward("book-appointment");
+  slidesDidLoad(slides: IonSlides) {
+    slides.startAutoplay();
   }
 
-  redirect (page: string) {
-    this.navCtrl.navigateForward(page);
+  signup(){
+    this.router.navigate(['/sign-up']);
   }
+
+  login(){
+    this.router.navigate(['/login']);
+  }
+
+  
 
 }
