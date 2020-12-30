@@ -44,8 +44,8 @@ export class AppComponent {
       projectId: "conserv-ebe60",
       storageBucket: "conserv-ebe60.appspot.com",
       messagingSenderId: "164552467063",
-      appId: "1:164552467063:web:a2b212777a9b6c4e1a5c72",
-      measurementId: "G-VB9PCJTQ28"
+      appId: "1:164552467063:web:732fe2d96f1123601a5c72",
+      measurementId: "G-VF82F4JWRC"
     };
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
