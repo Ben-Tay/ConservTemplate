@@ -4,6 +4,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../shared/models/User';
 import { UserService } from '../shared/services/user.service';
+import 'firebase/firestore';
+import 'firebase/storage';
 
 @Component({
   selector: 'app-signup',
@@ -14,6 +16,7 @@ export class SignupPage implements OnInit {
   SignupForm: FormGroup;
   gender: string[];
   data: User;
+  signupError: string;
 
   constructor(private userService: UserService, private router: Router) {
     this.SignupForm = new FormGroup({
@@ -36,9 +39,7 @@ export class SignupPage implements OnInit {
   register(){
     var formvalue = this.SignupForm.value
     this.data = new User(formvalue.name, formvalue.gender, formvalue.birthday, formvalue.email, formvalue.password, formvalue.phoneno, formvalue.address)
-    this.userService.signup(this.data).then(user=>{
-      this.userService.signupContinue(this.data)
-    })
+    this.userService.signupContinue(this.data.email, this.data.password)
     
   }
 
