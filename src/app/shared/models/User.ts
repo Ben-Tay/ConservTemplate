@@ -3,9 +3,12 @@ export class User {
 
     constructor(
         public name:string,
+        public gender: string,
+        public birthday: Date,
         public image: string,
         public email: string,
-        public phoneno: number,
+        public password: string,
+        public phoneno: string,
         public address: string
     ){ }
 

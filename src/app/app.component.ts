@@ -37,18 +37,18 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      var firebaseConfig = {
+        apiKey: "AIzaSyD2XKO_8KmfDPZorLAf38zJHFWyQa8TwXc",
+        authDomain: "conserv-ebe60.firebaseapp.com",
+        projectId: "conserv-ebe60",
+        storageBucket: "conserv-ebe60.appspot.com",
+        messagingSenderId: "164552467063",
+        appId: "1:164552467063:web:732fe2d96f1123601a5c72",
+        measurementId: "G-VF82F4JWRC"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
     });
-    var firebaseConfig = {
-      apiKey: "AIzaSyD2XKO_8KmfDPZorLAf38zJHFWyQa8TwXc",
-      authDomain: "conserv-ebe60.firebaseapp.com",
-      projectId: "conserv-ebe60",
-      storageBucket: "conserv-ebe60.appspot.com",
-      messagingSenderId: "164552467063",
-      appId: "1:164552467063:web:a2b212777a9b6c4e1a5c72",
-      measurementId: "G-VB9PCJTQ28"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
   }
 }
