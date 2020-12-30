@@ -1,11 +1,9 @@
-import { toBase64String } from '@angular/compiler/src/output/source_map';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../shared/models/User';
 import { UserService } from '../shared/services/user.service';
-import 'firebase/firestore';
-import 'firebase/storage';
+
 
 @Component({
   selector: 'app-signup',
@@ -39,8 +37,10 @@ export class SignupPage implements OnInit {
   register(){
     var formvalue = this.SignupForm.value
     this.data = new User(formvalue.name, formvalue.gender, formvalue.birthday, formvalue.email, formvalue.password, formvalue.phoneno, formvalue.address)
-    this.userService.signupContinue(this.data.email, this.data.password)
-    
+    this.userService.signup(this.data).then(user=>{
+      this.userService.signupContinue(this.data);
+      this.router.navigate(['/home']);
+    })
   }
 
 }
