@@ -22,7 +22,7 @@ export class SignupPage implements OnInit {
 
       gender: new FormControl('', [Validators.required]),
 
-      birthday: new FormControl(''),
+      birthday: new FormControl('', [Validators.required]),
       
       address: new FormControl('', [Validators.required]),
       
