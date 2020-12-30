@@ -55,6 +55,43 @@ export class SignupPage implements OnInit {
       this.userService.signupContinue(this.data);
       this.router.navigate(['/home']);
     })
-  }
+  };
+
+  validation_messages = {
+    'name': [
+      { type: 'required', message: 'Name is required.' }
+    ],
+    'gender': [
+      { type: 'required', message: 'Gender is required'}
+    ],
+    'birthday': [
+      { type: 'required', message: 'Birthday is required'}
+    ],
+    'address': [
+      { type: 'required', message: 'Address is required'}
+    ],
+    'email': [
+      { type: 'required', message: 'Email is required.' },
+      { type: 'pattern', message: 'Please enter a valid email.' }
+    ],
+    'phone': [
+      { type: 'required', message: 'Phone is required.' },
+      { type: 'validCountryPhone', message: 'The phone is incorrect for the selected country.' }
+    ],
+    'password': [
+      { type: 'required', message: 'Password is required.' },
+      { type: 'minlength', message: 'Password must be at least 5 characters long.' },
+      { type: 'pattern', message: 'Your password must contain at least one uppercase, one lowercase, and one number.' }
+    ],
+    'confirm_password': [
+      { type: 'required', message: 'Confirm password is required.' }
+    ],
+    'matching_passwords': [
+      { type: 'areEqual', message: 'Password mismatch.' }
+    ],
+    'terms': [
+      { type: 'pattern', message: 'You must accept terms and conditions.' }
+    ],
+  };
 
 }
