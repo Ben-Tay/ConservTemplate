@@ -18,13 +18,27 @@ export class SignupPage implements OnInit {
 
   constructor(private userService: UserService, private router: Router) {
     this.SignupForm = new FormGroup({
-      name: new FormControl(''),
-      gender: new FormControl(''),
+      name: new FormControl('', [Validators.required]),
+
+      gender: new FormControl('', [Validators.required]),
+
       birthday: new FormControl(''),
-      address: new FormControl(''),
+      
+      address: new FormControl('', [Validators.required]),
+      
       phoneno: new FormControl(''),
-      email: new FormControl(''),
-      password: new FormControl(''),
+      
+      email: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+      ])),
+      
+      password: new FormControl('', Validators.compose([
+        Validators.minLength(8),
+        Validators.required,
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+      ])),
+      
       confirmpassword: new FormControl('')
     })
 
