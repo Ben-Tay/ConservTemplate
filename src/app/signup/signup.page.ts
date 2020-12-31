@@ -16,7 +16,6 @@ export class SignupPage implements OnInit {
   SignupForm: FormGroup;
   gender: string[];
   data: User;
-  signupError: string;
   matching_passwords_group: FormGroup;
   country_phone_group: FormGroup;
 
