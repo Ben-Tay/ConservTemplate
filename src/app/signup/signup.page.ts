@@ -76,8 +76,6 @@ export class SignupPage implements OnInit {
       
       address: new FormControl('', [Validators.required]),
       
-      phoneno: new FormControl(''),
-      
       email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
@@ -98,8 +96,9 @@ export class SignupPage implements OnInit {
 
   register(){
     if(this.SignupForm.valid){
+      var form = this.SignupForm
       var formvalue = this.SignupForm.value
-      this.data = new User(formvalue.name, formvalue.gender, formvalue.birthday, formvalue.email, formvalue.password, formvalue.phoneno, formvalue.address)
+      this.data = new User(formvalue.name, formvalue.gender, formvalue.birthday, formvalue.email, form.controls['matching_passwords'].value.password, form.controls['country_phone'].value.phone, formvalue.address)
       this.userService.signup(this.data).then(user=>{
         this.userService.signupContinue(this.data);
         this.router.navigate(['/home']);
