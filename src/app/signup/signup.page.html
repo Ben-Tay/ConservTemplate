@@ -58,7 +58,8 @@
               <ion-label class="google-label" position="floating">
                 Birthday
               </ion-label>
-              <ion-input mode="md" formControlName="birthday" class="google-input" type="date">
+              <ion-input class="google-input" type="text">
+                <ion-datetime mode="md" displayFormat="DD MMM YYYY" formControlName="birthday"></ion-datetime>
               </ion-input>
 
               <div class="validation-errors">
@@ -92,14 +93,33 @@
         </ion-col>
       </ion-row>
 
-      <ion-row>
+      <ion-row formGroupName="country_phone">
+        <ion-col size="3">
+        <ion-item style="overflow: visible;">
+          <ion-label class="google-label" position="floating">Country</ion-label>
+          <ion-input class="google-input" type="text">
+          <ion-select formControlName="country" class="google-select" cancelText="Cancel" okText="OK" disabled="true">
+            <ion-select-option>Singapore</ion-select-option>
+          </ion-select>
+        </ion-input>
+        </ion-item>
+      </ion-col>
+
         <ion-col>
           <ion-item lines="none"  style="overflow: visible;">
               <ion-label class="google-label" position="floating">
                 Phone Number
               </ion-label>
-              <ion-input formControlName="phoneno" class="google-input" type="tel" pattern="tel">
+              <ion-input formControlName="phone" placeholder="+65 98473845" class="google-input" type="tel">
               </ion-input>
+
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.phone">
+                  <div class="error-message" *ngIf="SignupForm.get('country_phone').get('phone').hasError(validation.type) && (SignupForm.get('country_phone').get('phone').dirty || SignupForm.get('country_phone').get('phone').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -124,7 +144,7 @@
         </ion-col>
       </ion-row>
 
-      <ion-row>
+      <ion-row formGroupName="matching_passwords">
         <ion-col>
           <ion-item lines="none"  style="overflow: visible;">
               <ion-label class="google-label" position="floating">
@@ -132,6 +152,14 @@
               </ion-label>
               <ion-input formControlName="password" class="google-input" type="password">
               </ion-input>
+
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.password">
+                  <div class="error-message" *ngIf="SignupForm.get('matching_passwords').get('password').hasError(validation.type) && (SignupForm.get('matching_passwords').get('password').dirty || SignupForm.get('matching_passwords').get('password').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
           </ion-item>
         </ion-col>
 
@@ -140,15 +168,50 @@
               <ion-label class="google-label" position="floating">
                 Confirm Password
               </ion-label>
-              <ion-input formControlName="confirmpassword" class="google-input" type="password">
+              <ion-input formControlName="confirm_password" class="google-input" type="password">
               </ion-input>
+
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.confirm_password">
+                  <div class="error-message" *ngIf="SignupForm.get('matching_passwords').get('confirm_password').hasError(validation.type) && (SignupForm.get('matching_passwords').get('confirm_password').dirty || SignupForm.get('matching_passwords').get('confirm_password').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+
+              <!-- These validations are for the form group -->
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.matching_passwords">
+                  <div class="error-message" *ngIf="SignupForm.get('matching_passwords').hasError(validation.type) && (SignupForm.get('matching_passwords').get('confirm_password').dirty || SignupForm.get('matching_passwords').get('confirm_password').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
           </ion-item>
         </ion-col>
       </ion-row><br/>
 
       <ion-row>
         <ion-col>
-          <ion-button fill="clear">Cancel</ion-button>&nbsp;<ion-button type="submit" (click)="register()">Submit</ion-button>
+          <ion-item>
+            <ion-checkbox color="primary" formControlName="terms"></ion-checkbox>&nbsp;&nbsp;
+            <ion-label style="font-size: 1pc;" color="primary">I accept terms and conditions</ion-label>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.terms">
+              <div class="error-message" *ngIf="SignupForm.get('terms').hasError(validation.type) && (SignupForm.get('terms').dirty || SignupForm.get('terms').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-button fill="clear" (click)="cancel()">Cancel</ion-button>
+          &nbsp;&nbsp;
+          <ion-button type="submit" (click)="register()">Submit</ion-button>
         </ion-col>
       </ion-row>
     </form>
