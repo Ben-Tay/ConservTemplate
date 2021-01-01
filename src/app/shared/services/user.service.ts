@@ -5,6 +5,7 @@ import	'firebase/analytics';
 import  'firebase/auth'
 import  'firebase/firestore';
 import  'firebase/storage';
+import { Observable } from 'rxjs';
 
 
 
@@ -32,12 +33,23 @@ export class UserService {
       gender: p.gender,
       email: p.email,
       password: p.password,
-      phoneno: p.phoneno
+      phoneno: p.phoneno,
+      image: ""
     });
   }
 
   logout()	{	
     return	firebase.auth().signOut();	
   }
-  
+
+  updateProfile(p:User)	{	
+    const ref = firebase.firestore().collection('users').doc(p.email);
+    ref.update({
+      name: p.name,
+      address: p.address,
+      birthday: new Date(p.birthday),
+      gender: p.gender,
+      phoneno: p.phoneno
+    });
+  }
 }
