@@ -20,7 +20,7 @@ export class HomePage {
   }
 
   signup(){
-    this.router.navigate(['/sign-up']);
+    this.router.navigate(['/signup']);
   }
 
   login(){

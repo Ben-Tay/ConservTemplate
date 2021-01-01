@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'testimonials', loadChildren: './testimonials/testimonials.module#TestimonialsPageModule' },
   { path: 'office-hours', loadChildren: './office-hours/office-hours.module#OfficeHoursPageModule' },
   { path: 'my-appointments', loadChildren: './my-appointments/my-appointments.module#MyAppointmentsPageModule' },
+  { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'services', loadChildren: './services/services.module#ServicesPageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' }
