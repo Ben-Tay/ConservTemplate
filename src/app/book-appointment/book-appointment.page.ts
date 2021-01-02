@@ -20,13 +20,6 @@ export class BookAppointmentPage implements OnInit {
   userEmail: string;
   categories: string[];
   time;
-  // private days = [];
-  // private dayActive: string = "";
-  // private hours = [
-  //   "09:00:00", "09:10:00", "09:20:00", "09:30:00", "09:40:00", "09:50:00",
-  //   "10:00:00", "10:10:00", "10:20:00", "10:30:00", "10:40:00", "10:50:00",
-  // ];
-  // private hourActive = "";
 
   constructor(private jobService: JobService, private toastCtrl: ToastController) {
       this.categories = ['Grocery', 'ElderCare', 'Babysit','Others']
@@ -49,17 +42,18 @@ export class BookAppointmentPage implements OnInit {
     this.submitted = true;
     this.client = "Amy"
     this.time = this.getTimeValue();
-    if (this.makerequestForm.valid) {
-      let report_date = this.makerequestForm.value.date
-      let formatted_date = report_date.split('T')[0];
-      
-      const jobdetails = new JobDetail("DetailDoc", formatted_date,
-        this.makerequestForm.value.description,
+    const form = this.makerequestForm
+    const formvalue = this.makerequestForm.value;
+    if (form.valid) {
+      const dateFormat = formvalue.date.split('T')[0]; 
+
+      const jobdetails = new JobDetail("DetailDoc", dateFormat,
+        formvalue.description,
         this.time)
 
       this.jobService.createnewjobrequest(jobdetails,
-        this.makerequestForm.value.errandname,
-        this.makerequestForm.value.category,
+        formvalue.errandname,
+        formvalue.category,
         this.client)
 
       let toast = await this.toastCtrl.create({
@@ -84,34 +78,5 @@ export class BookAppointmentPage implements OnInit {
 }
 
 
-  // checkDay (day: any) {
-  //   this.dayActive = this.getStrDay(day);
-  // }
-  // checkHour (hour: string) {
-  //   this.hourActive = hour;
-  // }
-
-  // generateDays () {
-  //   let now = moment();
-  //   for (let i = 0; i < 7; i++) {
-  //     now.add(1, 'd');
-
-  //     this.days.push({
-  //       month: now.format('MMM'),
-  //       day: now.format("DD"),
-  //       dayname: now.format("ddd")
-  //     })
-  //   }
-
-  //   this.checkDay(this.days[0])
-  // }
-
-  // getStrDay (day: any) {
-  //   return `${day.month}-${day.day}-${day.dayname}`;
-  // }
-
-  // next () {
-  //   this.navCtrl.navigateForward('pick-service')
-  // }
 
 

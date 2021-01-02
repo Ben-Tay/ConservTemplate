@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -8,96 +8,94 @@
 </ion-header>
 
 <ion-content>
+
   <form [formGroup]="makerequestForm" (ngSubmit)="onCreateRequest()">
-    <!-- <ion-row class="appointment-row-dates shadow">
-    <ion-col size="2" class="ion-text-center" tappable 
-      *ngFor="let day of days"
-      (click)="checkDay(day)"
-      [ngClass]="{'active': dayActive == getStrDay(day)}"
-    >
-      <span class="small month">{{ day.month }}</span> <br>
-      <span class="day">{{ day.day }}</span> <br>
-      <span class="small">{{ day.dayname }}</span>
-    </ion-col>
-  </ion-row>
-
-  <div class="ion-padding">
-
-    <ion-grid class="card-grid">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Generic</ion-card-title>
+      </ion-card-header>
       <ion-row>
-        <ion-col size="4" tappable 
-          *ngFor="let hour of hours" 
-          [ngClass]="{'active': hour == hourActive}"
-          (click)="checkHour(hour)"
-        >
-          <ion-card mode="ios" class="ion-no-margin">
-            <ion-card-content class="ion-text-center">
-              {{ hour }}
-            </ion-card-content>
-          </ion-card>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label>Errand Name:</ion-label>
+            <ion-input formControlName="errandname"></ion-input>
+          </ion-item>
+          <ion-item class="errors" *ngIf="makerequestForm.controls.errandname.errors && submitted">
+            <ion-label color="danger">
+              Errand Name is required
+            </ion-label>
+          </ion-item>
         </ion-col>
       </ion-row>
-    </ion-grid> -->
-    <!-- <ion-button mode="ios" expand="block" color="tertiary" (click)="next()">
-      Next
-    </ion-button> -->
-    <ion-item>
-      <ion-label>Errand Name:</ion-label>
-      <ion-input formControlName="errandname"></ion-input>
-    </ion-item>
-    <ion-item *ngIf="makerequestForm.controls.errandname.errors && submitted">
-      <ion-label color="danger">
-        Errand Name is required
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Errand Category:</ion-label>
-      <ion-select formControlName="category">
-        <ion-select-option *ngFor="let option of categories" [value]="option">
-          {{option}}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item *ngIf="makerequestForm.controls.category.errors && submitted">
-      <ion-label color="danger">
-        Errand Category is required
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Errand Description:</ion-label>
-      <ion-textarea formControlName="description" maxlength="100" rows="2">
-      </ion-textarea>
-      <p>{{100 - makerequestForm.value.description.length}} characters left</p>
-    </ion-item>
-    <ion-item *ngIf="makerequestForm.controls.description.errors && submitted">
-      <ion-label color="danger">
-        Description is required
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Reporting Date:</ion-label>
-      <ion-button>
-        <ion-icon name="calendar"></ion-icon>
-        <ion-datetime formControlName="date"></ion-datetime>
-      </ion-button>
-    </ion-item>
-    <ion-item *ngIf="makerequestForm.controls.date.errors && submitted">
-      <ion-label color="danger">
-        Date is required
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Reporting Time:</ion-label>
-      <ion-button>
-        <ion-icon name="time"></ion-icon>
-        <ion-datetime displayFormat="hh-mm-A" formControlName="time" [pickerOptions]="pickerOpt"></ion-datetime>
-      </ion-button>
-    </ion-item>
-    <ion-item *ngIf="makerequestForm.controls.time.errors && submitted">
-      <ion-label color="danger">
-        Time is required
-      </ion-label>
-    </ion-item>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label>Errand Category:</ion-label>
+            <ion-select formControlName="category">
+              <ion-select-option *ngFor="let option of categories" [value]="option">
+                {{option}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item class="errors" *ngIf="makerequestForm.controls.category.errors && submitted">
+            <ion-label color="danger">
+              Errand Category is required
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Details</ion-card-title>
+      </ion-card-header>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label>Errand Description:</ion-label>
+            <ion-textarea formControlName="description" maxlength="100" rows="2">
+            </ion-textarea>
+            <p>{{100 - makerequestForm.value.description.length}} characters left</p>
+          </ion-item>
+          <ion-item class="errors" *ngIf="makerequestForm.controls.description.errors && submitted">
+            <ion-label color="danger">
+              Description is required
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label>Reporting Date:</ion-label>
+            <ion-datetime formControlName="date"></ion-datetime>
+            <ion-button>
+              <ion-icon name="calendar"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-item class="errors" *ngIf="makerequestForm.controls.date.errors && submitted">
+            <ion-label color="danger">
+              Date is required
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label>Reporting Time:</ion-label>
+            <ion-datetime displayFormat="hh-mm-A" formControlName="time" [pickerOptions]="pickerOpt"></ion-datetime>
+            <ion-button>
+              <ion-icon name="time"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-item class="errors" *ngIf="makerequestForm.controls.time.errors && submitted">
+            <ion-label color="danger">
+              Time is required
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+
     <ion-button expand="block" color="tertiary" type="submit">Submit</ion-button>
   </form>
 
