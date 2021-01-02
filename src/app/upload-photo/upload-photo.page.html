@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Upload Profile Picture</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="addPhotoForm">
+      <ion-item>
+        <img [src]="photo" [hidden]="!photo" class="center">
+      </ion-item>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button expand="block" color="secondary" id="camera-button" (click)="takePhoto()">
+          Select a Photo
+          <ion-icon slot="start" name="camera"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button expand="block" color="success" type="submit" (click)=add()>Upload Photo</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+  <div class="container">
+    <hr class="hr-text" data-content="OR">
+    <ion-button id="logindirect" expand="block" (click)="tologin()">Directly Login</ion-button>
+  </div>
+  
+</ion-content>

@@ -9,7 +9,7 @@ export class User {
         public password: string,
         public phoneno: string,
         public address: string,
-        public image?: string
+        public image?
     ){ }
 
 }
