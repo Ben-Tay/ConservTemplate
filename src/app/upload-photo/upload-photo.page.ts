@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
 import { NavController, ToastController } from '@ionic/angular';
 import { User } from '../shared/models/User';
@@ -19,21 +19,27 @@ export class UploadPhotoPage implements OnInit {
   submitted: boolean = false;
   photo: SafeResourceUrl;
   user: User;
-  pagecounter: 0;
-
+  userEmail: string;
   constructor(
     private router: Router,
     private userService: UserService,
     private sanitizer: DomSanitizer,
-    private toastCtrl: ToastController) {
-    this.userService.getUserByEmail("c@gmail.com")
-      .then(async data => {
-        this.user = data;
-      })
+    private toastCtrl: ToastController,
+    private route: ActivatedRoute) {
+
     this.addPhotoForm = new FormGroup({
     })
+    setInterval(() => {
+      this.userEmail = this.route.snapshot.params.email;
+
+      this.userService.getUserByEmail(this.userEmail)
+        .then(async data => {
+          this.user = data;
+        })
+    })
+
   }
-  
+
 
   ngOnInit() {
   }
