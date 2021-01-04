@@ -140,6 +140,14 @@
                   </div>
                 </ng-container>
               </div>
+
+              <div class="validation-errors">
+                <ng-container>
+                  <div class="error-message" *ngIf="!signuperror == ''">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ signuperror }}
+                  </div>
+                </ng-container>
+              </div>
           </ion-item>
         </ion-col>
       </ion-row>
