@@ -1,7 +1,7 @@
 import { JobDetail } from "./JobDetail";
 
 export class Job {
-    details: JobDetail[] =[];
+    details: JobDetail[] = [];
     constructor(
         public errandname:string,
         public category: string,
