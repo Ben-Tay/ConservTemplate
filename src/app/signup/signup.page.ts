@@ -103,7 +103,7 @@ export class SignupPage implements OnInit {
       this.data = new User(formvalue.name, formvalue.gender, formvalue.birthday, formvalue.email, form.controls['matching_passwords'].value.password, form.controls['country_phone'].value.phone, formvalue.address)
       this.userService.signup(this.data).then(user=>{
         this.userService.signupContinue(this.data);
-        this.router.navigate(['/upload-photo']);
+        this.router.navigate(['/upload-photo', formvalue.email]);
       }).catch(error => {
           this.signuperror = error.message;
       })
