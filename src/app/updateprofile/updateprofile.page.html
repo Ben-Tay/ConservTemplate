@@ -1,0 +1,136 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Update Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <form [formGroup]="UpdateForm">
+
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none"  style="overflow: visible;">
+            <ion-label class="google-label" position="floating">
+              Name
+            </ion-label>
+            <ion-input formControlName="name" class="google-input" type="text">
+            </ion-input>
+            
+            <div class="validation-errors">
+              <ng-container *ngFor="let validation of validation_messages.name">
+                <div class="error-message" *ngIf="UpdateForm.get('name').hasError(validation.type) && (UpdateForm.get('name').dirty || UpdateForm.get('name').touched)">
+                  <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none"  style="overflow: visible;">
+              <ion-label class="google-label" position="floating">
+                Gender
+              </ion-label>
+              <ion-input class="google-input" type="text">
+                <ion-select formControlName="gender" mode="md" style="border: 0in;" class="google-select">
+                  <ion-select-option *ngFor="let option of gender"
+                  [value]="option">{{option}}</ion-select-option>
+                </ion-select>
+              </ion-input>
+
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.gender">
+                  <div class="error-message" *ngIf="UpdateForm.get('gender').hasError(validation.type) && (UpdateForm.get('gender').dirty || UpdateForm.get('gender').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none"  style="overflow: visible;">
+              <ion-label class="google-label" position="floating">
+                Birthday
+              </ion-label>
+              <ion-input class="google-input" type="text">
+                <ion-datetime formControlName="birthday" mode="md" displayFormat="DD MMM YYYY"></ion-datetime>
+              </ion-input>
+
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.birthday">
+                  <div class="error-message" *ngIf="UpdateForm.get('birthday').hasError(validation.type) && (UpdateForm.get('birthday').dirty || UpdateForm.get('birthday').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none"  style="overflow: visible;">
+              <ion-label class="google-label" position="floating">
+                Address
+              </ion-label>
+              <ion-input formControlName="address" class="google-input" type="text">
+              </ion-input>
+
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.address">
+                  <div class="error-message" *ngIf="UpdateForm.get('address').hasError(validation.type) && (UpdateForm.get('address').dirty || UpdateForm.get('address').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row formGroupName="country_phone">
+        <ion-col size="3">
+        <ion-item style="overflow: visible;">
+          <ion-label class="google-label" position="floating">Country</ion-label>
+          <ion-input class="google-input" type="text">
+          <ion-select formControlName="country" class="google-select" cancelText="Cancel" okText="OK" disabled="true">
+            <ion-select-option>Singapore</ion-select-option>
+          </ion-select>
+        </ion-input>
+        </ion-item>
+      </ion-col>
+
+        <ion-col>
+          <ion-item lines="none"  style="overflow: visible;">
+              <ion-label class="google-label" position="floating">
+                Phone Number
+              </ion-label>
+              <ion-input formControlName="phone" placeholder="+65 98473845" class="google-input" type="tel">
+              </ion-input>
+
+              <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.phone">
+                  <div class="error-message" *ngIf="UpdateForm.get('country_phone').get('phone').hasError(validation.type) && (UpdateForm.get('country_phone').get('phone').dirty || UpdateForm.get('country_phone').get('phone').touched)">
+                    <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+                  </div>
+                </ng-container>
+              </div>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row>
+        <ion-col>
+          <ion-button fill="clear" (click)="cancel()">Cancel</ion-button>
+          &nbsp;&nbsp;
+          <ion-button type="submit">Submit</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+</ion-content>

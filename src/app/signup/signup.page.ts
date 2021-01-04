@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { error } from 'protractor';
 import { User } from '../shared/models/User';
 import { UserService } from '../shared/services/user.service';
 import { PasswordValidator } from '../validators/password.validator';
@@ -18,6 +19,7 @@ export class SignupPage implements OnInit {
   data: User;
   matching_passwords_group: FormGroup;
   country_phone_group: FormGroup;
+  signuperror: string;
 
   constructor(private formbuilder: FormBuilder, private userService: UserService, private router: Router) {
     this.matching_passwords_group = new FormGroup({
@@ -102,6 +104,8 @@ export class SignupPage implements OnInit {
       this.userService.signup(this.data).then(user=>{
         this.userService.signupContinue(this.data);
         this.router.navigate(['/upload-photo']);
+      }).catch(error => {
+          this.signuperror = error.message;
       })
     }
   };

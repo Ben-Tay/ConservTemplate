@@ -79,4 +79,14 @@ export class UserService {
       image: p.image
     });
   }
+
+  getUserInfoNoImage(id:string): Observable<any> {
+    return new Observable(observer => {
+      // Read collection '/users'
+      firebase.firestore().collection('users').doc(id).get().then((doc) => {
+        let loan = new User(doc.data().name, doc.data().gender, doc.data().birthday, doc.data().email, doc.data().password, doc.data().phoneno, doc.data().address);
+        observer.next(loan);
+      });
+    });
+  }
 }
