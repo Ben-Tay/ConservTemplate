@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-searchbar #searchBar (ionChange)=search($event)></ion-searchbar>
+  <ion-searchbar #searchBar (ionChange)="search($event)"></ion-searchbar>
   <ion-grid>
     <form [formGroup]="FilterForms">
       <ion-row>
@@ -23,8 +23,8 @@
           <ion-item style="border: 2px solid black;">
             <ion-label>Months</ion-label>
             <ion-select (ionChange)="filterItems()" formControlName="month">
-              <ion-select-option *ngFor="let mg of categories" [value]="mg">
-                {{ mg }}
+              <ion-select-option *ngFor="let mg of months" [value]="mg.value">
+                {{ mg.name }}
               </ion-select-option>
             </ion-select>
           </ion-item>
@@ -39,6 +39,8 @@
         <ion-col size="6">
           <p>{{ item.errandname }}</p>
           <p>{{ item.category }}</p>
+          <p>{{ item.client }}</p>
+          <p>{{ item.details[0].date | date:'MMM d, y' }}</p>
         </ion-col>
       </ion-row>
     </ion-card>

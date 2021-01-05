@@ -39,31 +39,31 @@ export class UserService {
 
   getUserByEmail(id: string) {
     return this.userRef.doc(id).get().then((doc) => {
-        let data = doc.data();
-        let user = new User(data.name, data.gender, data.birthday,
-          data.email, data.password, data.phoneno, data.address, data.image);
-        return user;
-      });
+      let data = doc.data();
+      let user = new User(data.name, data.gender, data.birthday,
+        data.email, data.password, data.phoneno, data.address, data.image);
+      return user;
+    });
   }
 
   addImageToUser(p: User): Observable<any> {
     return new Observable((observer) => {
       this.userRef.doc(p.email).get()
-      .then(() => {
-        //         observer.next(p);
-        if (p.image) {
-          const dataUrl = p.image.changingThisBreaksApplicationSecurity;
-          const imageRef = firebase.storage().ref().child(p.email +"/profilepic.jpg");
-          imageRef.putString(dataUrl,
-            firebase.storage.StringFormat.DATA_URL).then(() => {
-              const ref = this.userRef.doc(p.email);
-              ref.update({ image: p.email + "/profilepic.jpg"});
-            });
-        }
-      });
+        .then(() => {
+          //         observer.next(p);
+          if (p.image) {
+            const dataUrl = p.image.changingThisBreaksApplicationSecurity;
+            const imageRef = firebase.storage().ref().child(p.email + "/profilepic.jpg");
+            imageRef.putString(dataUrl,
+              firebase.storage.StringFormat.DATA_URL).then(() => {
+                const ref = this.userRef.doc(p.email);
+                ref.update({ image: p.email + "/profilepic.jpg" });
+              });
+          }
+        });
     })
   }
-  
+
   logout() {
     return firebase.auth().signOut();
   }
@@ -80,7 +80,7 @@ export class UserService {
     });
   }
 
-  getUserInfoNoImage(id:string): Observable<any> {
+  getUserInfoNoImage(id: string): Observable<any> {
     return new Observable(observer => {
       // Read collection '/users'
       firebase.firestore().collection('users').doc(id).get().then((doc) => {
