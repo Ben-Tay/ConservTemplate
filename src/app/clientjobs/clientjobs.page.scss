@@ -1,0 +1,26 @@
+ion-icon {
+    font-size:30px;
+   
+}
+
+ion-card {
+    width: 100%;
+    border-radius: 25px;
+    border: 1.5px solid rgb(91, 91, 189);
+    color: black;
+}
+ion-card-header{
+    border-bottom: 1px solid black;
+    padding-bottom: 0;
+    position: relative;
+}
+.center-right {
+    position: absolute;
+    top: 50%;
+    right: 30%;
+    transform: translateY(-50%) translateX(30%);
+}
+
+ion-list {
+    margin-top: 20px;
+}

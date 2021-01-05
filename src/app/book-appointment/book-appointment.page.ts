@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { NavController, ToastController } from '@ionic/angular';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { JobService } from '../shared/services/job.service';
 import { JobDetail } from '../shared/models/JobDetail';
 
@@ -12,7 +12,6 @@ import { JobDetail } from '../shared/models/JobDetail';
 })
 export class BookAppointmentPage implements OnInit {
   makerequestForm: FormGroup;
-  submitted: boolean = false;
   client: string;
   pickerOpt = {
     backdropDismiss: false,
@@ -20,10 +19,14 @@ export class BookAppointmentPage implements OnInit {
   userEmail: string;
   categories: string[];
   time;
+  date: String = new Date().toISOString();
+  min_time = "06:30";
+  max_time = "11:59";
 
-  constructor(private jobService: JobService, private toastCtrl: ToastController) {
-      this.categories = ['Grocery', 'ElderCare', 'Babysit','Others']
-      this.makerequestForm = new FormGroup({
+
+  constructor(private jobService: JobService, private toastCtrl: ToastController, private formbuilder: FormBuilder) {
+    this.categories = ['Grocery', 'ElderCare', 'Babysit', 'Others']
+    this.makerequestForm = this.formbuilder.group({
       errandname: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
@@ -31,21 +34,20 @@ export class BookAppointmentPage implements OnInit {
       time: new FormControl('', [Validators.required])
     })
 
-    
-    
+
+
   }
 
   ngOnInit() {
   }
 
   async onCreateRequest() {
-    this.submitted = true;
     this.client = "Amy"
     this.time = this.getTimeValue();
     const form = this.makerequestForm
     const formvalue = this.makerequestForm.value;
     if (form.valid) {
-      const dateFormat = formvalue.date.split('T')[0]; 
+      const dateFormat = formvalue.date.split('T')[0];
 
       const jobdetails = new JobDetail("DetailDoc", dateFormat,
         formvalue.description,
@@ -74,6 +76,24 @@ export class BookAppointmentPage implements OnInit {
     m = (m % 12) || 12;
     this.time = m + ":" + n + " " + AmOrPm;
     return this.time;
+  }
+
+  validation_messages = {
+    'errandname': [
+      { type: 'required', message: 'Errand Name is required.' }
+    ],
+    'category': [
+      { type: 'required', message: 'Category is required' }
+    ],
+    'description': [
+      { type: 'required', message: 'Description is required' }
+    ],
+    'date': [
+      { type: 'required', message: 'Date is required' },
+    ],
+    'time': [
+      { type: 'required', message: 'Time is required' }
+    ]
   }
 }
 

@@ -1,7 +1,5 @@
 import { Time } from "@angular/common";
-import { IonDatetime } from "@ionic/angular";
-import { Duration } from "moment";
-import { Timestamp } from "rxjs";
+
 
 export class JobDetail {
 
