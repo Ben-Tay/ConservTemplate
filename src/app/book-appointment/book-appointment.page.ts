@@ -3,7 +3,6 @@ import * as moment from 'moment';
 import { NavController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { JobService } from '../shared/services/job.service';
-import { JobDetail } from '../shared/models/JobDetail';
 
 @Component({
   selector: 'app-book-appointment',
@@ -18,10 +17,11 @@ export class BookAppointmentPage implements OnInit {
   }
   userEmail: string;
   categories: string[];
-  time;
-  date: String = new Date().toISOString();
+  date = new Date().toISOString();
+  correct_date: Date;
   min_time = "06:30";
   max_time = "11:59";
+  time;
 
 
   constructor(private jobService: JobService, private toastCtrl: ToastController, private formbuilder: FormBuilder) {
@@ -46,17 +46,12 @@ export class BookAppointmentPage implements OnInit {
     this.time = this.getTimeValue();
     const form = this.makerequestForm
     const formvalue = this.makerequestForm.value;
+    const formdate = new Date(formvalue.date);
+
+
     if (form.valid) {
-      const dateFormat = formvalue.date.split('T')[0];
-
-      const jobdetails = new JobDetail("DetailDoc", dateFormat,
-        formvalue.description,
-        this.time)
-
-      this.jobService.createnewjobrequest(jobdetails,
-        formvalue.errandname,
-        formvalue.category,
-        this.client)
+      this.jobService.createnewjobrequest(formvalue.errandname, formvalue.category,
+        this.client, formdate, formvalue.description, this.time)
 
       let toast = await this.toastCtrl.create({
         message: "Your request has been created",
