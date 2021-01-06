@@ -4,8 +4,7 @@ GitHub Repository for ConSerV
 
 ##  Download Git On Windows First:
 
-https://gitforwindows.org/
-
+https://git-scm.com/download/win
 ## Git Commands Docs
 
 1. https://dzone.com/articles/top-20-git-commands-with-examples
@@ -31,7 +30,7 @@ Section B should only be done once at the start
 ##### Import codes from Github repository into local environment: 
 
 1. git clone https://github.com/Ben-Tay/ConservTemplate.git (do this in D:\IonicApps)
-2. cd Conserv-Inc
+2. cd ConservTemplate
 3. git pull origin master (may or may not need but will not affect codes since only importing on first time) 
 4. npm install (to install all dependencies)
 5. ionic serve (check that u can preview the app)
