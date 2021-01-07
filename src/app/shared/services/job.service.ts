@@ -126,5 +126,23 @@ export class JobService {
     });
   }
 
+  getAllErrands(): Observable<any> {
+    return new Observable(observer => {
+      // Read collection '/JobsAvailable'
+      firebase.firestore().collection('JobsAvailable').onSnapshot(collection => {
+        let array = [];
+        collection.forEach(doc => {
 
+          // Add jobs into array if there's no error
+          try {
+            let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time);
+            array.push(loan);
+
+          } catch (error) { }
+
+        });
+        observer.next(array);
+      });
+    });
+  }
 }
