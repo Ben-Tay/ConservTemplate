@@ -47,6 +47,28 @@ export class UserService {
     });
   }
 
+  // getUserByEmailObservable(id: string): Observable<any> {
+  //   return new Observable(observer => {
+  //     // Read collection '/JobsAvailable'
+  //     this.userRef.where('email', '==', id).onSnapshot(collection => {
+  //       let array = [];
+  //       collection.forEach(doc => {
+
+  //         // Add job into array if there's no error
+  //         try {
+  //           let data = doc.data()
+  //           let user = new User(data.name, data.gender, data.birthday,
+  //             data.email, data.password, data.phoneno, data.address, data.image);
+  //           array.push(user);
+
+  //         } catch (error) { }
+
+  //       });
+  //       observer.next(array);
+  //     });
+  //   });
+  // }
+
   addImageToUser(p: User): Observable<any> {
     return new Observable((observer) => {
       this.userRef.doc(p.email).get()

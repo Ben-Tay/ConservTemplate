@@ -30,7 +30,7 @@ const routes: Routes = [
   { path: 'clientjobs', loadChildren: './clientjobs/clientjobs.module#ClientjobsPageModule' },
   { path: 'all-errand-requests', loadChildren: './all-errand-requests/all-errand-requests.module#AllErrandRequestsPageModule' },
   { path: 'errand-details', loadChildren: './errand-details/errand-details.module#ErrandDetailsPageModule' },
-  { path: 'update-photo', loadChildren: './update-photo/update-photo.module#UpdatePhotoPageModule' },
+  { path: 'updatephoto', loadChildren: './updatephoto/updatephoto.module#UpdatephotoPageModule' },
 
 ];
 

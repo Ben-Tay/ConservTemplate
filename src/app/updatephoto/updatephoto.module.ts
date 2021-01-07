@@ -5,12 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { UpdatePhotoPage } from './update-photo.page';
+import { UpdatephotoPage } from './updatephoto.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: UpdatePhotoPage
+    component: UpdatephotoPage
   }
 ];
 
@@ -18,10 +18,10 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
     IonicModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [UpdatePhotoPage]
+  declarations: [UpdatephotoPage]
 })
-export class UpdatePhotoPageModule {}
+export class UpdatephotoPageModule {}
