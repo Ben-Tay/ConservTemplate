@@ -1,52 +1,65 @@
 import { Component, OnInit } from '@angular/core';
-import {  FormGroup} from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { User } from '../shared/models/User';
 import { UserService } from '../shared/services/user.service';
 
 @Component({
-  selector: 'app-upload-photo',
-  templateUrl: './upload-photo.page.html',
-  styleUrls: ['./upload-photo.page.scss'],
+  selector: 'app-update-photo',
+  templateUrl: './update-photo.page.html',
+  styleUrls: ['./update-photo.page.scss'],
 })
-export class UploadPhotoPage implements OnInit {
+export class UpdatePhotoPage implements OnInit {
 
   addPhotoForm: FormGroup;
   categories: string[];
   submitted: boolean = false;
+  default: boolean = true;
   photo: SafeResourceUrl;
-  user: User;
+  user: User
+  usernoimage: User
   userEmail: string;
+  user_with_image;
   constructor(
     private router: Router,
     private userService: UserService,
     private sanitizer: DomSanitizer,
     private toastCtrl: ToastController,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    public loadingCtrl: LoadingController) {
 
     this.addPhotoForm = new FormGroup({
     })
     setInterval(() => {
-      this.userEmail = this.route.snapshot.params.email;
+      // this.userEmail = this.route.snapshot.params.email;
 
-      this.userService.getUserByEmail(this.userEmail)
-        .then(async data => {
+      //Get image 
+      this.userService.getUserImage("Dan@gmail.com")
+        .subscribe(async data => {
           this.user = data;
+        });
+
+      //get user data without image
+      this.userService.getUserByEmail("Dan@gmail.com")
+        .then(async data => {
+          this.usernoimage = data;
         })
+
     })
 
   }
 
 
   ngOnInit() {
+
+    this.showLoading()
   }
 
-  async add() {
-    //retrieve earlier user details
-    const user = this.user;
+  async update() {
+    const user = this.usernoimage;
     //create new user object and update image field for that user
     const user_with_image = new User(user.name, user.gender, user.birthday, user.email,
       user.password, user.phoneno, user.address, this.photo)
@@ -63,17 +76,10 @@ export class UploadPhotoPage implements OnInit {
       toast.present()
 
       //Navigate to login page
-      this.tologin();
-    } else {
-      let toast = await this.toastCtrl.create({
-        message: 'Please upload a picture',
-        position: 'top',
-        duration: 1000
-      })
-      toast.present()
+      this.toprofile();
     }
-
   }
+
 
   async takePhoto() {
     const image = await Plugins.Camera.getPhoto({
@@ -85,12 +91,22 @@ export class UploadPhotoPage implements OnInit {
     this.photo =
       this.sanitizer.bypassSecurityTrustResourceUrl(image &&
         (image.dataUrl));
+    this.default = false;
+
   }
 
-  tologin() {
-    this.router.navigate(['login'])
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading...',
+      duration: 2000
+    });
+
+    loading.present();
+
+
   }
 
+  toprofile() {
+    this.router.navigate(['profile'])
+  }
 }
-
-

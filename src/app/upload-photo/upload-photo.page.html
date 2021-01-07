@@ -17,7 +17,10 @@
         </ion-button>
       </ion-col>
       <ion-col size="6">
-        <ion-button expand="block" color="success" type="submit" (click)=add()>Upload Photo</ion-button>
+        <ion-button expand="block" color="success" id="update-button" (click)="add()">
+          Upload Photo
+          <ion-icon slot="start" name="cloud-upload"></ion-icon>
+        </ion-button>      
       </ion-col>
     </ion-row>
   </form>
