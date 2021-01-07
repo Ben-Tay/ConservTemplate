@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,7 +34,7 @@ export class UserService {
       gender: p.gender,
       email: p.email,
       password: p.password,
-      phoneno: p.phoneno
+      phoneno: p.phoneno,
     });
   }
 
@@ -45,6 +46,28 @@ export class UserService {
       return user;
     });
   }
+
+  // getUserByEmailObservable(id: string): Observable<any> {
+  //   return new Observable(observer => {
+  //     // Read collection '/JobsAvailable'
+  //     this.userRef.where('email', '==', id).onSnapshot(collection => {
+  //       let array = [];
+  //       collection.forEach(doc => {
+
+  //         // Add job into array if there's no error
+  //         try {
+  //           let data = doc.data()
+  //           let user = new User(data.name, data.gender, data.birthday,
+  //             data.email, data.password, data.phoneno, data.address, data.image);
+  //           array.push(user);
+
+  //         } catch (error) { }
+
+  //       });
+  //       observer.next(array);
+  //     });
+  //   });
+  // }
 
   addImageToUser(p: User): Observable<any> {
     return new Observable((observer) => {
@@ -76,7 +99,6 @@ export class UserService {
       birthday: new Date(p.birthday),
       gender: p.gender,
       phoneno: p.phoneno,
-      image: p.image
     });
   }
 
@@ -86,6 +108,29 @@ export class UserService {
       firebase.firestore().collection('users').doc(id).get().then((doc) => {
         let loan = new User(doc.data().name, doc.data().gender, doc.data().birthday, doc.data().email, doc.data().password, doc.data().phoneno, doc.data().address);
         observer.next(loan);
+      });
+    });
+  }
+
+  getUserImage(id: string): Observable<any> {
+    return new Observable(observer => {
+      // Read collection '/users'
+      firebase.firestore().collection('users').doc(id).get().then((doc) => {
+        let docdata = doc.data()
+        let u = new User(docdata.name, docdata.gender, docdata.birthday, docdata.email, docdata.password, docdata.phoneno, docdata.address);
+
+        if (docdata.image) {
+          u.imagepath = docdata.image
+          const imageRef = firebase.storage().ref().child(docdata.image);
+          imageRef.getDownloadURL()
+            .then(url => {
+              u.image = url;
+              observer.next(u);
+              console.log('Image is ' + u.image);
+            }).catch(error => {
+              console.log('Error: Read image fail ' + error);
+            });
+        }
       });
     });
   }
