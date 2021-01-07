@@ -118,7 +118,7 @@ export class AllErrandRequestsPage implements OnInit {
 
   search(event) {
     const text = event.target.value;
-    var hey = this.allJobs
+    var hey = this.jobs
 
     if (text && text.trim() !== '') {
       this.jobs = hey.filter(
