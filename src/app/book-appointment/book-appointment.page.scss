@@ -12,6 +12,13 @@ ion-card-title, ion-datetime{
 ion-item, ion-button {
     margin: 10px;
 }
-.errors {
-    border-bottom: 1px solid red;
+
+
+.error-message
+{
+    color: red;
+    font-size: 14px;
+    margin-left: 10px;
+    margin-top: 10px;
 }
+  
