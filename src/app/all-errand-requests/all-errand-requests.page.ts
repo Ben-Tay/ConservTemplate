@@ -1,10 +1,10 @@
 import { getLocaleMonthNames } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IonSearchbar } from '@ionic/angular';
 import { getMonth, isSameMonth } from 'date-fns';
 import { Job } from '../shared/models/Job';
-import { JobDetail } from '../shared/models/JobDetail';
 import { User } from '../shared/models/User';
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
@@ -24,7 +24,7 @@ export class AllErrandRequestsPage implements OnInit {
   categories: string[];
   months;
 
-  constructor(private jobService: JobService) {
+  constructor(private jobService: JobService, private router: Router) {
     this.categories = ['All', 'Grocery', 'ElderCare', 'Babysit', 'Others']
 
     this.months = [{
@@ -88,16 +88,16 @@ export class AllErrandRequestsPage implements OnInit {
     var hey = this.allJobs
     if(this.FilterForms.value.month !== 13 && this.FilterForms.value.category !== 'All'){
       this.jobs = hey.filter(item => {
-        if (new Date(item.details[0].date).getMonth().toString() && this.FilterForms.value.month.toString() && item.category && this.FilterForms.value.category) {
-          return (new Date(item.details[0].date).getMonth().toString().indexOf(this.FilterForms.value.month.toString()) > -1) && (item.category.toLowerCase().indexOf(this.FilterForms.value.category.toLowerCase()) > -1)
+        if (new Date(item.date).getMonth().toString() && this.FilterForms.value.month.toString() && item.category && this.FilterForms.value.category) {
+          return (new Date(item.date).getMonth().toString().indexOf(this.FilterForms.value.month.toString()) > -1) && (item.category.toLowerCase().indexOf(this.FilterForms.value.category.toLowerCase()) > -1)
         }
       })
     }
 
     else if (this.FilterForms.value.month !== 13) {
       this.jobs = hey.filter(item => {
-        if (new Date(item.details[0].date).getMonth().toString() && this.FilterForms.value.month.toString()) {
-          return (new Date(item.details[0].date).getMonth().toString().indexOf(this.FilterForms.value.month.toString()) > -1)
+        if (new Date(item.date).getMonth().toString() && this.FilterForms.value.month.toString()) {
+          return (new Date(item.date).getMonth().toString().indexOf(this.FilterForms.value.month.toString()) > -1)
         }
       })
     }
@@ -134,6 +134,10 @@ export class AllErrandRequestsPage implements OnInit {
       // Blank text, clear the search, show all products
       this.filterItems()
     }
+  }
+
+  redirect(){
+    this.router.navigate(['/errand-details'])
   }
 
 }
