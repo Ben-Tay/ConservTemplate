@@ -124,8 +124,8 @@ export class AllErrandRequestsPage implements OnInit {
       this.jobs = hey.filter(
         //item => item.errandname.toLowerCase().includes(text.toLowerCase()));
         item => {
-          if (item.errandname && text && item.client) {
-            return (item.errandname.toLowerCase().indexOf(text.toLowerCase()) > -1 || item.client.toLowerCase().indexOf(text.toLowerCase()) > -1)
+          if (item.errandname && text) {
+            return (item.errandname.toLowerCase().indexOf(text.toLowerCase()) > -1)
           }
         })
     }
