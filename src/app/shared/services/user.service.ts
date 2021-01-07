@@ -34,7 +34,7 @@ export class UserService {
       gender: p.gender,
       email: p.email,
       password: p.password,
-      phoneno: p.phoneno,
+      phoneno: p.phoneno
     });
   }
 
@@ -98,7 +98,7 @@ export class UserService {
       address: p.address,
       birthday: new Date(p.birthday),
       gender: p.gender,
-      phoneno: p.phoneno,
+      phoneno: p.phoneno
     });
   }
 
