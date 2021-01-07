@@ -26,7 +26,8 @@ const routes: Routes = [
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'upload-photo/:email', loadChildren: './upload-photo/upload-photo.module#UploadPhotoPageModule' },
-  { path: 'updateprofile', loadChildren: './updateprofile/updateprofile.module#UpdateprofilePageModule' }
+  { path: 'updateprofile', loadChildren: './updateprofile/updateprofile.module#UpdateprofilePageModule' },  { path: 'users', loadChildren: './users/users.module#UsersPageModule' }
+
 
 ];
 
