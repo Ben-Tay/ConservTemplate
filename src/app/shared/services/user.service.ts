@@ -77,6 +77,7 @@ export class UserService {
       birthday: new Date(p.birthday),
       gender: p.gender,
       phoneno: p.phoneno
+
     });
   }
 
@@ -96,7 +97,6 @@ export class UserService {
       firebase.firestore().collection('users').doc(id).get().then((doc) => {
         let docdata = doc.data()
         let u = new User(docdata.name, docdata.gender, docdata.birthday, docdata.email, docdata.password, docdata.phoneno, docdata.address, docdata.image);
-
         if (docdata.image) {
           u.imagepath = docdata.image
           const imageRef = firebase.storage().ref().child(docdata.image);
@@ -104,13 +104,13 @@ export class UserService {
             .then(url => {
               u.image = url;
               //Tell subscriber that image is updated
+
               observer.next(u);
               console.log('Image is ' + u.image);
             }).catch(error => {
               console.log('Error: Read image fail ' + error);
             });
         }
-        
       });
     });
   }

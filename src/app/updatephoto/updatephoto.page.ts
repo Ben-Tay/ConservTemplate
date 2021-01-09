@@ -20,6 +20,7 @@ export class UpdatephotoPage implements OnInit {
   user: User;
   userwithimg: User;
   final_user: User;
+
   userEmail: string;
   default: boolean = true;
   constructor(
@@ -55,11 +56,11 @@ export class UpdatephotoPage implements OnInit {
           this.userwithimg = data;
         })
 
+
   }
 
   async add() {
     //retrieve earlier user details
-
     //check for whether user selected photo
     if (this.photo) {
       //create new user object and update image field for that user
@@ -75,9 +76,9 @@ export class UpdatephotoPage implements OnInit {
       toast.present()
       this.toProfile();
 
-
     }
   }
+
 
 
   async takePhoto() {
