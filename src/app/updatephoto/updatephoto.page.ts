@@ -18,7 +18,9 @@ export class UpdatephotoPage implements OnInit {
   submitted: boolean = false;
   photo: SafeResourceUrl;
   user: User;
-  user_with_image: User;
+  userwithimg: User;
+  final_user: User;
+
   userEmail: string;
   default: boolean = true;
   constructor(
@@ -33,14 +35,13 @@ export class UpdatephotoPage implements OnInit {
     })
     setInterval(() => {
       // this.userEmail = this.route.snapshot.params.email;
-      this.userService.getUserImage("Dan@gmail.com")
+      
+      this.userService.getUserInfoNoImage("yiqinggoh@gmail.com")
         .subscribe(async data => {
-          this.user_with_image = data;
-        })
-
-      this.userService.getUserByEmail("Dan@gmail.com")
-        .then(async data => {
           this.user = data;
+          this.final_user = new User(this.user.name, this.user.gender, this.user.birthday, this.user.email,
+            this.user.password, this.user.phoneno, this.user.address, this.photo)
+
         })
     })
 
@@ -49,17 +50,22 @@ export class UpdatephotoPage implements OnInit {
 
   ngOnInit() {
     this.showLoading();
+    //to display user profile pic on page
+    this.userService.getUserImage("yiqinggoh@gmail.com")
+        .subscribe(async data => {
+          this.userwithimg = data;
+        })
+
+
   }
 
   async add() {
     //retrieve earlier user details
-    const user = this.user;
-    //create new user object and update image field for that user
-    const user_with_image = new User(user.name, user.gender, user.birthday, user.email,
-      user.password, user.phoneno, user.address, this.photo)
     //check for whether user selected photo
-    if (this.photo!) {
-      this.userService.addImageToUser(user_with_image).subscribe();
+    if (this.photo) {
+      //create new user object and update image field for that user
+
+      this.userService.addImageToUser(this.final_user).subscribe();
 
       //notify user upon upload
       let toast = await this.toastCtrl.create({
@@ -69,9 +75,11 @@ export class UpdatephotoPage implements OnInit {
       })
       toast.present()
       this.toProfile();
-    }
 
+    }
   }
+
+
 
   async takePhoto() {
     const image = await Plugins.Camera.getPhoto({

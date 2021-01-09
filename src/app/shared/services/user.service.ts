@@ -34,7 +34,7 @@ export class UserService {
       gender: p.gender,
       email: p.email,
       password: p.password,
-      phoneno: p.phoneno,
+      phoneno: p.phoneno
     });
   }
 
@@ -47,33 +47,11 @@ export class UserService {
     });
   }
 
-  // getUserByEmailObservable(id: string): Observable<any> {
-  //   return new Observable(observer => {
-  //     // Read collection '/JobsAvailable'
-  //     this.userRef.where('email', '==', id).onSnapshot(collection => {
-  //       let array = [];
-  //       collection.forEach(doc => {
-
-  //         // Add job into array if there's no error
-  //         try {
-  //           let data = doc.data()
-  //           let user = new User(data.name, data.gender, data.birthday,
-  //             data.email, data.password, data.phoneno, data.address, data.image);
-  //           array.push(user);
-
-  //         } catch (error) { }
-
-  //       });
-  //       observer.next(array);
-  //     });
-  //   });
-  // }
-
   addImageToUser(p: User): Observable<any> {
     return new Observable((observer) => {
       this.userRef.doc(p.email).get()
         .then(() => {
-          //         observer.next(p);
+          observer.next(p);
           if (p.image) {
             const dataUrl = p.image.changingThisBreaksApplicationSecurity;
             const imageRef = firebase.storage().ref().child(p.email + "/profilepic.jpg");
@@ -98,7 +76,8 @@ export class UserService {
       address: p.address,
       birthday: new Date(p.birthday),
       gender: p.gender,
-      phoneno: p.phoneno,
+      phoneno: p.phoneno
+
     });
   }
 
@@ -117,14 +96,15 @@ export class UserService {
       // Read collection '/users'
       firebase.firestore().collection('users').doc(id).get().then((doc) => {
         let docdata = doc.data()
-        let u = new User(docdata.name, docdata.gender, docdata.birthday, docdata.email, docdata.password, docdata.phoneno, docdata.address);
-
+        let u = new User(docdata.name, docdata.gender, docdata.birthday, docdata.email, docdata.password, docdata.phoneno, docdata.address, docdata.image);
         if (docdata.image) {
           u.imagepath = docdata.image
           const imageRef = firebase.storage().ref().child(docdata.image);
           imageRef.getDownloadURL()
             .then(url => {
               u.image = url;
+              //Tell subscriber that image is updated
+
               observer.next(u);
               console.log('Image is ' + u.image);
             }).catch(error => {

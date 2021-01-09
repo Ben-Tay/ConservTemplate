@@ -7,10 +7,10 @@
 <ion-content>
   <form [formGroup]="addPhotoForm">
     <ion-item *ngIf="default">
-      <img [src]="user_with_image?.image" [hidden]="!user_with_image?.image" class="center">
+      <img [src]="userwithimg?.image" [hidden]="!userwithimg?.image" class="image-card" >
     </ion-item>
     <ion-item *ngIf="!default">
-      <img [src]="photo" [hidden]="!photo" class="center">
+      <img [src]="photo" [hidden]="!photo" class="image-card">
     </ion-item>
     <ion-row>
       <ion-col size="6">
