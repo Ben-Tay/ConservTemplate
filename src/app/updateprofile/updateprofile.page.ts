@@ -15,10 +15,24 @@ export class UpdateprofilePage implements OnInit {
   country_phone_group: FormGroup;
 
   gender: string[];
-  data: User;
-  updateddata: User;
+  userEmail: string;
+  userPassword: string;
+  birthday: Date;
+  Userdata: User;
 
   constructor(private formbuilder: FormBuilder, private userService: UserService, private router: Router) {
+    /*this.userService.observeAuthState(user	=>	{
+      //	User	is	logged	in
+    if	(user)	{	
+          this.userEmail	=	user.email;	
+    }	
+      //	User	has	logged	out
+    else	{	
+        this.userEmail	=	undefined;		
+    }
+    });*/
+    this.userEmail = "admin@nyp.sg"
+
     let country = new FormControl('Singapore', Validators.required);
     let phone = new FormControl('', Validators.compose([
       Validators.required,
@@ -43,9 +57,31 @@ export class UpdateprofilePage implements OnInit {
       
       country_phone: this.country_phone_group
     })
+
+    this.userService.getUserInfoNoImage(this.userEmail)
+    .subscribe(data=>{
+      this.Userdata = data
+      if(this.Userdata){
+        this.UpdateForm.controls.name.setValue(this.Userdata.name)
+        this.UpdateForm.controls.gender.setValue(this.Userdata.gender)
+        this.UpdateForm.controls.birthday.setValue(this.Userdata.birthday.toDateString())
+        this.UpdateForm.controls.address.setValue(this.Userdata.address)
+        this.UpdateForm.get(['country_phone', 'phone']).setValue(this.Userdata.phoneno)
+        this.userPassword = this.Userdata.password
+      }
+    })
   }
 
   ngOnInit() {
+  }
+
+  update(){
+    if(this.UpdateForm.valid){
+      const updatedata = new User(this.UpdateForm.value.name, this.UpdateForm.value.gender, this.UpdateForm.value.birthday, this.userEmail, this.userPassword, this.UpdateForm.controls['country_phone'].value.phone, this.UpdateForm.value.address)
+      
+      this.userService.updateProfile(updatedata)
+      this.router.navigate(['/profile'])
+    }
   }
 
   cancel(){
