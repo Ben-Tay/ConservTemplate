@@ -23,8 +23,8 @@
           <ion-item style="border: 2px solid black;">
             <ion-label>Months</ion-label>
             <ion-select (ionChange)="filterItems()" formControlName="month">
-              <ion-select-option *ngFor="let mg of months" [value]="mg.value">
-                {{ mg.name }}
+              <ion-select-option *ngFor="let mg of months" [value]="mg">
+                {{ mg }}
               </ion-select-option>
             </ion-select>
           </ion-item>

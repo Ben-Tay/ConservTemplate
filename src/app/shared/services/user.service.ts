@@ -72,10 +72,10 @@ export class UserService {
   updateProfile(p: User) {
     const ref = firebase.firestore().collection('users').doc(p.email);
     ref.update({
-      name: p.name,
       address: p.address,
       birthday: new Date(p.birthday),
       gender: p.gender,
+      name: p.name,
       phoneno: p.phoneno
     });
   }
@@ -84,7 +84,7 @@ export class UserService {
     return new Observable(observer => {
       // Read collection '/users'
       firebase.firestore().collection('users').doc(id).get().then((doc) => {
-        let loan = new User(doc.data().name, doc.data().gender, doc.data().birthday, doc.data().email, doc.data().password, doc.data().phoneno, doc.data().address);
+        let loan = new User(doc.data().name, doc.data().gender, doc.data().birthday.toDate(), doc.data().email, doc.data().password, doc.data().phoneno, doc.data().address);
         observer.next(loan);
       });
     });
