@@ -31,6 +31,7 @@ const routes: Routes = [
   { path: 'all-errand-requests', loadChildren: './all-errand-requests/all-errand-requests.module#AllErrandRequestsPageModule' },
   { path: 'errand-details', loadChildren: './errand-details/errand-details.module#ErrandDetailsPageModule' },
   { path: 'updatephoto', loadChildren: './updatephoto/updatephoto.module#UpdatephotoPageModule' },
+  { path: 'clientjobsnotification/:id', loadChildren: './clientjobsnotification/clientjobsnotification.module#ClientjobsnotificationPageModule' },
 
 ];
 
