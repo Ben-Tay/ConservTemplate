@@ -1,6 +1,6 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IonButton } from '@ionic/angular';
 import { Job } from '../shared/models/Job';
 import { JobService } from '../shared/services/job.service';
@@ -29,7 +29,7 @@ export class ClientjobsPage implements OnInit {
 
 
 
-  constructor(private userservice: UserService, private jobservice: JobService) {
+  constructor(private userservice: UserService, private jobservice: JobService, private router: Router) {
     // this.userservice.observeAuthState(user => {
     //   this.client = user.email;
     // })
@@ -99,10 +99,10 @@ export class ClientjobsPage implements OnInit {
           this.job = data;
         })
     }
-
-
-
-
   }
 
+  toApplicants(id: string){
+    this.router.navigate(['clientjobsnotification', id])
+
+  }
 }

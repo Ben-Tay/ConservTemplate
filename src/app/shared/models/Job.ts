@@ -9,8 +9,8 @@ export class Job {
         public date: Date,
         public description: string,
         public time: Time,
-        public price?: number,
-        public id?: string
+        public id?: string,
+        public price?: number
     ) { }
 
 }

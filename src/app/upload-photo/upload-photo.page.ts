@@ -32,8 +32,8 @@ export class UploadPhotoPage implements OnInit {
     setInterval(() => {
       this.userEmail = this.route.snapshot.params.email;
 
-      this.userService.getUserByEmail(this.userEmail)
-        .then(async data => {
+      this.userService.getUserInfoNoImage(this.userEmail)
+        .subscribe(async data => {
           this.user = data;
         })
     })

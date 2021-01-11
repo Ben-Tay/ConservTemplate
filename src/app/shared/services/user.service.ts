@@ -38,14 +38,14 @@ export class UserService {
     });
   }
 
-  getUserByEmail(id: string) {
-    return this.userRef.doc(id).get().then((doc) => {
-      let data = doc.data();
-      let user = new User(data.name, data.gender, data.birthday,
-        data.email, data.password, data.phoneno, data.address, data.image);
-      return user;
-    });
-  }
+  // getUserByEmail(id: string) {
+  //   return this.userRef.doc(id).get().then((doc) => {
+  //     let data = doc.data();
+  //     let user = new User(data.name, data.gender, data.birthday,
+  //       data.email, data.password, data.phoneno, data.address, data.image);
+  //     return user;
+  //   });
+  // }
 
   addImageToUser(p: User): Observable<any> {
     return new Observable((observer) => {

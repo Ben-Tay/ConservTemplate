@@ -1,6 +1,8 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>My Jobs Requested</ion-title>
+    <ion-row>
+      <ion-title>My Jobs Requested</ion-title>
+  </ion-row>
   </ion-toolbar>
 </ion-header>
 
@@ -51,6 +53,11 @@
               <ion-row>
                 <ion-card-subtitle>Errand Category: {{jobs.category}} </ion-card-subtitle>
               </ion-row>
+            </ion-col>
+            <ion-col class="align-end">
+              <ion-button (click)="toApplicants(jobs.id)">Applicants
+                <ion-icon slot="start" name="notifications"></ion-icon>
+              </ion-button>
             </ion-col>
           </ion-row>
         </ion-card-header>
