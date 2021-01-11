@@ -23,8 +23,8 @@
           <ion-item style="border: 2px solid black;">
             <ion-label>Months</ion-label>
             <ion-select (ionChange)="filterItems()" formControlName="month">
-              <ion-select-option *ngFor="let mg of months" [value]="mg.value">
-                {{ mg.name }}
+              <ion-select-option *ngFor="let mg of months" [value]="mg">
+                {{ mg }}
               </ion-select-option>
             </ion-select>
           </ion-item>
@@ -61,7 +61,6 @@
             <ion-label>
               <div text-wrap>
                 <p>Job Date: {{item.date | date:'d MMM yyyy'}}</p>
-                <p>Job Description: {{item.description}}</p>
                 <p>Job Time: {{item.time}}</p>
               </div>
             </ion-label>

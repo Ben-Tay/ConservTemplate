@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonSearchbar } from '@ionic/angular';
 import { getMonth, isSameMonth } from 'date-fns';
+import { months } from 'moment';
 import { Job } from '../shared/models/Job';
 import { User } from '../shared/models/User';
 import { JobService } from '../shared/services/job.service';
@@ -27,50 +28,11 @@ export class AllErrandRequestsPage implements OnInit {
   constructor(private jobService: JobService, private router: Router) {
     this.categories = ['All', 'Grocery', 'ElderCare', 'Babysit', 'Others']
 
-    this.months = [{
-      name:'All',
-      value: 13
-    }, {
-      name: 'January',
-      value: 0
-    }, {
-      name: 'February',
-      value: 1
-    }, {
-      name: 'March',
-      value: 2
-    }, {
-      name: 'April',
-      value: 3
-    }, {
-      name: 'May',
-      value: 4
-    }, {
-      name: 'June',
-      value: 5
-    }, {
-      name: 'July',
-      value: 6
-    }, {
-      name: 'August',
-      value: 7
-    }, {
-      name: 'September',
-      value: 8
-    }, {
-      name: 'October',
-      value: 9
-    }, {
-      name: 'November',
-      value: 10
-    }, {
-      name: 'December',
-      value: 11
-    }]
+    this.months = ['All', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
     this.FilterForms = new FormGroup({
       category: new FormControl('All'),
-      month: new FormControl(13)
+      month: new FormControl('All')
     })
 
     this.jobService.getAllErrands()
@@ -86,18 +48,18 @@ export class AllErrandRequestsPage implements OnInit {
   filterItems() {
     this.searchBar.value=''
     var hey = this.allJobs
-    if(this.FilterForms.value.month !== 13 && this.FilterForms.value.category !== 'All'){
+    if(this.FilterForms.value.month !== 'All' && this.FilterForms.value.category !== 'All'){
       this.jobs = hey.filter(item => {
-        if (new Date(item.date).getMonth().toString() && this.FilterForms.value.month.toString() && item.category && this.FilterForms.value.category) {
-          return (new Date(item.date).getMonth().toString().indexOf(this.FilterForms.value.month.toString()) > -1) && (item.category.toLowerCase().indexOf(this.FilterForms.value.category.toLowerCase()) > -1)
+        if (months(new Date(item.date).getMonth()).toString() && this.FilterForms.value.month.toString() && item.category && this.FilterForms.value.category) {
+          return (months(new Date(item.date).getMonth()).toString().indexOf(this.FilterForms.value.month.toString()) > -1) && (item.category.toLowerCase().indexOf(this.FilterForms.value.category.toLowerCase()) > -1)
         }
       })
     }
 
-    else if (this.FilterForms.value.month !== 13) {
+    else if (this.FilterForms.value.month !== 'All') {
       this.jobs = hey.filter(item => {
-        if (new Date(item.date).getMonth().toString() && this.FilterForms.value.month.toString()) {
-          return (new Date(item.date).getMonth().toString().indexOf(this.FilterForms.value.month.toString()) > -1)
+        if (months(new Date(item.date).getMonth()).toString() && this.FilterForms.value.month.toString()) {
+          return (months(new Date(item.date).getMonth()).toString().indexOf(this.FilterForms.value.month.toString()) > -1)
         }
       })
     }
@@ -124,8 +86,8 @@ export class AllErrandRequestsPage implements OnInit {
       this.jobs = hey.filter(
         //item => item.errandname.toLowerCase().includes(text.toLowerCase()));
         item => {
-          if (item.errandname && text && item.client) {
-            return (item.errandname.toLowerCase().indexOf(text.toLowerCase()) > -1 || item.client.toLowerCase().indexOf(text.toLowerCase()) > -1)
+          if (item.errandname && text) {
+            return (item.errandname.toLowerCase().indexOf(text.toLowerCase()) > -1)
           }
         })
     }
