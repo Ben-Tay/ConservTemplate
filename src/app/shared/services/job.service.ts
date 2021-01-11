@@ -43,7 +43,7 @@ export class JobService {
             let jobdata = doc.data()
             const date = jobdata.date.toDate()
             let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client,
-              date, jobdata.description, jobdata.time);
+              date, jobdata.description, jobdata.time, doc.id);
             array.push(job);
           } catch (error) { }
 
@@ -67,7 +67,7 @@ export class JobService {
             const filtermonth = date.toLocaleString('default', { month: 'short' })
             if (filtermonth === month) {
               let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client,
-                date, jobdata.description, jobdata.time);
+                date, jobdata.description, jobdata.time, doc.id);
 
               array.push(job);
             }
@@ -92,7 +92,7 @@ export class JobService {
             let jobdata = doc.data()
             const date = jobdata.date.toDate()
             let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client,
-              date, jobdata.description, jobdata.time);
+              date, jobdata.description, jobdata.time, doc.id);
             array.push(job);
 
           } catch (error) { }
@@ -115,7 +115,7 @@ export class JobService {
             let jobdata = doc.data()
             const date = jobdata.date.toDate()
             let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client,
-              date, jobdata.description, jobdata.time);
+              date, jobdata.description, jobdata.time, doc.id);
             array.push(job);
 
           } catch (error) { }
@@ -135,7 +135,7 @@ export class JobService {
 
           // Add jobs into array if there's no error
           try {
-            let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time);
+            let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id);
             array.push(loan);
 
           } catch (error) { }
