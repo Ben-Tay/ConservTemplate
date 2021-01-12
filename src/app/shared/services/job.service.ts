@@ -145,4 +145,14 @@ export class JobService {
       });
     });
   }
+
+  getSpecificErrands(id: string): Observable<any> {
+    return new Observable(observer => {
+      // Read collection '/JobsAvailable'
+      firebase.firestore().collection('JobsAvailable').doc(id).get().then(collection => {
+        let loan = new Job(collection.data().errandname, collection.data().category, collection.data().status, collection.data().client, collection.data().date.toDate(), collection.data().description, collection.data().time, collection.id);
+        observer.next(loan);
+    });
+  })
+}
 }
