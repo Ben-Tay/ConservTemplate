@@ -126,6 +126,16 @@ export class JobService {
     });
   }
 
+  getClientJobsById(id: string) {
+    return firebase.firestore().collection('JobsAvailable').doc(id).get().then(doc => {
+      let jobdata = doc.data()
+      const date = jobdata.date.toDate()
+      let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client,
+        date, jobdata.description, jobdata.time, doc.id);
+
+      return job;
+    })
+  }
   getAllErrands(): Observable<any> {
     return new Observable(observer => {
       // Read collection '/JobsAvailable'
