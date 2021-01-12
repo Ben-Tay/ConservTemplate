@@ -23,8 +23,8 @@ export class ErrandDetailsPage implements OnInit {
   constructor(private jobService: JobService, private route: ActivatedRoute, userService: UserService) {
     this.errandId = this.route.snapshot.params.id;
     
-    this.jobService.getSpecificErrands(this.errandId)
-    .subscribe(data =>{
+    this.jobService.getSpecificJobsById(this.errandId)
+    .then(data =>{
       this.job = data
       this.jobname = this.job.errandname
       this.jobcategory = this.job.category
