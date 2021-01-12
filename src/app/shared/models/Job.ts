@@ -10,6 +10,7 @@ export class Job {
         public description: string,
         public time: Time,
         public id?: string,
+        public errandrunner?: string,
         public price?: number
     ) { }
 
