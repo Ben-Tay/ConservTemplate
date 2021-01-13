@@ -10,7 +10,7 @@
     <form [formGroup]="FilterForms">
       <ion-row>
         <ion-col>
-          <ion-item style="border: 2px solid black;">
+          <ion-item style="border: 2px solid black; border-radius: 5px;">
             <ion-label>Category</ion-label>
             <ion-select (ionChange)="filterItems()" formControlName="category">
               <ion-select-option *ngFor="let mg of categories" [value]="mg">
@@ -20,7 +20,7 @@
           </ion-item>
         </ion-col>
         <ion-col>
-          <ion-item style="border: 2px solid black;">
+          <ion-item style="border: 2px solid black; border-radius: 5px;">
             <ion-label>Months</ion-label>
             <ion-select (ionChange)="filterItems()" formControlName="month">
               <ion-select-option *ngFor="let mg of months" [value]="mg">
@@ -34,7 +34,7 @@
   </ion-grid>
 
   <ion-grid>
-    <ion-card *ngFor="let item of jobs" (click)="redirect()">
+    <ion-card *ngFor="let item of jobs" [routerLink]="['/errand-details', item.id]">
       <ion-card-header>
         <ion-row>
           <ion-col size="0.5">

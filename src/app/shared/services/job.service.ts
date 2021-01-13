@@ -126,7 +126,8 @@ export class JobService {
     });
   }
 
-  getClientJobsById(id: string) {
+
+  getSpecificJobsById(id: string) {
     return firebase.firestore().collection('JobsAvailable').doc(id).get().then(doc => {
       let jobdata = doc.data()
       const date = jobdata.date.toDate()

@@ -15,7 +15,8 @@ export class ClientjobsnotificationPage implements OnInit {
 
   constructor(private route: ActivatedRoute, private jobservice: JobService) { 
     this.jobid = this.route.snapshot.params.id;
-    this.jobservice.getClientJobsById(this.jobid)
+
+    this.jobservice.getSpecificJobsById(this.jobid)
     .then(data => {
       this.job = data;
     })
