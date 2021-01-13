@@ -126,6 +126,7 @@ export class JobService {
     });
   }
 
+
   getSpecificJobsById(id: string) {
     return firebase.firestore().collection('JobsAvailable').doc(id).get().then(doc => {
       let jobdata = doc.data()
