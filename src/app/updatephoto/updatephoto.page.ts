@@ -34,15 +34,21 @@ export class UpdatephotoPage implements OnInit {
     this.addPhotoForm = new FormGroup({
     })
     setInterval(() => {
-      // this.userEmail = this.route.snapshot.params.email;
-      
-      this.userService.getUserInfoNoImage("yiqinggoh@gmail.com")
-        .subscribe(async data => {
-          this.user = data;
-          this.final_user = new User(this.user.name, this.user.gender, this.user.birthday, this.user.email,
-            this.user.password, this.user.phoneno, this.user.address, this.photo)
+      this.userService.observeAuthState(user => {
+        //	User	is	logged	in
+        if (user) {
+          this.userEmail = user.email
+          this.userService.getUserInfoNoImage(user.email)
+            .subscribe(async data => {
+              this.user = data;
+              this.final_user = new User(this.user.name, this.user.gender, this.user.birthday, this.user.email,
+                this.user.password, this.user.phoneno, this.user.address, this.photo)
 
-        })
+            })
+        } else {
+          this.userEmail = undefined;
+        }
+      })
     })
 
   }
@@ -51,11 +57,15 @@ export class UpdatephotoPage implements OnInit {
   ngOnInit() {
     this.showLoading();
     //to display user profile pic on page
-    this.userService.getUserImage("yiqinggoh@gmail.com")
-        .subscribe(async data => {
-          this.userwithimg = data;
-        })
-
+    this.userService.observeAuthState(user => {
+      //	User	is	logged	in
+      if (user) {
+        this.userService.getUserImage(user.email)
+          .subscribe(async data => {
+            this.userwithimg = data;
+          })
+      }
+    })
 
   }
 
