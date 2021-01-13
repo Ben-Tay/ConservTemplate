@@ -26,9 +26,13 @@ const routes: Routes = [
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'upload-photo/:email', loadChildren: './upload-photo/upload-photo.module#UploadPhotoPageModule' },
-  { path: 'updateprofile', loadChildren: './updateprofile/updateprofile.module#UpdateprofilePageModule' },  { path: 'homepage', loadChildren: './homepage/homepage.module#HomepagePageModule' }
-
-
+  { path: 'updateprofile', loadChildren: './updateprofile/updateprofile.module#UpdateprofilePageModule' },
+  { path: 'clientjobs', loadChildren: './clientjobs/clientjobs.module#ClientjobsPageModule' },
+  { path: 'all-errand-requests', loadChildren: './all-errand-requests/all-errand-requests.module#AllErrandRequestsPageModule' },
+  { path: 'errand-details/:id', loadChildren: './errand-details/errand-details.module#ErrandDetailsPageModule' },
+  { path: 'updatephoto', loadChildren: './updatephoto/updatephoto.module#UpdatephotoPageModule' },
+  { path: 'clientjobsnotification/:id', loadChildren: './clientjobsnotification/clientjobsnotification.module#ClientjobsnotificationPageModule' },
+  { path: 'homepage', loadChildren: './homepage/homepage.module#HomepagePageModule' }
 ];
 
 @NgModule({
@@ -38,3 +42,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
+

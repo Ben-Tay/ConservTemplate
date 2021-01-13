@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ job?.errandname }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid style="margin-top: 1.5pc;">
+    <ion-row>
+      <ion-col class="large" style="margin-left: 1pc;" size="2">
+        Errand Name:
+      </ion-col>
+      <ion-col class="large">
+        {{ job?.errandname }}
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="large" style="margin-left: 1pc;" size="2">
+        Errand Category:
+      </ion-col>
+      <ion-col class="large">
+        {{ job?.category }}
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="large" style="margin-left: 1pc;" size="2">
+        Errand Date:
+      </ion-col>
+      <ion-col class="large">
+        {{ job?.date | date:'MMM d, yyyy' }}
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="large" style="margin-left: 1pc;" size="2">
+        Errand Meeting Time:
+      </ion-col>
+      <ion-col class="large">
+        {{ job?.time }}
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="large" style="margin-left: 1pc;" size="2">
+        Client:
+      </ion-col>
+      <ion-col class="large">
+
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col class="large" style="margin-left: 1pc;" size="2">
+        Client Email:
+      </ion-col>
+      <ion-col class="large">
+        {{ job?.client }}
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="large" style="margin-left: 1pc;">
+      <ion-col size="2">
+        Errand Description:
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="large" style="margin: 1pc; border: 1.5px solid black; border-radius: 7px;">
+      <p style="margin-left: 1pc;">{{ job?.description }}</p>
+    </ion-row><br/>
+
+    <ion-button expand="block" size="large" style="margin:1pc;">Apply</ion-button>
+  </ion-grid>
+</ion-content>

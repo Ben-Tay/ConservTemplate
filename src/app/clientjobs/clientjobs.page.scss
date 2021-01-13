@@ -1,0 +1,45 @@
+
+
+ion-card {
+    width: 100%;
+    border-radius: 25px;
+    border: 1.5px solid rgb(91, 91, 189);
+    color: black;
+}
+ion-card-header{
+    border-bottom: 1px solid black;
+    padding-bottom: 0;
+    position: relative;
+}
+.center-right {
+    position: absolute;
+    top: 50%;
+    right: 30%;
+    transform: translateY(-50%) translateX(30%);
+    font-size:30px;
+
+}
+
+ion-list {
+    margin-top: 20px;
+}
+
+.center {
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.center-content{
+    color: red;
+}
+.align-end {
+    text-align: right;
+}
+  
+
+  
+
+  
+  

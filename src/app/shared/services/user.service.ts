@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -37,36 +38,36 @@ export class UserService {
     });
   }
 
-  getUserByEmail(id: string) {
-    return this.userRef.doc(id).get().then((doc) => {
-        let data = doc.data();
-        let user = new User(data.name, data.gender, data.birthday,
-          data.email, data.password, data.phoneno, data.address, data.image);
-        return user;
-      });
-  }
+  // getUserByEmail(id: string) {
+  //   return this.userRef.doc(id).get().then((doc) => {
+  //     let data = doc.data();
+  //     let user = new User(data.name, data.gender, data.birthday,
+  //       data.email, data.password, data.phoneno, data.address, data.image);
+  //     return user;
+  //   });
+  // }
 
   addImageToUser(p: User): Observable<any> {
     return new Observable((observer) => {
       this.userRef.doc(p.email).get()
-      .then(() => {
-        //         observer.next(p);
-        if (p.image) {
-          const dataUrl = p.image.changingThisBreaksApplicationSecurity;
-          const imageRef = firebase.storage().ref().child(p.email +"/profilepic.jpg");
-          imageRef.putString(dataUrl,
-            firebase.storage.StringFormat.DATA_URL).then(() => {
-              const ref = this.userRef.doc(p.email);
-              ref.update({ image: p.email + "/profilepic.jpg"});
-            });
-        }
-      });
+        .then(() => {
+          observer.next(p);
+          if (p.image) {
+            const dataUrl = p.image.changingThisBreaksApplicationSecurity;
+            const imageRef = firebase.storage().ref().child(p.email + "/profilepic.jpg");
+            imageRef.putString(dataUrl,
+              firebase.storage.StringFormat.DATA_URL).then(() => {
+                const ref = this.userRef.doc(p.email);
+                ref.update({ image: p.email + "/profilepic.jpg" });
+              });
+          }
+        });
     })
   }
 
   login(email: string, password:	string)	{	
     return firebase.auth().signInWithEmailAndPassword(email, password);	
-}
+  }
   
   logout() {
     return firebase.auth().signOut();
@@ -75,21 +76,44 @@ export class UserService {
   updateProfile(p: User) {
     const ref = firebase.firestore().collection('users').doc(p.email);
     ref.update({
-      name: p.name,
       address: p.address,
       birthday: new Date(p.birthday),
       gender: p.gender,
-      phoneno: p.phoneno,
-      image: p.image
+      name: p.name,
+      phoneno: p.phoneno
     });
   }
 
-  getUserInfoNoImage(id:string): Observable<any> {
+  getUserInfoNoImage(id: string): Observable<any> {
     return new Observable(observer => {
       // Read collection '/users'
       firebase.firestore().collection('users').doc(id).get().then((doc) => {
-        let loan = new User(doc.data().name, doc.data().gender, doc.data().birthday, doc.data().email, doc.data().password, doc.data().phoneno, doc.data().address);
+        let loan = new User(doc.data().name, doc.data().gender, doc.data().birthday.toDate(), doc.data().email, doc.data().password, doc.data().phoneno, doc.data().address);
         observer.next(loan);
+      });
+    });
+  }
+
+  getUserImage(id: string): Observable<any> {
+    return new Observable(observer => {
+      // Read collection '/users'
+      firebase.firestore().collection('users').doc(id).get().then((doc) => {
+        let docdata = doc.data()
+        let u = new User(docdata.name, docdata.gender, docdata.birthday, docdata.email, docdata.password, docdata.phoneno, docdata.address, docdata.image);
+        if (docdata.image) {
+          u.imagepath = docdata.image
+          const imageRef = firebase.storage().ref().child(docdata.image);
+          imageRef.getDownloadURL()
+            .then(url => {
+              u.image = url;
+              //Tell subscriber that image is updated
+
+              observer.next(u);
+              console.log('Image is ' + u.image);
+            }).catch(error => {
+              console.log('Error: Read image fail ' + error);
+            });
+        }
       });
     });
   }

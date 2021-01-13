@@ -10,7 +10,7 @@
 <ion-content>
 
   <form [formGroup]="makerequestForm" (ngSubmit)="onCreateRequest()">
-    <ion-card>
+    <ion-card class="available-job-card">
       <ion-card-header>
         <ion-card-title>Generic</ion-card-title>
       </ion-card-header>
@@ -20,11 +20,12 @@
             <ion-label>Errand Name:</ion-label>
             <ion-input formControlName="errandname"></ion-input>
           </ion-item>
-          <ion-item class="errors" *ngIf="makerequestForm.controls.errandname.errors && submitted">
-            <ion-label color="danger">
-              Errand Name is required
-            </ion-label>
-          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.errandname">
+            <div class="error-message"
+              *ngIf="makerequestForm.get('errandname').hasError(validation.type) && (makerequestForm.get('errandname').dirty || makerequestForm.get('errandname').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+            </div>
+          </ng-container>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -37,15 +38,16 @@
               </ion-select-option>
             </ion-select>
           </ion-item>
-          <ion-item class="errors" *ngIf="makerequestForm.controls.category.errors && submitted">
-            <ion-label color="danger">
-              Errand Category is required
-            </ion-label>
-          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.category">
+            <div class="error-message"
+              *ngIf="makerequestForm.get('category').hasError(validation.type) && (makerequestForm.get('category').dirty || makerequestForm.get('category').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+            </div>
+          </ng-container>
         </ion-col>
       </ion-row>
     </ion-card>
-    <ion-card>
+    <ion-card class="available-job-card">
       <ion-card-header>
         <ion-card-title>Details</ion-card-title>
       </ion-card-header>
@@ -57,41 +59,44 @@
             </ion-textarea>
             <p>{{100 - makerequestForm.value.description.length}} characters left</p>
           </ion-item>
-          <ion-item class="errors" *ngIf="makerequestForm.controls.description.errors && submitted">
-            <ion-label color="danger">
-              Description is required
-            </ion-label>
-          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.description">
+            <div class="error-message"
+              *ngIf="makerequestForm.get('description').hasError(validation.type) && (makerequestForm.get('description').dirty || makerequestForm.get('description').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+            </div>
+          </ng-container>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="6">
           <ion-item>
             <ion-label>Reporting Date:</ion-label>
-            <ion-datetime formControlName="date"></ion-datetime>
+            <ion-datetime formControlName="date" [min]="date"></ion-datetime>
             <ion-button>
               <ion-icon name="calendar"></ion-icon>
             </ion-button>
           </ion-item>
-          <ion-item class="errors" *ngIf="makerequestForm.controls.date.errors && submitted">
-            <ion-label color="danger">
-              Date is required
-            </ion-label>
-          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.date">
+            <div class="error-message"
+              *ngIf="makerequestForm.get('date').hasError(validation.type) && (makerequestForm.get('date').dirty || makerequestForm.get('date').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+            </div>
+          </ng-container>
         </ion-col>
         <ion-col size="6">
           <ion-item>
             <ion-label>Reporting Time:</ion-label>
-            <ion-datetime displayFormat="hh-mm-A" formControlName="time" [pickerOptions]="pickerOpt"></ion-datetime>
+            <ion-datetime displayFormat="hh:mm A" formControlName="time" [pickerOptions]="pickerOpt" [min]="min_time" [max]="max_time"></ion-datetime>
             <ion-button>
               <ion-icon name="time"></ion-icon>
             </ion-button>
           </ion-item>
-          <ion-item class="errors" *ngIf="makerequestForm.controls.time.errors && submitted">
-            <ion-label color="danger">
-              Time is required
-            </ion-label>
-          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.time">
+            <div class="error-message"
+              *ngIf="makerequestForm.get('time').hasError(validation.type) && (makerequestForm.get('time').dirty || makerequestForm.get('time').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+            </div>
+          </ng-container>
         </ion-col>
       </ion-row>
     </ion-card>
