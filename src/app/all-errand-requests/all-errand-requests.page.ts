@@ -97,9 +97,4 @@ export class AllErrandRequestsPage implements OnInit {
       this.filterItems()
     }
   }
-
-  redirect(){
-    this.router.navigate(['/errand-details'])
-  }
-
 }

@@ -1,6 +1,8 @@
 import { Time } from "@angular/common";
 
 export class Job {
+    appliedErrandRunner: [];
+
     constructor(
         public errandname: string,
         public category: string,

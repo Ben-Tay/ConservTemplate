@@ -150,5 +150,4 @@ export class SignupPage implements OnInit {
       { type: 'pattern', message: 'You must accept terms and conditions.' }
     ],
   };
-
 }
