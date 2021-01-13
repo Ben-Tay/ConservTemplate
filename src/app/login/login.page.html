@@ -11,23 +11,33 @@
   <form [formGroup]="loginForm">
 
     <ion-list>
-      <ion-item>
-        <ion-input placeholder="Email" type="email" formControlName="email"></ion-input>
+      <ion-item lines="none"  style="overflow: visible;">
+        <ion-label class="google-label" position="floating">
+          E-Mail
+        </ion-label>
+        <ion-input class="google-input" type="email" formControlName="email"></ion-input>
       </ion-item>
   
-      <ion-item>
-        <ion-input placeholder="Password" type="password" formControlName="password"></ion-input>
+      <ion-item lines="none"  style="overflow: visible;">
+        <ion-label class="google-label" position="floating">
+          Password
+        </ion-label>
+        <ion-input class="google-input" type="password" formControlName="password"></ion-input>
       </ion-item>
     </ion-list>
 
   </form>
 
-  <ion-button expand="block" type="submit" (click)=login()>
+  <div class="validation-errors">
+    <ng-container>
+      <div class="error-message" *ngIf="!loginError == ''">
+        <ion-icon name="information-circle-outline"></ion-icon> {{ loginError }}
+      </div>
+    </ng-container>
+  </div>
+
+  <ion-button style="margin:1pc" expand="block" type="submit" (click)=login()>
   Login
   </ion-button>
-
-  <ion-label color='danger'>	
-    <p>{{loginError}}</p>	
-  </ion-label>
 
 </ion-content>
