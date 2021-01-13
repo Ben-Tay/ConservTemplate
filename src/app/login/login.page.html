@@ -1,11 +1,33 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>
-      Conserv
-    </ion-title>
+    <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+
+<ion-content padding center text-center>
+  <ion-title>ConserV</ion-title>
+
+  <form [formGroup]="loginForm">
+
+    <ion-list>
+      <ion-item>
+        <ion-input placeholder="Email" type="email" formControlName="email"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-input placeholder="Password" type="password" formControlName="password"></ion-input>
+      </ion-item>
+    </ion-list>
+
+  </form>
+
+  <ion-button expand="block" type="submit" (click)=login()>
+  Login
+  </ion-button>
+
+  <ion-label color='danger'>	
+    <p>{{loginError}}</p>	
+  </ion-label>
 
 </ion-content>
