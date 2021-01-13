@@ -1,4 +1,147 @@
 ion-title * {
     margin-top: 30vh;
     margin-bottom: 5vh;
+}
+
+* {
+  --background-focused: transparent;
+}
+ion-toolbar {
+  --color: blue !important;
+}
+
+ion-select{
+  max-width: 100%;
+}
+
+#menu_header {
+  --color: blue !important;
+}
+#avatar_menu {
+  margin-right: 10px !important;
+}
+
+.item-input {
+  margin-top: 5px;
+  &.invalid {
+    color: red;
   }
+}
+
+ion-label.google-label {
+  background-color: white;
+  font-size: 12px;
+  margin-left: 10px !important;
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+  position: absolute !important;
+  margin-bottom: 5px !important;
+  z-index: 9;
+}
+
+.google-input {
+  padding-top: 10px !important;
+  color: black;
+  border: 2px solid black;
+  width: 100%;
+  max-width: 100%;
+  padding-left: 10px !important;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+.google-select {
+  padding-top: 10px !important;
+  color: black;
+  width: 100%;
+  max-width: 100%;
+  padding-left: 10px !important;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+.item-label-floating {
+  &.ion-invalid.ion-touched {
+    .google-label {
+      color: #f53d3d !important;
+    }
+    .google-input {
+      border: 2px solid #f53d3d !important;
+    }
+  }
+  &.item-has-value {
+    .google-label {
+      padding-left: 4px !important;
+      padding-right: 4px !important;
+      color: #062f77 !important;
+      -webkit-transform: translate3d(0, -50%, 0) !important;
+      transform: translate3d(0, -50%, 0) !important;
+      -webkit-transform-origin: left top;
+      transform-origin: left top;
+      -webkit-transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+        -webkit-transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      &.invalid {
+        .google-label {
+          color: #f53d3d !important;
+        }
+        .google-input {
+          border: 2px solid #f53d3d !important;
+        }
+      }
+    }
+
+    &.ion-valid.ion-touched {
+      .google-label {
+        color: black !important;
+      }
+    }
+  }
+  &.item-has-focus {
+    .google-label {
+      padding-left: 4px !important;
+      padding-right: 4px !important;
+      color: #062f77 !important;
+      -webkit-transform: translate3d(0, -50%, 0) !important;
+      transform: translate3d(0, -50%, 0) !important;
+      -webkit-transform-origin: left top;
+      transform-origin: left top;
+      -webkit-transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s cubic-bezier(0.4, 0, 0.2, 1),
+        -webkit-transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .google-input {
+      border: 2px solid #062f77;
+    }
+    &.invalid {
+      .google-label {
+        color: #f53d3d !important;
+      }
+      .google-input {
+        border: 2px solid #f53d3d !important;
+      }
+    }
+
+    &.ion-valid.ion-touched {
+      .google-label {
+        color: #062f77 !important;
+      }
+    }
+  }
+}
+
+ion-content {
+  .error-message
+  {
+    color: red;
+    font-size: 14px;
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+}
