@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ jobname }}</ion-title>
+    <ion-title>{{ job?.errandname }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +14,7 @@
         Errand Name:
       </ion-col>
       <ion-col class="large">
-        {{ jobname }}
+        {{ job?.errandname }}
       </ion-col>
     </ion-row>
 
@@ -23,7 +23,7 @@
         Errand Category:
       </ion-col>
       <ion-col class="large">
-        {{ jobcategory }}
+        {{ job?.category }}
       </ion-col>
     </ion-row>
 
@@ -32,7 +32,7 @@
         Errand Date:
       </ion-col>
       <ion-col class="large">
-        {{ jobdate | date:'MMM d, yyyy' }}
+        {{ job?.date | date:'MMM d, yyyy' }}
       </ion-col>
     </ion-row>
 
@@ -41,7 +41,7 @@
         Errand Meeting Time:
       </ion-col>
       <ion-col class="large">
-        {{ jobTime }}
+        {{ job?.time }}
       </ion-col>
     </ion-row>
 
@@ -59,7 +59,7 @@
         Client Email:
       </ion-col>
       <ion-col class="large">
-        {{ jobclient }}
+        {{ job?.client }}
       </ion-col>
     </ion-row>
 
@@ -70,7 +70,7 @@
     </ion-row>
 
     <ion-row class="large" style="margin: 1pc; border: 1.5px solid black; border-radius: 7px;">
-      <p style="margin-left: 1pc;">{{ jobdescrip }}</p>
+      <p style="margin-left: 1pc;">{{ job?.description }}</p>
     </ion-row><br/>
 
     <ion-button expand="block" size="large" style="margin:1pc;">Apply</ion-button>

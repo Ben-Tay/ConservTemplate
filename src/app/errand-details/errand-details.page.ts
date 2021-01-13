@@ -26,12 +26,6 @@ export class ErrandDetailsPage implements OnInit {
     this.jobService.getSpecificJobsById(this.errandId)
     .then(data =>{
       this.job = data
-      this.jobname = this.job.errandname
-      this.jobcategory = this.job.category
-      this.jobclient = this.job.client
-      this.jobdescrip = this.job.description
-      this.jobdate = this.job.date
-      this.jobTime = this.job.time
     })
   }
 
