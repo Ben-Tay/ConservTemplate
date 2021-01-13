@@ -63,6 +63,10 @@ export class UserService {
       });
     })
   }
+
+  login(email: string, password:	string)	{	
+    return firebase.auth().signInWithEmailAndPassword(email, password);	
+}
   
   logout() {
     return firebase.auth().signOut();
