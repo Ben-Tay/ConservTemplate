@@ -40,6 +40,19 @@ ion-card-title{
 .applicant-card ion-card-title {
     color: black;
 }
+//background styling 
+ion-content.homepage{
+    --ion-background-color: linear-gradient(#0275d8, #fafafa);
+}
+
+ion-content.emptyx{
+    --ion-background-color: linear-gradient(#ecb53e, #9198e5);
+}
+
+
+ion-content.empty{
+    --ion-background-color: linear-gradient(#e66465, #9198e5);
+}
 @import "~@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */

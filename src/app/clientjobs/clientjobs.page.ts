@@ -30,10 +30,15 @@ export class ClientjobsPage implements OnInit {
 
 
   constructor(private userservice: UserService, private jobservice: JobService, private router: Router) {
-    // this.userservice.observeAuthState(user => {
-    //   this.client = user.email;
-    // })
-    this.defaultData();
+    this.userservice.observeAuthState(user => {
+      if (user) {
+        this.client = user.email;
+        this.jobservice.getAllJobsByClient(this.client)
+          .subscribe(data => {
+            this.job = data;
+          })
+      }
+    })
     this.orderbyfilter = ["Closest", "Furthest"];
     this.monthfilter = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     this.filterform = new FormGroup({
@@ -64,7 +69,7 @@ export class ClientjobsPage implements OnInit {
   }
 
   defaultData() {
-    this.jobservice.getAllJobsByClient("Amy")
+    this.jobservice.getAllJobsByClient(this.client)
       .subscribe(data => {
         this.job = data;
       })
@@ -72,13 +77,13 @@ export class ClientjobsPage implements OnInit {
   onChangeMonth(value) {
     for (let i of this.monthfilter) {
       if (value === i) {
-        this.jobservice.getAllJobsByClientByMonth("Amy", i)
+        this.jobservice.getAllJobsByClientByMonth(this.client, i)
           .subscribe(data => {
             this.job = data;
             //handle for when there is no request data for that month
             if (!data.length) {
               this.nodata = true;
-            }else{
+            } else {
               this.nodata = false;
             }
           })
@@ -89,19 +94,19 @@ export class ClientjobsPage implements OnInit {
   onChangeDate(_value) {
     // if nothing selected, show all
     if (_value == "Closest") {
-      this.jobservice.getAllJobsByClientByClosest("Amy")
+      this.jobservice.getAllJobsByClientByClosest(this.client)
         .subscribe(data => {
           this.job = data;
         })
     } else if (_value == "Furthest") {
-      this.jobservice.getAllJobsByClientByFurthest("Amy")
+      this.jobservice.getAllJobsByClientByFurthest(this.client)
         .subscribe(data => {
           this.job = data;
         })
     }
   }
 
-  toApplicants(id: string){
+  toApplicants(id: string) {
     this.router.navigate(['clientjobsnotification', id])
 
   }

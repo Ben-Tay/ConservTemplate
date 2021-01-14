@@ -1,15 +1,17 @@
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-      <ion-toolbar>
+<ion-header collapse="condense">
+      <ion-toolbar color="primary">
           <ion-title size="large">Account</ion-title>
       </ion-toolbar>
-  </ion-header>
+  </ion-header> 
 
+<ion-content [fullscreen]="true" class="homepage">
+  <ion-card class="available-job-card">
   <div>
     <ion-item>	
-      Hello {{userEmail}}
+      <p>Hello {{userEmail}}</p>
     </ion-item>	
     <ion-button	expand="block" color="secondary" (click)=logout()>Logout</ion-button>	
-</div>
+  </div>
+</ion-card>
 
 </ion-content>
