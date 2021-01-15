@@ -4,7 +4,6 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { Time } from '@angular/common';
-import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
