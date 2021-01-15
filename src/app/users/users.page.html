@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>users</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        Name
+      </ion-col>
+      <ion-col>
+        Address
+      </ion-col>
+      <ion-col>
+        Email
+      </ion-col>
+      <ion-col>
+        Gender
+      </ion-col>
+      <ion-col>
+        Phone Number
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        {{ users.name }}
+      </ion-col>
+      <ion-col>
+        {{ users.address }}
+      </ion-col>
+      <ion-col>
+        {{ users.email }}
+      </ion-col>
+      <ion-col>
+        {{ users.gender }}
+      </ion-col>
+      <ion-col>
+        {{ users.phoneno }}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!--
+    <div *ngIf="selectedItem" padding>
+      You navigated here from <b>{{selectedItem.title }}</b>
+    </div>
+  -->
+</ion-content>
