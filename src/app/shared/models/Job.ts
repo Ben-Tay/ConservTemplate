@@ -1,7 +1,8 @@
 import { Time } from "@angular/common";
+import { ErrandRunner } from "./ErrandRunner";
 
 export class Job {
-    appliedErrandRunner: [];
+    applicant: ErrandRunner[] = []
 
     constructor(
         public errandname: string,

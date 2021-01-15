@@ -21,6 +21,7 @@ export class ClientjobsPage implements OnInit {
   selectByMonth: boolean = false;
   selectByDate: boolean = false;
   nodata: boolean = false;
+  nodatamonth: boolean = false;
   @ViewChild('monthbutton', { static: false }) monthbtn: IonButton;
   @ViewChild('datebutton', { static: false }) datebtn: IonButton;
 
@@ -36,11 +37,18 @@ export class ClientjobsPage implements OnInit {
         this.jobservice.getAllJobsByClient(this.client)
           .subscribe(data => {
             this.job = data;
+            if (!data.length) {
+              this.nodata = true;
+              this.monthbtn.disabled = true;
+              this.datebtn.disabled = true;
+            } else {
+              this.nodata = false;
+            }
           })
       }
     })
     this.orderbyfilter = ["Closest", "Furthest"];
-    this.monthfilter = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    this.monthfilter = ["All", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     this.filterform = new FormGroup({
       month: new FormControl(''),
       orderbydate: new FormControl('')
@@ -48,6 +56,8 @@ export class ClientjobsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.userservice.showLoading();
+
   }
 
   clickmonth() {
@@ -77,22 +87,27 @@ export class ClientjobsPage implements OnInit {
   onChangeMonth(value) {
     for (let i of this.monthfilter) {
       if (value === i) {
-        this.jobservice.getAllJobsByClientByMonth(this.client, i)
-          .subscribe(data => {
-            this.job = data;
-            //handle for when there is no request data for that month
-            if (!data.length) {
-              this.nodata = true;
-            } else {
-              this.nodata = false;
-            }
-          })
-
+        if (value === "All") {
+          this.defaultData()
+        } else {
+          this.jobservice.getAllJobsByClientByMonth(this.client, i)
+            .subscribe(data => {
+              this.job = data;
+              //handle for when there is no request data for that month
+              if (!data.length) {
+                this.nodatamonth = true;
+              } else {
+                this.nodatamonth = false;
+              }
+            })
+        }
       }
     }
   }
   onChangeDate(_value) {
     // if nothing selected, show all
+    this.nodata = false;
+    this.nodatamonth = false;
     if (_value == "Closest") {
       this.jobservice.getAllJobsByClientByClosest(this.client)
         .subscribe(data => {

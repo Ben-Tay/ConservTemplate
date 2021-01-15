@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ErrandRunner } from '../shared/models/ErrandRunner';
 import { Job } from '../shared/models/Job';
 import { JobService } from '../shared/services/job.service';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-clientjobsnotification',
@@ -11,23 +13,22 @@ import { JobService } from '../shared/services/job.service';
 export class ClientjobsnotificationPage implements OnInit {
   jobid: string;
   job: Job;
-  alljobs: Job;
+  jobapplicants: ErrandRunner[]
 
-  constructor(private route: ActivatedRoute, private jobservice: JobService) { 
+  constructor(private route: ActivatedRoute, private jobservice: JobService, private userservice: UserService) { 
     this.jobid = this.route.snapshot.params.id;
 
     this.jobservice.getSpecificJobsById(this.jobid)
     .then(data => {
       this.job = data;
+      this.jobapplicants = data.applicant;
     })
 
-    this.jobservice.getAllErrands()
-    .subscribe(data => {
-      this.alljobs = data;
-    })
   }
 
   ngOnInit() {
+    this.userservice.showLoading();
   }
+  
 
 }
