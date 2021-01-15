@@ -53,4 +53,8 @@ export class ErrandDetailsPage implements OnInit {
       }
     })
   }
+
+  redirectprofile(){
+    this.router.navigate(['/userprofile', this.job.client])
+  }
 }

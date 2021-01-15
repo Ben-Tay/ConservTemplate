@@ -29,6 +29,7 @@ ion-card-title{
     border: 2px solid black;
     margin: 15px;
     background-color: white;
+    --ion-background-color: white;
 }
 
 .applicant-card{
@@ -51,16 +52,16 @@ ion-card-title{
 }
 //background styling 
 ion-content.homepage{
-    --ion-background-color: linear-gradient(#0275d8, #fafafa);
+    --ion-background-color: linear-gradient(#60b5ff, #ffffff);
 }
 
-ion-content.emptyx{
-    --ion-background-color: linear-gradient(#ecb53e, #9198e5);
+ion-content.ER{
+    --ion-background-color: linear-gradient(#ffe2a3, #60b5ff);
 }
 
 
-ion-content.empty{
-    --ion-background-color: linear-gradient(#e66465, #9198e5);
+ion-content.C{
+    --ion-background-color: linear-gradient(#daffb7, #60b5ff);
 }
 @import "~@ionic/angular/css/core.css";
 
