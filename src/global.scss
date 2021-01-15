@@ -38,7 +38,16 @@ ion-card-title{
 
 }
 .applicant-card ion-card-title {
+    color:darkblue;
+
+}
+.applicant-child-card {
+    background-color: rgb(255, 255, 255);
     color: black;
+    border: 1px solid blue;
+    padding: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 //background styling 
 ion-content.homepage{
