@@ -31,6 +31,7 @@ export class ErrandDetailsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.userService.showLoading();
   }
 
   applyErrand(){

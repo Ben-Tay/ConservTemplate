@@ -44,6 +44,7 @@ export class AllErrandRequestsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.userService.showLoading();
   }
 
   filterItems() {
