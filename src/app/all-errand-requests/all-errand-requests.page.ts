@@ -25,7 +25,7 @@ export class AllErrandRequestsPage implements OnInit {
   categories: string[];
   months;
 
-  constructor(private jobService: JobService, private router: Router) {
+  constructor(private jobService: JobService, private userService: UserService) {
     this.categories = ['All', 'Grocery', 'ElderCare', 'Babysit', 'Others']
 
     this.months = ['All', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -34,12 +34,13 @@ export class AllErrandRequestsPage implements OnInit {
       category: new FormControl('All'),
       month: new FormControl('All')
     })
-
-    this.jobService.getAllErrands()
+    this.userService.observeAuthState(user=>{
+      this.jobService.getAllErrandsExcept(user.email)
       .subscribe(data => {
         this.jobs = data;
         this.allJobs = data;
       })
+    })
   }
 
   ngOnInit() {
