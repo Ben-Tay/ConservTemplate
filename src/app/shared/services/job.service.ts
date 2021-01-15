@@ -11,7 +11,7 @@ import { ToastController } from '@ionic/angular';
 })
 export class JobService {
 
-  constructor(private toastController: ToastController) { }
+  constructor() { }
 
   createnewjobrequest(errandname: string, category: string,
     client: string, date: Date, description: string, time: Time) {
