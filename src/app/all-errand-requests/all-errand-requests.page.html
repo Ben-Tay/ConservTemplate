@@ -4,13 +4,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-searchbar #searchBar (ionChange)="search($event)"></ion-searchbar>
+<ion-content class="emptyx">
+  <ion-searchbar class="filters" style="border: 0in;" #searchBar (ionChange)="search($event)"></ion-searchbar>
   <ion-grid>
     <form [formGroup]="FilterForms">
       <ion-row>
         <ion-col>
-          <ion-item style="border: 2px solid black; border-radius: 5px;">
+          <ion-item class="filters">
             <ion-label>Category</ion-label>
             <ion-select (ionChange)="filterItems()" formControlName="category">
               <ion-select-option *ngFor="let mg of categories" [value]="mg">
@@ -20,7 +20,7 @@
           </ion-item>
         </ion-col>
         <ion-col>
-          <ion-item style="border: 2px solid black; border-radius: 5px;">
+          <ion-item class="filters">
             <ion-label>Months</ion-label>
             <ion-select (ionChange)="filterItems()" formControlName="month">
               <ion-select-option *ngFor="let mg of months" [value]="mg">
