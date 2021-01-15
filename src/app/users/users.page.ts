@@ -12,11 +12,9 @@ export class UsersPage implements OnInit {
   constructor(private userService: UserService) { 
     let tempParam = 'yqg@gmail.com';
     this.users = {};
-    this.userService.getUserByEmail(tempParam).then(doc => {
+    this.userService.getUserInfoNoImage(tempParam).subscribe(doc => {
       this.users = doc;
-    }).catch(function(error) {
-        console.log("Error getting document:", error);
-    });
+    })
   }
 
   ngOnInit() {
