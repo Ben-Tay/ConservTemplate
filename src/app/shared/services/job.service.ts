@@ -156,4 +156,45 @@ export class JobService {
       });
     });
   }
+
+  getAllErrandsExcept(id: string): Observable<any> {
+    return new Observable(observer => {
+      // Read collection '/JobsAvailable'
+      firebase.firestore().collection('JobsAvailable').where('client', '!=', id).onSnapshot(collection => {
+        let array = [];
+        collection.forEach(doc => {
+
+          // Add jobs into array if there's no error
+          try {
+            let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id);
+            array.push(loan);
+
+          } catch (error) { }
+
+        });
+        observer.next(array);
+      });
+    });
+  }
+
+  applyjobs(id: string, email: string, dateapplied: Date){
+    return firebase.firestore().collection('JobsAvailable').doc(id).collection('Applicants').get().then(collection=>{
+      let y = false
+
+      collection.forEach(doc=>{
+        if(doc.id == email){
+          y = true
+        }
+      })
+
+      if(y == false){
+        firebase.firestore().collection('JobsAvailable').doc(id)
+        .collection('Applicants').doc(email).set({
+          date: dateapplied
+        })
+      }
+      return y
+    })
+  }
+
 }

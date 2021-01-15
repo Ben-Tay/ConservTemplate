@@ -24,7 +24,6 @@ const routes: Routes = [
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'services', loadChildren: './services/services.module#ServicesPageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
   { path: 'upload-photo/:email', loadChildren: './upload-photo/upload-photo.module#UploadPhotoPageModule' },
   { path: 'updateprofile', loadChildren: './updateprofile/updateprofile.module#UpdateprofilePageModule' },
   { path: 'clientjobs', loadChildren: './clientjobs/clientjobs.module#ClientjobsPageModule' },

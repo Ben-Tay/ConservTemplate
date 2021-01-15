@@ -16,9 +16,7 @@
       <ion-col class="large">
         {{ job?.errandname }}
       </ion-col>
-    </ion-row>
 
-    <ion-row>
       <ion-col class="large" style="margin-left: 1pc;" size="2">
         Errand Category:
       </ion-col>
@@ -26,40 +24,20 @@
         {{ job?.category }}
       </ion-col>
     </ion-row>
-
-    <ion-row>
-      <ion-col class="large" style="margin-left: 1pc;" size="2">
-        Errand Date:
-      </ion-col>
-      <ion-col class="large">
-        {{ job?.date | date:'MMM d, yyyy' }}
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col class="large" style="margin-left: 1pc;" size="2">
-        Errand Meeting Time:
-      </ion-col>
-      <ion-col class="large">
-        {{ job?.time }}
-      </ion-col>
-    </ion-row>
-
+    
     <ion-row>
       <ion-col class="large" style="margin-left: 1pc;" size="2">
         Client:
       </ion-col>
       <ion-col class="large">
-
+        {{ user }}
       </ion-col>
-    </ion-row>
 
-    <ion-row>
       <ion-col class="large" style="margin-left: 1pc;" size="2">
-        Client Email:
+        Errand Meeting Time:
       </ion-col>
       <ion-col class="large">
-        {{ job?.client }}
+        {{ job?.date | date:'d MMM yyyy' }}, {{ job?.time }}
       </ion-col>
     </ion-row>
 
@@ -73,6 +51,6 @@
       <p style="margin-left: 1pc;">{{ job?.description }}</p>
     </ion-row><br/>
 
-    <ion-button expand="block" size="large" style="margin:1pc;">Apply</ion-button>
+    <ion-button expand="block" size="large" style="margin:1pc;" (click)="applyErrand()">Apply</ion-button>
   </ion-grid>
 </ion-content>
