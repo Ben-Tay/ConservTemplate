@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { User } from '../shared/models/User';
@@ -28,8 +28,7 @@ export class UpdatephotoPage implements OnInit {
     private userService: UserService,
     private sanitizer: DomSanitizer,
     private toastCtrl: ToastController,
-    private loadingCtrl: LoadingController,
-    private route: ActivatedRoute) {
+    private loadingCtrl: LoadingController) {
 
     this.addPhotoForm = new FormGroup({
     })
@@ -55,7 +54,7 @@ export class UpdatephotoPage implements OnInit {
 
 
   ngOnInit() {
-    this.showLoading();
+    this.userService.showLoading();
     //to display user profile pic on page
     this.userService.observeAuthState(user => {
       //	User	is	logged	in
@@ -107,17 +106,6 @@ export class UpdatephotoPage implements OnInit {
   }
 
   toProfile() {
-    this.router.navigate(['profile'])
+    this.router.navigate(['users'])
   }
-
-  async showLoading() {
-    const loading = await this.loadingCtrl.create({
-      message: 'Loading...',
-      duration: 2000,
-      showBackdrop: true,
-      spinner: 'lines'
-    });
-    loading.present();
-  }
-
 }

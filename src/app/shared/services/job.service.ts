@@ -4,6 +4,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { Time } from '@angular/common';
+import { ErrandRunner } from '../models/ErrandRunner';
 
 @Injectable({
   providedIn: 'root'
@@ -128,13 +129,24 @@ export class JobService {
 
 
   getSpecificJobsById(id: string) {
+    //read document '/JobsAvailable/<id>'
     return firebase.firestore().collection('JobsAvailable').doc(id).get().then(doc => {
       let jobdata = doc.data()
       const date = jobdata.date.toDate()
       let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client,
         date, jobdata.description, jobdata.time, doc.id);
 
-      return job;
+      //Read subcollection '/JobsAvailable/<id>/Applicants'
+      return firebase.firestore().collection('JobsAvailable').doc(id).collection('Applicants').get().then(collection => {
+        job.applicant = [];
+        collection.forEach(doc => {
+          let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id)
+          job.applicant.push(applicant)
+        })
+
+        return job;
+      })
+
     })
   }
   getAllErrands(): Observable<any> {
@@ -177,21 +189,21 @@ export class JobService {
     });
   }
 
-  applyjobs(id: string, email: string, dateapplied: Date){
-    return firebase.firestore().collection('JobsAvailable').doc(id).collection('Applicants').get().then(collection=>{
+  applyjobs(id: string, email: string, dateapplied: Date) {
+    return firebase.firestore().collection('JobsAvailable').doc(id).collection('Applicants').get().then(collection => {
       let y = false
 
-      collection.forEach(doc=>{
-        if(doc.id == email){
+      collection.forEach(doc => {
+        if (doc.id == email) {
           y = true
         }
       })
 
-      if(y == false){
+      if (y == false) {
         firebase.firestore().collection('JobsAvailable').doc(id)
-        .collection('Applicants').doc(email).set({
-          date: dateapplied
-        })
+          .collection('Applicants').doc(email).set({
+            date: dateapplied
+          })
       }
       return y
     })
