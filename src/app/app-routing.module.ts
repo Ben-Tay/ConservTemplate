@@ -32,7 +32,9 @@ const routes: Routes = [
   { path: 'updatephoto', loadChildren: './updatephoto/updatephoto.module#UpdatephotoPageModule' },
   { path: 'clientjobsnotification/:id', loadChildren: './clientjobsnotification/clientjobsnotification.module#ClientjobsnotificationPageModule' },
   { path: 'homepage', loadChildren: './homepage/homepage.module#HomepagePageModule' },
-  { path: 'users', loadChildren: './users/users.module#UsersPageModule' }
+  { path: 'users', loadChildren: './users/users.module#UsersPageModule' },
+  { path: 'userprofile/:id', loadChildren: './userprofile/userprofile.module#UserprofilePageModule' }
+
 ];
 
 @NgModule({
