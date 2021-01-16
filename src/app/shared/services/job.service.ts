@@ -253,4 +253,72 @@ export class JobService {
         }
       })
   }
+
+  getAllErrandsApplied(id: string): Observable<any> {
+    return new Observable(observer => {
+      // Read collection '/JobsAvailable'
+      const ref = firebase.firestore().collection('JobsAvailable')
+      ref.onSnapshot(collection => {
+        let array = [];
+        let applied = false
+        collection.forEach(doc => {
+          // Add jobs into array if there's no error
+          try {
+            const docRef = ref.doc(doc.id)
+            docRef.collection('Applicants').get().then(sdoc=>{
+              sdoc.forEach(ssdoc=>{
+                if(ssdoc.id ===id){
+                  applied = true
+                }
+                else{
+                  applied = false
+                }
+
+                if(applied === true){
+                  let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id);
+                  array.push(loan);
+                }
+              })
+            })
+          } catch (error) { }
+
+        });
+        observer.next(array);
+      });
+    });
+  }
+
+  getAllErrandsAccepted(id: string): Observable<any> {
+    return new Observable(observer => {
+      // Read collection '/JobsAvailable'
+      const ref = firebase.firestore().collection('JobsAccepted')
+      ref.onSnapshot(collection => {
+        let array = [];
+        let applied = false
+        collection.forEach(doc => {
+          // Add jobs into array if there's no error
+          try {
+            const docRef = ref.doc(doc.id)
+            docRef.collection('Applicant').get().then(sdoc=>{
+              sdoc.forEach(ssdoc=>{
+                if(ssdoc.id ===id){
+                  applied = true
+                }
+                else{
+                  applied = false
+                }
+
+                if(applied === true){
+                  let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id);
+                  array.push(loan);
+                }
+              })
+            })
+          } catch (error) { }
+
+        });
+        observer.next(array);
+      });
+    });
+  }
 }

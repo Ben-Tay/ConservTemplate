@@ -33,7 +33,9 @@ const routes: Routes = [
   { path: 'clientjobsnotification/:id', loadChildren: './clientjobsnotification/clientjobsnotification.module#ClientjobsnotificationPageModule' },
   { path: 'homepage', loadChildren: './homepage/homepage.module#HomepagePageModule' },
   { path: 'users', loadChildren: './users/users.module#UsersPageModule' },
-  { path: 'userprofile/:id', loadChildren: './userprofile/userprofile.module#UserprofilePageModule' },  { path: 'jobs-accepted', loadChildren: './jobs-accepted/jobs-accepted.module#JobsAcceptedPageModule' }
+  { path: 'userprofile/:id', loadChildren: './userprofile/userprofile.module#UserprofilePageModule' },
+  { path: 'jobs-accepted', loadChildren: './jobs-accepted/jobs-accepted.module#JobsAcceptedPageModule' },
+  { path: 'erjobs', loadChildren: './erjobs/erjobs.module#ERJobsPageModule' }
 
 
 ];

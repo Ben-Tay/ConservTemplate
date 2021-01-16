@@ -63,6 +63,11 @@ ion-content.ER{
 ion-content.C{
     --ion-background-color: linear-gradient(#daffb7, #60b5ff);
 }
+
+.transparent-stylebackground{
+    background-color: transparent;
+    --ion-background-color: transparent;
+}
 @import "~@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
