@@ -64,7 +64,7 @@
               <ion-card-header>
                   <ion-card-title>Applicant Details:
                     <p>
-                      <ion-button color="secondary" class="profilebtn">Profile</ion-button>      
+                      <ion-button color="secondary" class="profilebtn" (click)="toERProfile(applicant.id)">Profile</ion-button>      
                     </p>
                   </ion-card-title>
               </ion-card-header>
@@ -82,7 +82,7 @@
                   </ion-row>
                 </ion-card>
                 <div class="ion-text-end">
-                  <ion-button color="success" class="acceptbtn">Accept</ion-button>
+                  <ion-button color="success" class="acceptbtn" (click)="AcceptApplicant(applicant)">Accept</ion-button>
                   <ion-button color="danger" class="rejectbtn">Reject</ion-button>
                 </div>   
               </ion-card-content>
