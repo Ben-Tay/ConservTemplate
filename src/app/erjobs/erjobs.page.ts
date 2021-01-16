@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Job } from '../shared/models/Job';
+import { JobService } from '../shared/services/job.service';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-erjobs',
@@ -6,10 +10,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./erjobs.page.scss'],
 })
 export class ERJobsPage implements OnInit {
+  jobs: Job[];
+  jobsApplied: Job[];
 
-  constructor() { }
+  constructor(private jobService: JobService, private userService: UserService, private router: Router) {
+    this.userService.observeAuthState(user=>{
+      if(user){
+        this.jobService.getAllErrandsAccepted(user.email)
+        .subscribe(data=>{
+          this.jobs = data
+        })
+        this.jobService.getAllErrandsApplied(user.email)
+        .subscribe(data=>{
+          this.jobsApplied = data
+        })
+      }
+    })
+  }
 
   ngOnInit() {
+    this.userService.showLoading();
   }
 
 }

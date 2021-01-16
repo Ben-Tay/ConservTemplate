@@ -1,9 +1,95 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>ERJobs</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Jobs</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ER">
+  <ion-segment style="--color-checked: #60b5ff;" [(ngModel)]="mySegment" (ionChange)="segmentChanged(mySegment)">
+    <ion-segment-button value="ERJobs">
+      <ion-label>Jobs</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="ERApplied">
+      <ion-label>Jobs Applied</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
+  <div [ngSwitch]="mySegment">
+
+    <ion-grid *ngSwitchCase="'ERJobs'">
+      <ion-card *ngFor="let item of jobs">
+        <ion-card-header>
+          <ion-row>
+            <ion-col size="0.5">
+              <ion-thumbnail text-wrap>
+                <ion-icon size="large" class="center-right" name="briefcase" color="medium"></ion-icon>
+              </ion-thumbnail>
+            </ion-col>
+            <ion-col>
+              <ion-row>
+                <ion-card-title>{{item?.errandname}}</ion-card-title>
+              </ion-row>
+              <ion-row>
+                <ion-card-subtitle>Errand Category: {{item.category}} </ion-card-subtitle>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="0.5">
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                <div text-wrap>
+                  <p>Client: {{ item.client }}</p>
+                  <p>Job Meeting Time: {{item.date | date:'d MMM yyyy'}}, {{item.time}}</p>
+                  <p>Job Description: {{ item.description }}</p>
+                </div>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-grid>
+
+    <ion-grid *ngSwitchCase="'ERApplied'">
+      <ion-card *ngFor="let item of jobsApplied">
+        <ion-card-header>
+          <ion-row>
+            <ion-col size="0.5">
+              <ion-thumbnail text-wrap>
+                <ion-icon size="large" class="center-right" name="briefcase" color="medium"></ion-icon>
+              </ion-thumbnail>
+            </ion-col>
+            <ion-col>
+              <ion-row>
+                <ion-card-title>{{item?.errandname}}</ion-card-title>
+              </ion-row>
+              <ion-row>
+                <ion-card-subtitle>Errand Category: {{item.category}} </ion-card-subtitle>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="0.5">
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                <div text-wrap>
+                  <p>Client: {{ item.client }}</p>
+                  <p>Job Meeting Time: {{item.date | date:'d MMM yyyy'}}, {{item.time}}</p>
+                  <p>Job Description: {{ item.description }}</p>
+                </div>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-grid>
+  </div>
 </ion-content>
