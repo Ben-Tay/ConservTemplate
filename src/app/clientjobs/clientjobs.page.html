@@ -2,39 +2,46 @@
   <ion-toolbar color="primary">
     <ion-row>
       <ion-title>My Jobs Requested</ion-title>
-  </ion-row>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="C">
-
   <ion-list style="background-color: transparent; --ion-background-color: transparent">
     <form [formGroup]="filterform">
-      <ion-label>Filter By:</ion-label>
-      <ion-item>
-        <ion-label>
-          <ion-button #monthbutton (click)="clickmonth()">Months</ion-button>
-          <ion-button #datebutton (click)="clickdate()">Date</ion-button>
-        </ion-label>
-      </ion-item>
-      <ion-item *ngIf="selectByMonth">
-        <ion-label>Months:</ion-label>
-        <ion-select formControlName="month" #Bymonth [(ngModel)]="Bymonth.value"
-          (ngModelChange)="onChangeMonth(Bymonth.value)">
-          <ion-select-option *ngFor="let filter of monthfilter" [value]="filter">
-            {{filter}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item *ngIf="selectByDate">
-        <ion-label>Upcoming Date:</ion-label>
-        <ion-select formControlName="orderbydate" #order [(ngModel)]="order.value"
-          (ngModelChange)="onChangeDate(order.value)">
-          <ion-select-option *ngFor="let filter of orderbyfilter" [value]="filter">
-            {{filter}}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
+      <ion-row>
+        <ion-card class="filtercard">
+          <ion-card-header>
+            <ion-card-title>Filter By:</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item>
+              <ion-label>
+                <ion-button #monthbutton (click)="clickmonth()">Months</ion-button>
+                <ion-button #datebutton (click)="clickdate()">Date</ion-button>
+              </ion-label>
+            </ion-item>
+            <ion-item *ngIf="selectByMonth">
+              <ion-label>Months:</ion-label>
+              <ion-select formControlName="month" #Bymonth [(ngModel)]="Bymonth.value"
+                (ngModelChange)="onChangeMonth(Bymonth.value)">
+                <ion-select-option *ngFor="let filter of monthfilter" [value]="filter">
+                  {{filter}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item *ngIf="selectByDate">
+              <ion-label>Upcoming Date:</ion-label>
+              <ion-select formControlName="orderbydate" #order [(ngModel)]="order.value"
+                (ngModelChange)="onChangeDate(order.value)">
+                <ion-select-option *ngFor="let filter of orderbyfilter" [value]="filter">
+                  {{filter}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
     </form>
 
     <ion-item lines="none" *ngFor="let jobs of job">
@@ -83,6 +90,6 @@
     <h5 class="center-content"> You have no job requests currently </h5>
   </div>
   <div *ngIf="nodatamonth" class="center">
-      <h5 class="center-content"> You have no job requests for this month</h5>
+    <h5 class="center-content"> You have no job requests for this month</h5>
   </div>
 </ion-content>

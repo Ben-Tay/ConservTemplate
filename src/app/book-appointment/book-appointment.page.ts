@@ -64,6 +64,7 @@ export class BookAppointmentPage implements OnInit {
       })
       toast.present()
     }
+    this.makerequestForm.reset()
   }
 
   getTimeValue() {

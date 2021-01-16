@@ -209,4 +209,48 @@ export class JobService {
     })
   }
 
+  acceptapplicantrequest(sjob: Job, applicant: ErrandRunner) {
+    let job = new Job(sjob.errandname, sjob.category, "Accepted", sjob.client, sjob.date, sjob.description, sjob.time)
+
+    return firebase.firestore().collection('JobsAccepted').add({
+      errandname: job.errandname,
+      category: job.category,
+      status: job.status,
+      client: job.client,
+      date: job.date,
+      description: job.description,
+      time: job.time
+    }).then(doc => {
+      job.id = doc.id;
+      firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant/').doc(applicant.id).set({
+        date: applicant.date
+      })
+      return job;
+    })
+  }
+
+  deletefromJobsAvailable(sJob: Job){
+      const jobref = firebase.firestore().collection("JobsAvailable").doc(sJob.id);
+      const jobapplicantref = firebase.firestore().collection("JobsAvailable/" + sJob.id + "/Applicants")
+
+      //delete applicant subcollection of particular job document
+      jobapplicantref.get().then(snapshot => {
+        if (snapshot.empty) {
+        } else {
+          snapshot.forEach(doc => {
+            const applicantrefid = jobapplicantref.doc(doc.id)
+            applicantrefid.get().then(doc => {
+              if (doc.exists)
+                applicantrefid.delete()
+            })
+          })
+        }
+      })
+      //delete particular jobdocument
+      jobref.get().then(doc => {
+        if(doc.exists){
+          jobref.delete();
+        }
+      })
+  }
 }
