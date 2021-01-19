@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 import { Job } from '../shared/models/Job';
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
@@ -13,7 +14,7 @@ export class ERJobsPage implements OnInit {
   jobs: Job[];
   jobsApplied: Job[];
 
-  constructor(private jobService: JobService, private userService: UserService, private router: Router) {
+  constructor(private jobService: JobService, private userService: UserService, private router: Router, private menuController: MenuController) {
     this.userService.observeAuthState(user=>{
       if(user){
         this.jobService.getAllErrandsAccepted(user.email)
@@ -30,6 +31,11 @@ export class ERJobsPage implements OnInit {
 
   ngOnInit() {
     this.userService.showLoading();
+    this.ionViewWillEnter()
+  }
+
+  ionViewWillEnter(){
+    this.menuController.enable(true, 'second')
   }
 
 }
