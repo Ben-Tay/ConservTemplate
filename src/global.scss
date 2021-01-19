@@ -64,6 +64,11 @@ ion-content.C{
     --ion-background-color: linear-gradient(#daffb7, #60b5ff);
 }
 
+ion-footer.segment-footer{
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
 .transparent-stylebackground{
     background-color: transparent;
     --ion-background-color: transparent;

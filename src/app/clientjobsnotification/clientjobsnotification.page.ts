@@ -55,7 +55,7 @@ export class ClientjobsnotificationPage implements OnInit {
     })
     toast.present()
 
-    this.router.navigate(['jobs-accepted'])
+    this.router.navigate(['clientjobs'])
     
   }
  
