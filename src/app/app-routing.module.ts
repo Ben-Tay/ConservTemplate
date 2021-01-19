@@ -34,9 +34,7 @@ const routes: Routes = [
   { path: 'homepage', loadChildren: './homepage/homepage.module#HomepagePageModule' },
   { path: 'users', loadChildren: './users/users.module#UsersPageModule' },
   { path: 'userprofile/:id', loadChildren: './userprofile/userprofile.module#UserprofilePageModule' },
-  { path: 'jobs-accepted', loadChildren: './jobs-accepted/jobs-accepted.module#JobsAcceptedPageModule' },
   { path: 'erjobs', loadChildren: './erjobs/erjobs.module#ERJobsPageModule' }
-
 
 ];
 
@@ -47,3 +45,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
+
