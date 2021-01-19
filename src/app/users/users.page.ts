@@ -9,12 +9,31 @@ import { UserService } from '../shared/services/user.service';
 })
 export class UsersPage implements OnInit {
   users: any;
-  constructor(private userService: UserService) { 
-    let tempParam = 'yqg@gmail.com';
+  userEmail: any;
+  constructor(private userService: UserService,) {
     this.users = {};
-    this.userService.getUserInfoNoImage(tempParam).subscribe(doc => {
-      this.users = doc;
-    })
+    this.userService.observeAuthState(user => {
+      //	User	is	logged	in
+      
+      if (user) {
+        this.userEmail = user.email;
+        console.log(this.userEmail)
+        console.log(user)
+        let tempParam = this.userEmail;
+
+        this.userService.getUserInfoNoImage(tempParam).subscribe(doc => {
+          this.users = doc;
+          console.log(doc);
+          this.users.birthday = (new Date(this.users.birthday)).toDateString()
+        })
+      }
+      //	User	has	logged	out
+      else {
+        this.userEmail = undefined;
+      }
+
+    });
+
   }
 
   ngOnInit() {

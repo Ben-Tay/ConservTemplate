@@ -1,49 +1,52 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>users</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title style="text-align: center;">Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        Name
-      </ion-col>
-      <ion-col>
-        Address
-      </ion-col>
-      <ion-col>
-        Email
-      </ion-col>
-      <ion-col>
-        Gender
-      </ion-col>
-      <ion-col>
-        Phone Number
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        {{ users.name }}
-      </ion-col>
-      <ion-col>
-        {{ users.address }}
-      </ion-col>
-      <ion-col>
-        {{ users.email }}
-      </ion-col>
-      <ion-col>
-        {{ users.gender }}
-      </ion-col>
-      <ion-col>
-        {{ users.phoneno }}
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <!--
-    <div *ngIf="selectedItem" padding>
-      You navigated here from <b>{{selectedItem.title }}</b>
+<ion-content style="">
+  <div class="list card" >
+    <div style="background-color: aquamarine; padding: 15px;"> 
+      <!-- <div class="profile-picture big-profile-picture" style="">
+        <img src="{{user.icon}}">
+      </div> -->
+      <div style="text-align: center;">
+        <h2 class="profile-name dark">{{users.name}}</h2>
+      </div>
     </div>
-  -->
+    <div style="display:flex; flex-wrap: wrap; align-content: flex-start; align-items: center; justify-content: center; height: calc(100vh - 234px - 80px);">
+      <div style="" class="childClass">
+        <div style="margin: 15px;">
+          <h4>Gender</h4>
+        </div>
+        <div>
+          {{users.gender}}
+        </div>
+      </div>
+      <div style="" class="childClass">
+        <div style="margin: 15px;">
+          <h4>Mobile Number</h4>
+        </div>
+        <div>
+          {{users.phoneno}}
+        </div>
+      </div>
+      <div style="" class="childClass">
+        <div style="margin: 15px;">
+          <h4>Email</h4>
+        </div>
+        <div>
+          {{users.email}}
+        </div>
+      </div>
+      <div style="" class="childClass">
+        <div style="margin: 15px;">
+          <h4>Birthday</h4>
+        </div>
+        <div>
+          {{ users.birthday }}
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>
