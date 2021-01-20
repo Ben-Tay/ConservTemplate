@@ -2,6 +2,7 @@ export class ErrandRunner{
 
     constructor(
       public date: Date,
-      public id?: string) { }
+      public id?: string,
+      public applicationstatus?: string) { }
   
   }

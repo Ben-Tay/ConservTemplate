@@ -316,10 +316,27 @@ export class JobService {
     }).then(doc => {
       job.id = doc.id;
       firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant/').doc(applicant.id).set({
-        date: applicant.date
+        date: applicant.date,
+        applicationstatus: "Accepted"
       })
       return job;
     })
+  }
+  
+  rejectapplicantbyspecificjob(jobid: string, applicant: ErrandRunner) {
+    const jobref = firebase.firestore().collection("JobsAvailable").doc(jobid);
+    const ref = firebase.firestore().collection('JobsAvailable/' + jobid + '/Applicants/').doc(applicant.id)
+    ref.set({
+      date: applicant.date,
+      applicationstatus: "Rejected"
+    }).then(() => {
+      ref.get().then(doc => {
+        if(doc.exists){
+          ref.delete()
+        }
+      })
+    })
+
   }
 
   deletefromJobsAvailable(sJob: Job) {
@@ -440,7 +457,6 @@ export class JobService {
               });
             } catch (error) { }
           }
-
           // Add loan into array if there's no error
         });
         observer.next(array);
