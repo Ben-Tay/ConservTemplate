@@ -78,12 +78,12 @@ export class UpdateprofilePage implements OnInit {
       const updatedata = new User(this.UpdateForm.value.name, this.UpdateForm.value.gender, this.UpdateForm.value.birthday, this.userEmail, this.userPassword, this.UpdateForm.controls['country_phone'].value.phone, this.UpdateForm.value.address)
 
       this.userService.updateProfile(updatedata)
-      this.router.navigate(['/profile'])
+      this.router.navigate(['/users'])
     }
   }
 
   cancel() {
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/users']);
   };
 
   validation_messages = {

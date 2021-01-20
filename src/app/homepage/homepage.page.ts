@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '../shared/services/user.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { UserService } from '../shared/services/user.service';
 export class HomepagePage implements OnInit {
   userEmail: string;
 
-  constructor(private	authService: UserService) { 
+  constructor(private router: Router, private	authService: UserService) { 
 
     this.authService.observeAuthState(user	=>	{
       //	User	is	logged	in
@@ -26,6 +27,10 @@ export class HomepagePage implements OnInit {
 
 logout()	{	
   this.authService.logout();	
+}
+
+profile(){
+  this.router.navigate(['users']);
 }
   ngOnInit() {
   }

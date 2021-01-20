@@ -49,14 +49,14 @@ export class AppComponent {
     this.navigate =
     [
       {
-        title : "Make Job Request",
-        url   : "/book-appointment",
-        icon  : "home"
-      },
-      {
-        title : "My Jobs",
+        title : "My Errands",
         url   : "clientjobs",
         icon  : "briefcase"
+      },
+      {
+        title : "Make Errand Request",
+        url   : "/book-appointment",
+        icon  : "filing"
       },
     ]
   }
@@ -66,14 +66,14 @@ export class AppComponent {
     this.navigateER =
     [
       {
-        title : "Find Jobs",
-        url   : "/all-errand-requests",
-        icon  : "home"
-      },
-      {
-        title : "My Jobs",
+        title : "My Errands",
         url   : "/erjobs",
         icon  : "briefcase"
+      },
+      {
+        title : "Find Errands",
+        url   : "/all-errand-requests",
+        icon  : "search"
       },
     ]
   }
