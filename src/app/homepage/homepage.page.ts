@@ -26,13 +26,14 @@ export class HomepagePage implements OnInit {
 }
 
 logout()	{	
-  this.authService.logout();	
+  this.authService.logout();
+  this.router.navigate(['/home'])	
 }
 
 profile(){
   this.router.navigate(['users']);
 }
-  ngOnInit() {
-  }
+ngOnInit() {
+}
 
 }
