@@ -12,25 +12,17 @@ import	'firebase/analytics';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  public appPages = [
-    {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-    {
-      title: 'My appointments',
-      url: '/my-appointments',
-      icon: 'list'
-    }
-  ];
-
+  navigate: any;
+  navigateER: any;
+  
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
   ) {
     this.initializeApp();
+    this.sideMenu();
+    this.sideMenuER();
   }
 
   initializeApp() {
@@ -50,5 +42,39 @@ export class AppComponent {
       firebase.initializeApp(firebaseConfig);
       firebase.analytics();
     });
+  }
+
+  sideMenu()
+  {
+    this.navigate =
+    [
+      {
+        title : "My Errands",
+        url   : "clientjobs",
+        icon  : "briefcase"
+      },
+      {
+        title : "Make Errand Request",
+        url   : "/book-appointment",
+        icon  : "filing"
+      },
+    ]
+  }
+
+  sideMenuER()
+  {
+    this.navigateER =
+    [
+      {
+        title : "My Errands",
+        url   : "/erjobs",
+        icon  : "briefcase"
+      },
+      {
+        title : "Find Errands",
+        url   : "/all-errand-requests",
+        icon  : "search"
+      },
+    ]
   }
 }

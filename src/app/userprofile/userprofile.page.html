@@ -1,23 +1,27 @@
 <ion-header>
-  <ion-toolbar class="transparent-stylebackground">
-      <ion-back-button slot="start"></ion-back-button>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ user?.name }}</ion-title>
   </ion-toolbar>
-</ion-header> 
+</ion-header>
 
 <ion-content class="homepage">
-  <ion-list class="transparent-stylebackground" lines="none">
+  <ion-card class="available-job-card" style="border-radius: 10px; margin: 1.5pc;">
+    <div>
       <ion-item class="profile-item">
         <ion-grid>
           <ion-row>
             <div style="margin: auto;">
-              <img [src]="userwithimg?.image" class="profile-picture big-profile-picture" (click)="updatephoto()">
+              <img [src]="userwithimg?.image" class="profile-picture big-profile-picture">
             </div>
           </ion-row>
           <ion-row>
-            <h2 class="profile-name dark">{{users?.name}}</h2>
+            <h2 class="profile-name dark">{{user?.name}}</h2>
           </ion-row>
           <ion-row>
-            <h3 class="profile-item"><div>{{users?.address}}</div></h3>
+            <h3 class="profile-item"><div>{{address}}</div></h3>
           </ion-row>
         </ion-grid>
       </ion-item>
@@ -31,7 +35,7 @@
               Gender:
             </ion-col>
             <ion-col size="6">
-              {{users?.gender}}
+              {{user?.gender}}
             </ion-col>
           </ion-row>
           <ion-row>
@@ -40,7 +44,7 @@
               Birthday:
             </ion-col>
             <ion-col size="6">
-              {{users?.birthday | date: 'MMM d, yyyy'}}
+              {{user?.birthday | date: 'MMM d, yyyy'}}
             </ion-col>
           </ion-row>
           <ion-row>
@@ -49,7 +53,7 @@
               Contact Number:
             </ion-col>
             <ion-col size="6">
-              {{users?.phoneno}}
+              {{user?.phoneno}}
             </ion-col>
           </ion-row>
           <ion-row>
@@ -58,13 +62,11 @@
               Email:
             </ion-col>
             <ion-col size="6">
-              {{users?.email}}
+              {{user?.email}}
             </ion-col>
           </ion-row>
         </ion-grid>
       </ion-item>
-    <div>
-      <ion-button style="margin: 1.2pc; font-size: 1.1pc;" size="large" expand="block" [routerLink]="['/updateprofile']">Edit Profile</ion-button>
     </div>
-  </ion-list>
+  </ion-card>
 </ion-content>
