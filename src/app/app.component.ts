@@ -13,6 +13,7 @@ import	'firebase/analytics';
 })
 export class AppComponent {
   navigate: any;
+  navigateER: any;
   
   constructor(
     private platform: Platform,
@@ -20,7 +21,8 @@ export class AppComponent {
     private statusBar: StatusBar
   ) {
     this.initializeApp();
-    this.sideMenu()
+    this.sideMenu();
+    this.sideMenuER();
   }
 
   initializeApp() {
@@ -54,6 +56,23 @@ export class AppComponent {
       {
         title : "My Jobs",
         url   : "clientjobs",
+        icon  : "briefcase"
+      },
+    ]
+  }
+
+  sideMenuER()
+  {
+    this.navigateER =
+    [
+      {
+        title : "Find Jobs",
+        url   : "/all-errand-requests",
+        icon  : "home"
+      },
+      {
+        title : "My Jobs",
+        url   : "/erjobs",
         icon  : "briefcase"
       },
     ]

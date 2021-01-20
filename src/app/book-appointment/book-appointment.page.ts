@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { NavController, ToastController } from '@ionic/angular';
+import { MenuController, NavController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
@@ -25,7 +25,7 @@ export class BookAppointmentPage implements OnInit {
   time;
 
 
-  constructor(private jobService: JobService, private toastCtrl: ToastController, private formbuilder: FormBuilder, private userService: UserService) {
+  constructor(private jobService: JobService, private toastCtrl: ToastController, private formbuilder: FormBuilder, private userService: UserService, private menuController: MenuController) {
     this.categories = ['Grocery', 'ElderCare', 'Babysit', 'Others']
     this.makerequestForm = this.formbuilder.group({
       errandname: new FormControl('', [Validators.required]),
@@ -44,6 +44,11 @@ export class BookAppointmentPage implements OnInit {
   }
 
   ngOnInit() {
+    this.ionViewWillEnter()
+  }
+
+  ionViewWillEnter(){
+    this.menuController.enable(true, 'first')
   }
 
   async onCreateRequest() {

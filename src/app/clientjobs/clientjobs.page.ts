@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonButton, IonSegment, ToastController } from '@ionic/angular';
+import { IonButton, IonSegment, MenuController} from '@ionic/angular';
 import { Job } from '../shared/models/Job';
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
@@ -29,7 +29,7 @@ export class ClientjobsPage implements OnInit {
   @ViewChild('defaultsegment', { static: false }) defaultsgmt: IonSegment;
 
 
-  constructor(private userservice: UserService, private jobservice: JobService, private router: Router) {
+  constructor(private userservice: UserService, private jobservice: JobService, private router: Router, private menuController: MenuController) {
     this.orderbyfilter = ["Closest", "Furthest"];
     this.monthfilter = ["All", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     this.filterform = new FormGroup({
@@ -57,6 +57,11 @@ export class ClientjobsPage implements OnInit {
         this.defaultsgmt.value = "ClientJobsCreated"
       }
     })
+    this.ionViewWillEnter()
+  }
+
+  ionViewWillEnter(){
+    this.menuController.enable(true, 'first')
   }
 
 
