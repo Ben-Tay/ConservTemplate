@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Jobs</ion-title>
+    <ion-title>My Errands</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button menuId="second"></ion-menu-button>
     </ion-buttons>
@@ -10,10 +10,10 @@
 <ion-content class="ER">
   <ion-segment style="--color-checked: #60b5ff;" [(ngModel)]="mySegment" (ionChange)="segmentChanged(mySegment)">
     <ion-segment-button value="ERJobs">
-      <ion-label>Jobs To Be Done</ion-label>
+      <ion-label>Errands To Be Done</ion-label>
     </ion-segment-button>
     <ion-segment-button value="ERApplied">
-      <ion-label>Jobs Applied</ion-label>
+      <ion-label>Errands Applied</ion-label>
     </ion-segment-button>
   </ion-segment>
 
@@ -36,6 +36,10 @@
                 <ion-card-subtitle>Errand Category: {{item.category}} </ion-card-subtitle>
               </ion-row>
             </ion-col>
+            <ion-col class="align-end">
+              <ion-button (click)="toClient(item.client)">Client Profile
+              </ion-button>
+            </ion-col>
           </ion-row>
         </ion-card-header>
 
@@ -47,8 +51,8 @@
               <ion-label>
                 <div text-wrap>
                   <p>Client: {{ item.client }}</p>
-                  <p>Job Meeting Time: {{item.date | date:'d MMM yyyy'}}, {{item.time}}</p>
-                  <p>Job Description: {{ item.description }}</p>
+                  <p>Errand Meeting Time: {{item.date | date:'d MMM yyyy'}}, {{item.time}}</p>
+                  <p>Errand Description: {{ item.description }}</p>
                 </div>
               </ion-label>
             </ion-col>
@@ -74,6 +78,10 @@
                 <ion-card-subtitle>Errand Category: {{item.category}} </ion-card-subtitle>
               </ion-row>
             </ion-col>
+            <ion-col class="align-end">
+              <ion-button (click)="toClient(item.client)">Client Profile
+              </ion-button>
+            </ion-col>
           </ion-row>
         </ion-card-header>
 
@@ -85,8 +93,8 @@
               <ion-label>
                 <div text-wrap>
                   <p>Client: {{ item.client }}</p>
-                  <p>Job Meeting Time: {{item.date | date:'d MMM yyyy'}}, {{item.time}}</p>
-                  <p>Job Description: {{ item.description }}</p>
+                  <p>Errand Meeting Time: {{item.date | date:'d MMM yyyy'}}, {{item.time}}</p>
+                  <p>Errand Description: {{ item.description }}</p>
                 </div>
               </ion-label>
             </ion-col>

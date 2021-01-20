@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>My Jobs</ion-title>
+    <ion-title>My Errands</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button menuId="first"></ion-menu-button>
       </ion-buttons>
@@ -78,9 +78,9 @@
                 <ion-col>
                   <ion-label>
                     <div text-wrap>
-                      <p>Job Date: {{jobs.date | date:'d MMM yyyy'}}</p>
-                      <p>Job Description: {{jobs.description}}</p>
-                      <p>Job Time: {{jobs.time}}</p>
+                      <p>Errand Date: {{jobs.date | date:'d MMM yyyy'}}</p>
+                      <p>Errand Description: {{jobs.description}}</p>
+                      <p>Errand Time: {{jobs.time}}</p>
                     </div>
                   </ion-label>
                 </ion-col>
@@ -116,9 +116,9 @@
                 <ion-col>
                   <ion-label>
                     <div text-wrap>
-                      <p>Job Date: {{c.date | date:'d MMM yyyy'}}</p>
-                      <p>Job Description: {{c.description}}</p>
-                      <p>Job Time: {{c.time}}</p>
+                      <p>Errand Date: {{c.date | date:'d MMM yyyy'}}</p>
+                      <p>Errand Description: {{c.description}}</p>
+                      <p>Errand Time: {{c.time}}</p>
                     </div>
                   </ion-label>
                 </ion-col>
@@ -130,20 +130,20 @@
     </ion-list>
   </div>
   <div *ngIf="nodata" class="center">
-    <h5 class="center-content"> You have no job requests currently </h5>
+    <h5 class="center-content"> You have no errand requests currently </h5>
   </div>
   <div *ngIf="nodatamonth" class="center">
-    <h5 class="center-content"> You have no job requests for this month</h5>
+    <h5 class="center-content"> You have no errand requests for this month</h5>
   </div>
 </ion-content>
 <ion-footer class="segment-footer">
   <ion-segment #defaultsegment style="--color-checked: #60b5ff;" [(ngModel)]="mySegment"
     (ionChange)="segmentChanged(mySegment)">
     <ion-segment-button value="ClientJobsCreated" (click)="defaultfilter()">
-      <ion-label>Jobs Created</ion-label>
+      <ion-label>Errands Created</ion-label>
     </ion-segment-button>
     <ion-segment-button value="JobsConfirmed" (click)="confirmfilter()">
-      <ion-label>Jobs Confirmed</ion-label>
+      <ion-label>Errands Confirmed</ion-label>
     </ion-segment-button>
   </ion-segment>
 </ion-footer>
