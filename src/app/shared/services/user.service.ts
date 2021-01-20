@@ -7,9 +7,6 @@ import 'firebase/firestore';
 import 'firebase/storage';
 import { Observable } from 'rxjs';
 
-
-
-
 @Injectable({
   providedIn: 'root'
 })
