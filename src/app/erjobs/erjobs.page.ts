@@ -38,4 +38,8 @@ export class ERJobsPage implements OnInit {
     this.menuController.enable(true, 'second')
   }
 
+  toClient(id: string) {
+    this.router.navigate(['userprofile', id])
+  }
+
 }
