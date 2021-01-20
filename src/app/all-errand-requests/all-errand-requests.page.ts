@@ -2,7 +2,7 @@ import { getLocaleMonthNames } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonSearchbar } from '@ionic/angular';
+import { IonSearchbar, MenuController } from '@ionic/angular';
 import { getMonth, isSameMonth } from 'date-fns';
 import { months } from 'moment';
 import { Job } from '../shared/models/Job';
@@ -25,7 +25,7 @@ export class AllErrandRequestsPage implements OnInit {
   categories: string[];
   months;
 
-  constructor(private jobService: JobService, private router: Router) {
+  constructor(private jobService: JobService, private userService: UserService, private menuController: MenuController) {
     this.categories = ['All', 'Grocery', 'ElderCare', 'Babysit', 'Others']
 
     this.months = ['All', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -34,15 +34,22 @@ export class AllErrandRequestsPage implements OnInit {
       category: new FormControl('All'),
       month: new FormControl('All')
     })
-
-    this.jobService.getAllErrands()
+    this.userService.observeAuthState(user=>{
+      this.jobService.getAllErrandsExcept(user.email)
       .subscribe(data => {
         this.jobs = data;
         this.allJobs = data;
       })
+    })
   }
 
   ngOnInit() {
+    this.userService.showLoading();
+    this.ionViewWillEnter()
+  }
+
+  ionViewWillEnter(){
+    this.menuController.enable(true, 'second')
   }
 
   filterItems() {

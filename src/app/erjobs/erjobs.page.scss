@@ -1,29 +1,23 @@
-ion-icon {
-    font-size:30px;
+ion-card-header{
+    border-bottom: 1px solid black;
+    padding-bottom: 0;
+    position: relative;
 }
 
 ion-card {
-    width: 100%;
+    margin: 1.2pc;
     border-radius: 15px;
     border: 1.5px solid black;
     color: black;
     background-color: white;
     --background-hover: #d7d8da;
 }
-ion-card-header{
-    border-bottom: 1px solid black;
-    padding-bottom: 0;
-    position: relative;
-}
+
 .center-right {
     position: absolute;
     top: 50%;
     right: 30%;
     transform: translateY(-50%) translateX(30%);
-}
-
-ion-list {
-    margin-top: 20px;
 }
 
 .center {
@@ -33,9 +27,6 @@ ion-list {
     justify-content: center;
   }
 
-.filters{
-    border: 2px solid black; 
-    border-radius: 5px; 
-    --ion-background-color: white;
-    --background-hover: #f4f5f8;
+.center-content{
+    color: red;
 }

@@ -1,13 +1,13 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+    <ion-buttons slot="end">
+      <ion-menu-button menuId="first"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Create Job Request</ion-title>
+    <ion-title>Create Errand Request</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="C">
 
   <form [formGroup]="makerequestForm" (ngSubmit)="onCreateRequest()">
     <ion-card class="available-job-card">

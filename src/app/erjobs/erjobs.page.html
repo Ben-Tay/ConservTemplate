@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>My Errands</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button menuId="second"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ER">
+  <ion-segment style="--color-checked: #60b5ff;" [(ngModel)]="mySegment" (ionChange)="segmentChanged(mySegment)">
+    <ion-segment-button value="ERJobs">
+      <ion-label>Errands To Be Done</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="ERApplied">
+      <ion-label>Errands Applied</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="mySegment">
+
+    <ion-grid *ngSwitchCase="'ERJobs'">
+      <div *ngIf="jobs?.length === 0" class="center">
+        <h5 class="center-content"> You have no errands </h5>
+      </div>
+      <ion-card *ngFor="let item of jobs">
+        <ion-card-header>
+          <ion-row>
+            <ion-col size="0.5">
+              <ion-thumbnail text-wrap>
+                <ion-icon size="large" class="center-right" name="briefcase" color="medium"></ion-icon>
+              </ion-thumbnail>
+            </ion-col>
+            <ion-col>
+              <ion-row>
+                <ion-card-title>{{item?.errandname}}</ion-card-title>
+              </ion-row>
+              <ion-row>
+                <ion-card-subtitle>Errand Category: {{item.category}} </ion-card-subtitle>
+              </ion-row>
+            </ion-col>
+            <ion-col class="align-end">
+              <ion-button (click)="toClient(item.client)">Client Profile
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="0.5">
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                <div text-wrap>
+                  <p>Client: {{ item.client }}</p>
+                  <p>Errand Meeting Time: {{item.date | date:'d MMM yyyy'}}, {{item.time}}</p>
+                  <p>Errand Description: {{ item.description }}</p>
+                </div>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-grid>
+
+    <ion-grid *ngSwitchCase="'ERApplied'">
+      <div *ngIf="jobsApplied?.length === 0" class="center">
+        <h5 class="center-content"> You have not applied for any errands </h5>
+      </div>
+      <ion-card *ngFor="let item of jobsApplied">
+        <ion-card-header>
+          <ion-row>
+            <ion-col size="0.5">
+              <ion-thumbnail text-wrap>
+                <ion-icon size="large" class="center-right" name="briefcase" color="medium"></ion-icon>
+              </ion-thumbnail>
+            </ion-col>
+            <ion-col>
+              <ion-row>
+                <ion-card-title>{{item?.errandname}}</ion-card-title>
+              </ion-row>
+              <ion-row>
+                <ion-card-subtitle>Errand Category: {{item.category}} </ion-card-subtitle>
+              </ion-row>
+            </ion-col>
+            <ion-col class="align-end">
+              <ion-button (click)="toClient(item.client)">Client Profile
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="0.5">
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                <div text-wrap>
+                  <p>Client: {{ item.client }}</p>
+                  <p>Errand Meeting Time: {{item.date | date:'d MMM yyyy'}}, {{item.time}}</p>
+                  <p>Errand Description: {{ item.description }}</p>
+                </div>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-grid>
+  </div>
+</ion-content>

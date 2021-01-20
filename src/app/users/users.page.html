@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar class="transparent-stylebackground">
+      <ion-back-button slot="start"></ion-back-button>
+  </ion-toolbar>
+</ion-header> 
+
+<ion-content class="homepage">
+  <ion-list class="transparent-stylebackground" lines="none">
+      <ion-item class="profile-item">
+        <ion-grid>
+          <ion-row>
+            <div class="container">
+              <div class="outer" style="border: 1px solid rgba(0, 0, 0, 0.25); padding: 3px;">
+              <img [src]="userwithimg?.image" class="outer">
+              <ion-button shape="round" color="medium" class="inner" [routerLink]="['/updatephoto']">
+                <ion-icon name="camera" size="large"></ion-icon>
+              </ion-button>
+              </div>
+            </div>
+          </ion-row>
+          <ion-row>
+            <h2 class="profile-name dark">{{users?.name}}</h2>
+          </ion-row>
+          <ion-row>
+            <h3 class="profile-item"><div>{{users?.address}}</div></h3>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+
+      <ion-item class="profile-item-info">
+        <ion-grid style="--ion-grid-padding: 1pc; --ion-grid-column-padding: 1pc; margin: auto;">
+          <ion-row>
+            <ion-col size="4"></ion-col>
+            <ion-col>
+              Gender:
+            </ion-col>
+            <ion-col size="6">
+              {{users?.gender}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="4"></ion-col>
+            <ion-col>
+              Birthday:
+            </ion-col>
+            <ion-col size="6">
+              {{users?.birthday | date: 'MMM d, yyyy'}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="4"></ion-col>
+            <ion-col>
+              Contact Number:
+            </ion-col>
+            <ion-col size="6">
+              {{users?.phoneno}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="4"></ion-col>
+            <ion-col>
+              Email:
+            </ion-col>
+            <ion-col size="6">
+              {{users?.email}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    <div>
+      <ion-button style="margin: 1.2pc; font-size: 1.1pc;" size="large" expand="block" [routerLink]="['/updateprofile']">Edit Profile</ion-button>
+    </div>
+  </ion-list>
+</ion-content>

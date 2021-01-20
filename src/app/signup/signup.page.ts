@@ -20,6 +20,7 @@ export class SignupPage implements OnInit {
   matching_passwords_group: FormGroup;
   country_phone_group: FormGroup;
   signuperror: string;
+  email: string;
 
   constructor(private formbuilder: FormBuilder, private userService: UserService, private router: Router) {
     this.matching_passwords_group = new FormGroup({
@@ -100,10 +101,11 @@ export class SignupPage implements OnInit {
     if(this.SignupForm.valid){
       var form = this.SignupForm
       var formvalue = this.SignupForm.value
-      this.data = new User(formvalue.name, formvalue.gender, formvalue.birthday, formvalue.email, form.controls['matching_passwords'].value.password, form.controls['country_phone'].value.phone, formvalue.address)
+      this.email = formvalue.email.toLowerCase();
+      this.data = new User(formvalue.name, formvalue.gender, formvalue.birthday, this.email, form.controls['matching_passwords'].value.password, form.controls['country_phone'].value.phone, formvalue.address)
       this.userService.signup(this.data).then(user=>{
         this.userService.signupContinue(this.data);
-        this.router.navigate(['/upload-photo', formvalue.email]);
+        this.router.navigate(['/upload-photo', this.email]);
       }).catch(error => {
           this.signuperror = error.message;
       })

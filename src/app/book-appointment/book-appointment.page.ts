@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { NavController, ToastController } from '@ionic/angular';
+import { MenuController, NavController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { JobService } from '../shared/services/job.service';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-book-appointment',
@@ -24,7 +25,7 @@ export class BookAppointmentPage implements OnInit {
   time;
 
 
-  constructor(private jobService: JobService, private toastCtrl: ToastController, private formbuilder: FormBuilder) {
+  constructor(private jobService: JobService, private toastCtrl: ToastController, private formbuilder: FormBuilder, private userService: UserService, private menuController: MenuController) {
     this.categories = ['Grocery', 'ElderCare', 'Babysit', 'Others']
     this.makerequestForm = this.formbuilder.group({
       errandname: new FormControl('', [Validators.required]),
@@ -33,16 +34,24 @@ export class BookAppointmentPage implements OnInit {
       date: new FormControl('', [Validators.required]),
       time: new FormControl('', [Validators.required])
     })
-
-
+    this.userService.observeAuthState(user => {
+      //	User	is	logged	in
+      if (user) {
+          this.client = user.email;
+      }
+    })
 
   }
 
   ngOnInit() {
+    this.ionViewWillEnter()
+  }
+
+  ionViewWillEnter(){
+    this.menuController.enable(true, 'first')
   }
 
   async onCreateRequest() {
-    this.client = "Amy"
     this.time = this.getTimeValue();
     const form = this.makerequestForm
     const formvalue = this.makerequestForm.value;
@@ -60,6 +69,7 @@ export class BookAppointmentPage implements OnInit {
       })
       toast.present()
     }
+    this.makerequestForm.reset()
   }
 
   getTimeValue() {

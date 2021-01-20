@@ -6,6 +6,7 @@ import 'firebase/auth'
 import 'firebase/firestore';
 import 'firebase/storage';
 import { Observable } from 'rxjs';
+import { LoadingController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ import { Observable } from 'rxjs';
 export class UserService {
   private userRef = firebase.firestore().collection("users")
 
-  constructor() { }
+  constructor(private loadingCtrl: LoadingController) { }
 
   observeAuthState(func) {
     return firebase.auth().onAuthStateChanged(func);
@@ -34,15 +35,6 @@ export class UserService {
       phoneno: p.phoneno
     });
   }
-
-  // getUserByEmail(id: string) {
-  //   return this.userRef.doc(id).get().then((doc) => {
-  //     let data = doc.data();
-  //     let user = new User(data.name, data.gender, data.birthday,
-  //       data.email, data.password, data.phoneno, data.address, data.image);
-  //     return user;
-  //   });
-  // }
 
   addImageToUser(p: User): Observable<any> {
     return new Observable((observer) => {
@@ -96,7 +88,7 @@ export class UserService {
       // Read collection '/users'
       firebase.firestore().collection('users').doc(id).get().then((doc) => {
         let docdata = doc.data()
-        let u = new User(docdata.name, docdata.gender, docdata.birthday, docdata.email, docdata.password, docdata.phoneno, docdata.address, docdata.image);
+        let u = new User(docdata.name, docdata.gender, docdata.birthday.toDate(), docdata.email, docdata.password, docdata.phoneno, docdata.address, docdata.image);
         if (docdata.image) {
           u.imagepath = docdata.image
           const imageRef = firebase.storage().ref().child(docdata.image);
@@ -114,4 +106,16 @@ export class UserService {
       });
     });
   }
+
+  async showLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading...',
+      duration: 1500,
+      showBackdrop: true,
+      spinner: 'lines'
+    });
+    loading.present();
+  }
+
+
 }

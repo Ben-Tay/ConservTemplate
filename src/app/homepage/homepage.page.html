@@ -1,15 +1,18 @@
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-      <ion-toolbar>
-          <ion-title size="large">Account</ion-title>
+<ion-header collapse="condense">
+      <ion-toolbar style="--ion-background-color: transparent;">
+          <ion-icon name="exit" size="large" slot="end" style="margin-right:1pc; color:#60b5ff;" (click)="logout()"></ion-icon>
       </ion-toolbar>
-  </ion-header>
+  </ion-header> 
 
+<ion-content [fullscreen]="true" class="homepage">
+  <ion-card class="available-job-card">
   <div>
     <ion-item>	
-      Hello {{userEmail}}
+      <p>Hello {{userEmail}}</p>
     </ion-item>	
-    <ion-button	expand="block" color="secondary" (click)=logout()>Logout</ion-button>	
-</div>
+    <ion-button	expand="block" color="secondary" (click)=profile()>Profile</ion-button>	
+    
+  </div>
+</ion-card>
 
 </ion-content>

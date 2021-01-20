@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { CameraResultType, CameraSource, Plugins } from '@capacitor/core';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { User } from '../shared/models/User';
@@ -28,34 +28,43 @@ export class UpdatephotoPage implements OnInit {
     private userService: UserService,
     private sanitizer: DomSanitizer,
     private toastCtrl: ToastController,
-    private loadingCtrl: LoadingController,
-    private route: ActivatedRoute) {
+    private loadingCtrl: LoadingController) {
 
     this.addPhotoForm = new FormGroup({
     })
     setInterval(() => {
-      // this.userEmail = this.route.snapshot.params.email;
-      
-      this.userService.getUserInfoNoImage("yiqinggoh@gmail.com")
-        .subscribe(async data => {
-          this.user = data;
-          this.final_user = new User(this.user.name, this.user.gender, this.user.birthday, this.user.email,
-            this.user.password, this.user.phoneno, this.user.address, this.photo)
+      this.userService.observeAuthState(user => {
+        //	User	is	logged	in
+        if (user) {
+          this.userEmail = user.email
+          this.userService.getUserInfoNoImage(user.email)
+            .subscribe(async data => {
+              this.user = data;
+              this.final_user = new User(this.user.name, this.user.gender, this.user.birthday, this.user.email,
+                this.user.password, this.user.phoneno, this.user.address, this.photo)
 
-        })
+            })
+        } else {
+          this.userEmail = undefined;
+        }
+      })
     })
 
   }
 
 
   ngOnInit() {
-    this.showLoading();
+    this.userService.showLoading();
     //to display user profile pic on page
-    this.userService.getUserImage("yiqinggoh@gmail.com")
-        .subscribe(async data => {
-          this.userwithimg = data;
-        })
-
+    this.userService.observeAuthState(user => {
+      //	User	is	logged	in
+      if (user) {
+        this.userService.getUserImage(user.email)
+          .subscribe(async data => {
+            this.userwithimg = data;
+          })
+      }
+    })
 
   }
 
@@ -97,17 +106,6 @@ export class UpdatephotoPage implements OnInit {
   }
 
   toProfile() {
-    this.router.navigate(['profile'])
+    this.router.navigate(['users'])
   }
-
-  async showLoading() {
-    const loading = await this.loadingCtrl.create({
-      message: 'Loading...',
-      duration: 2000,
-      showBackdrop: true,
-      spinner: 'lines'
-    });
-    loading.present();
-  }
-
 }

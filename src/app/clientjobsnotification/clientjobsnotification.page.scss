@@ -1,13 +1,11 @@
-ion-label{
+ion-label, .acceptbtn, .rejectbtn, .profilebtn{
     font-weight: bold;
 }
-
-ion-content{
-    --ion-background-color: lightgreen;
-}
-
-
-.align-end {
-    text-align: right;
-}
-  
+.center {
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: red;
+    font-weight: bold;
+  }
