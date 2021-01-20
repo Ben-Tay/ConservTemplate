@@ -91,7 +91,7 @@ export class UserService {
       // Read collection '/users'
       firebase.firestore().collection('users').doc(id).get().then((doc) => {
         let docdata = doc.data()
-        let u = new User(docdata.name, docdata.gender, docdata.birthday, docdata.email, docdata.password, docdata.phoneno, docdata.address, docdata.image);
+        let u = new User(docdata.name, docdata.gender, docdata.birthday.toDate(), docdata.email, docdata.password, docdata.phoneno, docdata.address, docdata.image);
         if (docdata.image) {
           u.imagepath = docdata.image
           const imageRef = firebase.storage().ref().child(docdata.image);

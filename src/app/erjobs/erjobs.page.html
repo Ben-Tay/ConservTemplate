@@ -20,6 +20,9 @@
   <div [ngSwitch]="mySegment">
 
     <ion-grid *ngSwitchCase="'ERJobs'">
+      <div *ngIf="jobs?.length === 0" class="center">
+        <h5 class="center-content"> You have no errands </h5>
+      </div>
       <ion-card *ngFor="let item of jobs">
         <ion-card-header>
           <ion-row>
@@ -62,6 +65,9 @@
     </ion-grid>
 
     <ion-grid *ngSwitchCase="'ERApplied'">
+      <div *ngIf="jobsApplied?.length === 0" class="center">
+        <h5 class="center-content"> You have not applied for any errands </h5>
+      </div>
       <ion-card *ngFor="let item of jobsApplied">
         <ion-card-header>
           <ion-row>

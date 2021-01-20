@@ -9,7 +9,7 @@ import { UserService } from '../shared/services/user.service';
   styleUrls: ['./users.page.scss'],
 })
 export class UsersPage implements OnInit {
-  users: any;
+  users: User;
   userEmail: any;
   userwithimg: User;
 
@@ -17,36 +17,45 @@ export class UsersPage implements OnInit {
   }
 
   ngOnInit() {
-    this.users = {};
+    this.userService.showLoading()
     this.userService.observeAuthState(user => {
       //	User	is	logged	in
-      
       if (user) {
         this.userEmail = user.email;
-        console.log(this.userEmail)
-        console.log(user)
-        let tempParam = this.userEmail;
 
-        this.userService.getUserInfoNoImage(tempParam).subscribe(doc => {
-          this.users = doc;
-          console.log(doc);
-          this.users.birthday = (new Date(this.users.birthday)).toDateString()
-          this.userService.getUserImage(tempParam)
+        this.userService.getUserImage(user.email)
           .subscribe(async data => {
-            this.userwithimg = data;
-          })
-        })
+            this.users = data;
+        });
       }
       //	User	has	logged	out
       else {
         this.userEmail = undefined;
       }
-
     });
   }
 
   updatephoto() {
     this.router.navigate(['/updatephoto']);
   };
+
+  ionViewWillEnter(){
+    this.userService.observeAuthState(user => {
+      //	User	is	logged	in
+      if (user) {
+        this.userEmail = user.email;
+
+        this.userService.getUserImage(user.email)
+          .subscribe(async data => {
+            this.users = data;
+        });
+
+      }
+      //	User	has	logged	out
+      else {
+        this.userEmail = undefined;
+      }
+    });
+  }
 
 }
