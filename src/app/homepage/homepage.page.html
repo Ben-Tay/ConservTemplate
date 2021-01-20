@@ -1,6 +1,6 @@
 <ion-header collapse="condense">
       <ion-toolbar style="--ion-background-color: transparent;">
-          <ion-icon name="exit" size="large" slot="end" style="margin-right:1pc; color:#60b5ff;"></ion-icon>
+          <ion-icon name="exit" size="large" slot="end" style="margin-right:1pc; color:#60b5ff;" (click)="logout()"></ion-icon>
       </ion-toolbar>
   </ion-header> 
 
@@ -11,7 +11,6 @@
       <p>Hello {{userEmail}}</p>
     </ion-item>	
     <ion-button	expand="block" color="secondary" (click)=profile()>Profile</ion-button>	
-    <ion-button	expand="block" color="secondary" (click)=logout()>Logout</ion-button>	
     
   </div>
 </ion-card>

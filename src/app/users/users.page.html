@@ -9,8 +9,13 @@
       <ion-item class="profile-item">
         <ion-grid>
           <ion-row>
-            <div style="margin: auto;">
-              <img [src]="userwithimg?.image" class="profile-picture big-profile-picture" (click)="updatephoto()">
+            <div class="container">
+              <div class="outer" style="border: 1px solid rgba(0, 0, 0, 0.25); padding: 3px;">
+              <img [src]="userwithimg?.image" class="outer">
+              <ion-button shape="round" color="medium" class="inner" [routerLink]="['/updatephoto']">
+                <ion-icon name="camera" size="large"></ion-icon>
+              </ion-button>
+              </div>
             </div>
           </ion-row>
           <ion-row>
