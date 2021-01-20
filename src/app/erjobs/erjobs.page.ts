@@ -13,7 +13,8 @@ import { UserService } from '../shared/services/user.service';
 export class ERJobsPage implements OnInit {
   jobs: Job[];
   jobsApplied: Job[];
-
+  mySegment: string;
+  
   constructor(private jobService: JobService, private userService: UserService, private router: Router, private menuController: MenuController) {
     this.userService.observeAuthState(user=>{
       if(user){
@@ -27,6 +28,7 @@ export class ERJobsPage implements OnInit {
         })
       }
     })
+    this.mySegment = 'ERJobs'
   }
 
   ngOnInit() {

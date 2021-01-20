@@ -274,7 +274,6 @@ export class JobService {
           try {
             let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id);
             array.push(loan);
-
           } catch (error) { }
 
         });
