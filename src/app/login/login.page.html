@@ -5,39 +5,40 @@
 </ion-header>
 
 
-<ion-content padding center text-center>
-  <ion-title>ConserV</ion-title>
+<ion-content padding center text-center class="homepage">
+  <ion-card style="--ion-background-color: white; background-color: white; border:2px solid black; margin: 10px;">
+    <ion-title style="margin: 16px;">ConserV</ion-title>
 
-  <form [formGroup]="loginForm">
-    <ion-list>
-      <ion-item lines="none"  style="overflow: visible;">
-        <ion-label class="google-label" position="floating">
-          E-Mail
-        </ion-label>
-        <ion-input class="google-input" type="email" formControlName="email"></ion-input>
-      </ion-item>
-  
-      <ion-item lines="none"  style="overflow: visible;">
-        <ion-label class="google-label" position="floating">
-          Password
-        </ion-label>
-        <ion-input class="google-input" type="password" formControlName="password"></ion-input>
-      </ion-item>
-    </ion-list>
+    <form [formGroup]="loginForm" style="margin: 10px;">
 
-  </form>
+      <ion-list>
+        <ion-item lines="none" style="overflow: visible;">
+          <ion-label class="google-label" position="floating">
+            E-Mail
+          </ion-label>
+          <ion-input class="google-input" type="email" formControlName="email"></ion-input>
+        </ion-item>
 
-  <div class="validation-errors">
-    <ng-container>
-      <div class="error-message" *ngIf="!loginError == ''">
-        <ion-icon name="information-circle-outline"></ion-icon> {{ loginError }}
-      </div>
-    </ng-container>
-  </div>
+        <ion-item lines="none" style="overflow: visible;">
+          <ion-label class="google-label" position="floating">
+            Password
+          </ion-label>
+          <ion-input class="google-input" type="password" formControlName="password"></ion-input>
+        </ion-item>
+      </ion-list>
 
-  <ion-button style="margin:1pc" expand="block" type="submit" (click)=login()>
-  Login
-  </ion-button>
+    </form>
 
+    <div class="validation-errors">
+      <ng-container>
+        <div class="error-message" *ngIf="!loginError == ''">
+          <ion-icon name="information-circle-outline"></ion-icon> {{ loginError }}
+        </div>
+      </ng-container>
+    </div>
 
+    <ion-button style="margin:1.4pc" expand="block" type="submit" (click)=login()>
+      Login
+    </ion-button>
+  </ion-card>
 </ion-content>

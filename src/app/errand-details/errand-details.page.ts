@@ -31,6 +31,7 @@ export class ErrandDetailsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.userService.showLoading();
   }
 
   applyErrand(){
@@ -52,5 +53,9 @@ export class ErrandDetailsPage implements OnInit {
         }
       }
     })
+  }
+
+  redirectprofile(){
+    this.router.navigate(['/userprofile', this.job.client])
   }
 }
