@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from '../shared/models/User';
 import { UserService } from '../shared/services/user.service';
 
@@ -10,7 +11,12 @@ import { UserService } from '../shared/services/user.service';
 export class UsersPage implements OnInit {
   users: any;
   userEmail: any;
-  constructor(private userService: UserService,) {
+  userwithimg: User;
+
+  constructor(private userService: UserService, private router: Router) {
+  }
+
+  ngOnInit() {
     this.users = {};
     this.userService.observeAuthState(user => {
       //	User	is	logged	in
@@ -25,6 +31,10 @@ export class UsersPage implements OnInit {
           this.users = doc;
           console.log(doc);
           this.users.birthday = (new Date(this.users.birthday)).toDateString()
+          this.userService.getUserImage(tempParam)
+          .subscribe(async data => {
+            this.userwithimg = data;
+          })
         })
       }
       //	User	has	logged	out
@@ -33,10 +43,10 @@ export class UsersPage implements OnInit {
       }
 
     });
-
   }
 
-  ngOnInit() {
-  }
+  updatephoto() {
+    this.router.navigate(['/updatephoto']);
+  };
 
 }
