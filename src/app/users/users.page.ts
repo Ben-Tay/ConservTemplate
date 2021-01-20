@@ -17,45 +17,38 @@ export class UsersPage implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.showLoading()
+  }
+
+  ionViewWillEnter() {
     this.userService.observeAuthState(user => {
       //	User	is	logged	in
       if (user) {
         this.userEmail = user.email;
+        this.userService.getUserInfoNoImage(user.email).subscribe(doc => {
+          this.users = doc;
+          console.log(doc)
+          this.userService.showLoading()
 
-        this.userService.getUserImage(user.email)
-          .subscribe(async data => {
-            this.users = data;
-        });
-      }
+          this.userService.getUserImage(user.email)
+            .subscribe(async data => {
+              this.userwithimg = data;
+            });
+          })
+
+        }
       //	User	has	logged	out
       else {
-        this.userEmail = undefined;
-      }
+            this.userEmail = undefined;
+          }
     });
   }
 
-  updatephoto() {
-    this.router.navigate(['/updatephoto']);
-  };
-
-  ionViewWillEnter(){
-    this.userService.observeAuthState(user => {
-      //	User	is	logged	in
-      if (user) {
-        this.userEmail = user.email;
-
-        this.userService.getUserImage(user.email)
-          .subscribe(async data => {
-            this.users = data;
-        });
-
-      }
-      //	User	has	logged	out
-      else {
-        this.userEmail = undefined;
-      }
-    });
+  ionViewDidEnter() {
+    this.userService.getUserImage(this.userEmail)
+      .subscribe(async data => {
+        this.users = data;
+      });
   }
+
 
 }
