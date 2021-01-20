@@ -45,6 +45,9 @@
             </ion-label>
           </ion-col>
         </ion-row>
+        <ion-row>
+          <ion-button expand="block" color="tertiary" (click)="DeleteErrand(job)">Delete Errand</ion-button>
+        </ion-row>
       </ion-grid>
     </ion-card-content>
   </ion-card>
@@ -83,7 +86,7 @@
                 </ion-card>
                 <div class="ion-text-end">
                   <ion-button color="success" class="acceptbtn" (click)="AcceptApplicant(applicant)">Accept</ion-button>
-                  <ion-button color="danger" class="rejectbtn">Reject</ion-button>
+                  <ion-button color="danger" class="rejectbtn" (click)="RejectApplicant(applicant)">Reject</ion-button>
                 </div>   
               </ion-card-content>
             </ion-card>
