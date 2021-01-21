@@ -27,7 +27,7 @@ export class JobERService {
                 return;
               }
               else{
-                let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id);
+                let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id, doc.data().price);
                 array.push(loan);
               }
             })
@@ -61,7 +61,7 @@ export class JobERService {
                 }
 
                 if (applied === true) {
-                  let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id);
+                  let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id, doc.data().price);
                   array.push(loan);
                 }
               })
@@ -95,7 +95,7 @@ export class JobERService {
                 }
 
                 if (applied === true) {
-                  let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id);
+                  let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id, doc.data().price);
                   array.push(loan);
                 }
               })
