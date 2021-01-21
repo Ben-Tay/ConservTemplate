@@ -7,6 +7,7 @@ import { getMonth, isSameMonth } from 'date-fns';
 import { months } from 'moment';
 import { Job } from '../shared/models/Job';
 import { User } from '../shared/models/User';
+import { JobERService } from '../shared/services/job-er.service';
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
 
@@ -25,7 +26,7 @@ export class AllErrandRequestsPage implements OnInit {
   categories: string[];
   months;
 
-  constructor(private jobService: JobService, private userService: UserService, private menuController: MenuController) {
+  constructor(private jobService: JobERService, private userService: UserService, private menuController: MenuController) {
     this.categories = ['All', 'Grocery', 'ElderCare', 'Babysit', 'Others']
 
     this.months = ['All', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']

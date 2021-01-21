@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { Job } from '../shared/models/Job';
+import { JobERService } from '../shared/services/job-er.service';
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
 
@@ -16,7 +17,7 @@ export class ERJobsPage implements OnInit {
   mySegment: string;
   useremail: string;
   
-  constructor(private jobService: JobService, private userService: UserService, private router: Router, private menuController: MenuController) {
+  constructor(private jobService: JobERService, private userService: UserService, private router: Router, private menuController: MenuController) {
     this.userService.observeAuthState(user=>{
       this.userService.showLoading();
       if(user){
