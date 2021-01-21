@@ -33,4 +33,8 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
+  cancel(){
+    this.router.navigate(['/home']);
+  };
+
 }
