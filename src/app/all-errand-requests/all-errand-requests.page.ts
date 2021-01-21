@@ -41,11 +41,11 @@ export class AllErrandRequestsPage implements OnInit {
         this.allJobs = data;
       })
     })
+    this.ionViewWillEnter()
   }
 
   ngOnInit() {
     this.userService.showLoading();
-    this.ionViewWillEnter()
   }
 
   ionViewWillEnter(){
