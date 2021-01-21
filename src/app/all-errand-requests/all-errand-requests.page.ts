@@ -41,15 +41,26 @@ export class AllErrandRequestsPage implements OnInit {
         this.allJobs = data;
       })
     })
+    this.ionViewWillEnter()
   }
 
   ngOnInit() {
     this.userService.showLoading();
-    this.ionViewWillEnter()
   }
 
   ionViewWillEnter(){
     this.menuController.enable(true, 'second')
+  }
+
+  ionViewDidEnter() {
+    this.userService.showLoading()
+    this.userService.observeAuthState(user=>{
+      this.jobService.getAllErrandsExcept(user.email)
+      .subscribe(data => {
+        this.jobs = data;
+        this.allJobs = data;
+      })
+    })
   }
 
   filterItems() {
