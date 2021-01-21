@@ -22,17 +22,14 @@ export class JobERService {
           // Add jobs into array if there's no error
           try {
             const docRef = ref.doc(doc.id)
-            docRef.collection('Applicants').get().then(sdoc => {
-              let applied = null
-              docRef.collection('Applicants').doc(id).get().then((docSnapshot)=>{
-                if(docSnapshot.exists){
-                  return;
-                }
-                else{
-                  let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id);
-                  array.push(loan);
-                }
-              })
+            docRef.collection('Applicants').doc(id).get().then(sdoc => {
+              if(sdoc.exists){
+                return;
+              }
+              else{
+                let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id);
+                array.push(loan);
+              }
             })
           } catch (error) { }
 

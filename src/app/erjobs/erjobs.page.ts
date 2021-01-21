@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { Job } from '../shared/models/Job';
 import { JobERService } from '../shared/services/job-er.service';
-import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
 
 @Component({

@@ -1,14 +1,9 @@
-import { getLocaleMonthNames } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { IonSearchbar, MenuController } from '@ionic/angular';
-import { getMonth, isSameMonth } from 'date-fns';
 import { months } from 'moment';
 import { Job } from '../shared/models/Job';
-import { User } from '../shared/models/User';
 import { JobERService } from '../shared/services/job-er.service';
-import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
 
 @Component({
