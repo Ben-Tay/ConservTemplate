@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
-import { MenuController, NavController, ToastController } from '@ionic/angular';
+import { MenuController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';

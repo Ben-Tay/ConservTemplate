@@ -5,7 +5,6 @@ import 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { Time } from '@angular/common';
 import { ErrandRunner } from '../models/ErrandRunner';
-import { isNullOrUndefined } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -243,44 +242,6 @@ export class JobService {
 
     })
   }
-  getAllErrands(): Observable<any> {
-    return new Observable(observer => {
-      // Read collection '/JobsAvailable'
-      firebase.firestore().collection('JobsAvailable').onSnapshot(collection => {
-        let array = [];
-        collection.forEach(doc => {
-
-          // Add jobs into array if there's no error
-          try {
-            let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id);
-            array.push(loan);
-
-          } catch (error) { }
-
-        });
-        observer.next(array);
-      });
-    });
-  }
-
-  getAllErrandsExcept(id: string): Observable<any> {
-    return new Observable(observer => {
-      // Read collection '/JobsAvailable'
-      firebase.firestore().collection('JobsAvailable').where('client', '!=', id).onSnapshot(collection => {
-        let array = [];
-        collection.forEach(doc => {
-
-          // Add jobs into array if there's no error
-          try {
-            let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id);
-            array.push(loan);
-          } catch (error) { }
-
-        });
-        observer.next(array);
-      });
-    });
-  }
 
   applyjobs(id: string, email: string, dateapplied: Date) {
     return firebase.firestore().collection('JobsAvailable').doc(id).collection('Applicants').get().then(collection => {
@@ -316,10 +277,27 @@ export class JobService {
     }).then(doc => {
       job.id = doc.id;
       firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant/').doc(applicant.id).set({
-        date: applicant.date
+        date: applicant.date,
+        applicationstatus: "Accepted"
       })
       return job;
     })
+  }
+  
+  rejectapplicantbyspecificjob(jobid: string, applicant: ErrandRunner) {
+    const jobref = firebase.firestore().collection("JobsAvailable").doc(jobid);
+    const ref = firebase.firestore().collection('JobsAvailable/' + jobid + '/Applicants/').doc(applicant.id)
+    ref.set({
+      date: applicant.date,
+      applicationstatus: "Rejected"
+    }).then(() => {
+      ref.get().then(doc => {
+        if(doc.exists){
+          ref.delete()
+        }
+      })
+    })
+
   }
 
   deletefromJobsAvailable(sJob: Job) {
@@ -347,74 +325,6 @@ export class JobService {
     })
   }
 
-  getAllErrandsApplied(id: string): Observable<any> {
-    return new Observable(observer => {
-      // Read collection '/JobsAvailable'
-      const ref = firebase.firestore().collection('JobsAvailable')
-      ref.onSnapshot(collection => {
-        let array = [];
-        let applied = false
-        collection.forEach(doc => {
-          // Add jobs into array if there's no error
-          try {
-            const docRef = ref.doc(doc.id)
-            docRef.collection('Applicants').get().then(sdoc => {
-              sdoc.forEach(ssdoc => {
-                if (ssdoc.id === id) {
-                  applied = true
-                }
-                else {
-                  applied = false
-                }
-
-                if (applied === true) {
-                  let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id);
-                  array.push(loan);
-                }
-              })
-            })
-          } catch (error) { }
-
-        });
-        observer.next(array);
-      });
-    });
-  }
-
-  getAllErrandsAccepted(id: string): Observable<any> {
-    return new Observable(observer => {
-      // Read collection '/JobsAccepted'
-      const ref = firebase.firestore().collection('JobsAccepted')
-      ref.onSnapshot(collection => {
-        let array = [];
-        let applied = false
-        collection.forEach(doc => {
-          // Add jobs into array if there's no error
-          try {
-            const docRef = ref.doc(doc.id)
-            docRef.collection('Applicant').get().then(sdoc => {
-              sdoc.forEach(ssdoc => {
-                if (ssdoc.id === id) {
-                  applied = true
-                }
-                else {
-                  applied = false
-                }
-
-                if (applied === true) {
-                  let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id);
-                  array.push(loan);
-                }
-              })
-            })
-          } catch (error) { }
-
-        });
-        observer.next(array);
-      });
-    });
-  }
-
   getConfirmedJobsByClient(client: string): Observable<any> {
     return new Observable(observer => {
       // Read collection '/JobsAccepted'
@@ -440,7 +350,6 @@ export class JobService {
               });
             } catch (error) { }
           }
-
           // Add loan into array if there's no error
         });
         observer.next(array);
