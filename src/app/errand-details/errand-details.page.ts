@@ -1,9 +1,7 @@
-import { Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Job } from '../shared/models/Job';
-import { User } from '../shared/models/User';
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
 
