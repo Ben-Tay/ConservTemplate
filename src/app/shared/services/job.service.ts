@@ -266,14 +266,26 @@ export class JobService {
   getAllErrandsExcept(id: string): Observable<any> {
     return new Observable(observer => {
       // Read collection '/JobsAvailable'
-      firebase.firestore().collection('JobsAvailable').where('client', '!=', id).onSnapshot(collection => {
+      const ref = firebase.firestore().collection('JobsAvailable')
+      ref.where('client', '!=', id).onSnapshot(collection => {
         let array = [];
         collection.forEach(doc => {
 
           // Add jobs into array if there's no error
           try {
-            let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id);
-            array.push(loan);
+            const docRef = ref.doc(doc.id)
+            docRef.collection('Applicants').get().then(sdoc => {
+              let applied = null
+              docRef.collection('Applicants').doc(id).get().then((docSnapshot)=>{
+                if(docSnapshot.exists){
+                  return;
+                }
+                else{
+                  let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time, doc.id);
+                  array.push(loan);
+                }
+              })
+            })
           } catch (error) { }
 
         });
@@ -370,17 +382,18 @@ export class JobService {
       const ref = firebase.firestore().collection('JobsAvailable')
       ref.onSnapshot(collection => {
         let array = [];
-        let applied = false
+        
         collection.forEach(doc => {
           // Add jobs into array if there's no error
           try {
             const docRef = ref.doc(doc.id)
             docRef.collection('Applicants').get().then(sdoc => {
+              let applied = null
               sdoc.forEach(ssdoc => {
                 if (ssdoc.id === id) {
                   applied = true
                 }
-                else {
+                else{
                   applied = false
                 }
 
