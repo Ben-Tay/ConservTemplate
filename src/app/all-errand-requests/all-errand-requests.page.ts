@@ -52,6 +52,17 @@ export class AllErrandRequestsPage implements OnInit {
     this.menuController.enable(true, 'second')
   }
 
+  ionViewDidEnter() {
+    this.userService.showLoading()
+    this.userService.observeAuthState(user=>{
+      this.jobService.getAllErrandsExcept(user.email)
+      .subscribe(data => {
+        this.jobs = data;
+        this.allJobs = data;
+      })
+    })
+  }
+
   filterItems() {
     this.searchBar.value=''
     var hey = this.allJobs
