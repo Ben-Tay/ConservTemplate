@@ -14,4 +14,13 @@ ion-item, ion-button {
     margin-left: 10px;
     margin-top: 10px;
 }
-  
+
+.disabled {
+    opacity: 1 !important;
+}
+
+.input-disabled {
+    opacity: 0.7 !important;
+    margin-left: 83%;
+    
+}
