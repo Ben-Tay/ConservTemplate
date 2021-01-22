@@ -30,38 +30,34 @@
       <ion-item class="profile-item-info">
         <ion-grid style="--ion-grid-padding: 1pc; --ion-grid-column-padding: 1pc; margin: auto;">
           <ion-row>
-            <ion-col size="4"></ion-col>
-            <ion-col>
+            <ion-col style="text-align: right;">
               Gender:
             </ion-col>
-            <ion-col size="6">
+            <ion-col>
               {{user?.gender}}
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col size="4"></ion-col>
-            <ion-col>
+            <ion-col style="text-align: right;">
               Birthday:
             </ion-col>
-            <ion-col size="6">
+            <ion-col>
               {{user?.birthday | date: 'MMM d, yyyy'}}
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col size="4"></ion-col>
-            <ion-col>
+            <ion-col style="text-align: right;">
               Contact Number:
             </ion-col>
-            <ion-col size="6">
+            <ion-col>
               {{user?.phoneno}}
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col size="4"></ion-col>
-            <ion-col>
+            <ion-col style="text-align: right;">
               Email:
             </ion-col>
-            <ion-col size="6">
+            <ion-col>
               {{user?.email}}
             </ion-col>
           </ion-row>

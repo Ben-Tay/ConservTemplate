@@ -58,7 +58,7 @@ profile() {
   }
 
 runnerpage() {
-  this.router.navigate(['all-errand-requests'])
+  this.router.navigate(['erjobs'])
   }
 
 clientpage() {
