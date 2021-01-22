@@ -8,9 +8,6 @@ import 'firebase/storage';
 import { Observable } from 'rxjs';
 import { LoadingController } from '@ionic/angular';
 
-
-
-
 @Injectable({
   providedIn: 'root'
 })

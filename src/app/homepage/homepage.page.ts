@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from '../shared/models/User';
 import { UserService } from '../shared/services/user.service';
 
 @Component({
@@ -8,32 +9,59 @@ import { UserService } from '../shared/services/user.service';
   styleUrls: ['./homepage.page.scss'],
 })
 export class HomepagePage implements OnInit {
-  userEmail: string;
+  users: User;
+  userwithimg: User;
+  userEmail: any;
 
-  constructor(private router: Router, private	authService: UserService) { 
+  constructor(private route: ActivatedRoute, private userService: UserService, private router: Router, private authService: UserService) {
+  }
 
-    this.authService.observeAuthState(user	=>	{
-      //	User	is	logged	in
-    if	(user)	{	
-          this.userEmail	=	user.email;	
-    }	
-      //	User	has	logged	out
-    else	{	
-        this.userEmail	=	undefined;		
-    }	
-            
-  });
-}
+  ngOnInit() {
+      this.userService.showLoading()
+  
+      this.userService.observeAuthState(user => {
+        //	User	is	logged	in
+        if (user) {
+          this.userEmail = user.email;
+          this.userService.getUserImage(user.email).subscribe(doc => {
+            this.users = doc;
+  
+            })
+          }
+        //	User	has	logged	out
+        else {
+              this.userEmail = undefined;
+            }
+      });
+    }
+  
+    ionViewWillEnter() {
+      this.userService.getUserImage(this.userEmail).subscribe(doc => {
+        this.users = doc;
+        })
+    }
+  
+    ionViewDidEnter() {
+      this.userService.getUserImage(this.userEmail).subscribe(async doc => {
+        this.userService.showLoading()
+        this.users = await doc;
+        })
+    }
 
 logout()	{	
   this.authService.logout();
   this.router.navigate(['/home'])	
-}
+  }
 
-profile(){
+profile() {
   this.router.navigate(['users']);
-}
-ngOnInit() {
-}
+  }
 
+runnerpage() {
+  this.router.navigate(['all-errand-requests'])
+  }
+
+clientpage() {
+  this.router.navigate(['clientjobs'])
+  }
 }
