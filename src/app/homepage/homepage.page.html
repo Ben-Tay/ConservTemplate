@@ -6,13 +6,33 @@
 
 <ion-content [fullscreen]="true" class="homepage">
   <ion-card class="available-job-card">
-  <div>
-    <ion-item>	
-      <p>Hello {{userEmail}}</p>
-    </ion-item>	
-    <ion-button	expand="block" color="secondary" (click)=profile()>Profile</ion-button>	
-    
-  </div>
-</ion-card>
+      <ion-item class="profile-item">
+        <ion-grid>
+          <ion-row>
+            <div class="cointainer">
+              <div class="outer" style="border: 1px solid rgba(0, 0, 0, 0.25); padding: 3px;">
+              <img [src]="users?.image" class="outer">
+              </div>
+            </div>
+          </ion-row>
+          <ion-row>
+              <h2 class="profile-name dark">Hello {{users?.name}}!</h2>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-button expand="block" color="secondary" (click)=profile()>Profile</ion-button>
+  </ion-card>
 
+  <ion-card class="available-job-card">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <ion-button expand="block" color="secondary" (click)=runnerpage()>Go to Errand Runner</ion-button>
+        </ion-col>
+        <ion-col col-6>
+          <ion-button expand="block" color="secondary" (click)=clientpage()>Go to Client</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
 </ion-content>
