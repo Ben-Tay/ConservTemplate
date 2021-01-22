@@ -238,26 +238,6 @@ export class JobService {
     })
   }
 
-  applyjobs(id: string, email: string, dateapplied: Date) {
-    return firebase.firestore().collection('JobsAvailable').doc(id).collection('Applicants').get().then(collection => {
-      let y = false
-
-      collection.forEach(doc => {
-        if (doc.id == email) {
-          y = true
-        }
-      })
-
-      if (y == false) {
-        firebase.firestore().collection('JobsAvailable').doc(id)
-          .collection('Applicants').doc(email).set({
-            date: dateapplied
-          })
-      }
-      return y
-    })
-  }
-
   acceptapplicantrequest(sjob: Job, applicant: ErrandRunner) {
     let job = new Job(sjob.errandname, sjob.category, "Accepted", sjob.client, sjob.date, sjob.description, sjob.time)
 
