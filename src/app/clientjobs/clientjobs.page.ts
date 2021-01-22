@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonButton, IonSegment, MenuController } from '@ionic/angular';
+import { IonButton, IonLabel, IonSegment, MenuController } from '@ionic/angular';
 import { Job } from '../shared/models/Job';
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
@@ -21,13 +21,10 @@ export class ClientjobsPage implements OnInit {
   orderbyselected: string;
   selectByMonth: boolean = false;
   selectByDate: boolean = false;
-  nodata: boolean = false;
-  nodatamonth: boolean = false;
-  segmentpage: string;
+  mySegment: string;
+
   @ViewChild('monthbutton', { static: false }) monthbtn: IonButton;
   @ViewChild('datebutton', { static: false }) datebtn: IonButton;
-  @ViewChild('defaultsegment', { static: false }) defaultsgmt: IonSegment;
-
 
   constructor(private userservice: UserService, private jobservice: JobService, private router: Router, private menuController: MenuController) {
     this.orderbyfilter = ["Closest", "Furthest"];
@@ -48,14 +45,15 @@ export class ClientjobsPage implements OnInit {
           .subscribe(data => {
             this.job = data;
             if (!data.length) {
-              this.nodata = true;
               this.monthbtn.disabled = true;
               this.datebtn.disabled = true;
-            } else {
-              this.nodata = false;
+            }else{
+              this.monthbtn.disabled = false;
+              this.datebtn.disabled = false;
             }
           })
-        this.defaultsgmt.value = "ClientJobsCreated"
+        this.mySegment = 'ClientJobsCreated'
+
       }
     })
     this.ionViewWillEnter()
@@ -66,11 +64,7 @@ export class ClientjobsPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.defaultsgmt.value = "ClientJobsCreated"
-    if(this.nodata === false){
-      this.monthbtn.disabled = false;
-      this.datebtn.disabled = false;
-    }
+    this.mySegment = "ClientJobsCreated"
   }
 
 
@@ -80,10 +74,10 @@ export class ClientjobsPage implements OnInit {
     this.monthbtn.disabled = true;
     this.datebtn.disabled = false;
     //show default data whenever change button clicked
-    if (this.defaultsgmt.value === "ClientJobsCreated") {
+    if (this.mySegment === "ClientJobsCreated") {
       this.defaultData()
     }
-    else if (this.defaultsgmt.value === "JobsConfirmed") {
+    else if (this.mySegment === "JobsConfirmed") {
       this.confirmData()
     }
 
@@ -94,10 +88,10 @@ export class ClientjobsPage implements OnInit {
     this.datebtn.disabled = true;
     this.monthbtn.disabled = false;
     //show default data whenever change button clicked
-    if (this.defaultsgmt.value === "ClientJobsCreated") {
+    if (this.mySegment === "ClientJobsCreated") {
       this.defaultData();
     }
-    else if (this.defaultsgmt.value === "JobsConfirmed") {
+    else if (this.mySegment === "JobsConfirmed") {
       this.confirmData()
     }
 
@@ -112,37 +106,23 @@ export class ClientjobsPage implements OnInit {
   async onChangeMonth(value) {
     for (let i of this.monthfilter) {
       if (value === i) {
-        if (this.defaultsgmt.value === "ClientJobsCreated") {
+        if (this.mySegment === "ClientJobsCreated") {
           if (value === "All") {
             this.defaultData()
-            this.nodatamonth = false;
           } else {
             this.jobservice.getAllJobsByClientByMonth(this.client, i)
               .subscribe(data => {
                 this.job = data;
-                //handle for when there is no request data for that month
-                if (!data.length) {
-                  this.nodatamonth = true;
-                } else {
-                  this.nodatamonth = false;
-                }
               })
           }
         }
-        else if (this.defaultsgmt.value === "JobsConfirmed") {
+        else if (this.mySegment === "JobsConfirmed") {
           if (value === "All") {
             this.confirmData()
-            this.nodatamonth = false;
           } else {
             this.jobservice.getAllJobsByClientByMonth(this.client, i, "Confirmed")
               .subscribe(data => {
                 this.jobsconfirmed = data;
-                //handle for when there is no request data for that month
-                if (!data.length) {
-                  this.nodatamonth = true;
-                } else {
-                  this.nodatamonth = false;
-                }
               })
           }
         }
@@ -151,9 +131,7 @@ export class ClientjobsPage implements OnInit {
   }
   onChangeDate(_value) {
     // if nothing selected, show all
-    this.nodata = false;
-    this.nodatamonth = false;
-    if (this.defaultsgmt.value === "ClientJobsCreated") {
+    if (this.mySegment === "ClientJobsCreated") {
       if (_value == "Closest") {
         this.jobservice.getAllJobsByClientByClosest(this.client)
           .subscribe(data => {
@@ -166,7 +144,7 @@ export class ClientjobsPage implements OnInit {
           })
       }
     }
-    else if (this.defaultsgmt.value === "JobsConfirmed") {
+    else if (this.mySegment === "JobsConfirmed") {
       if (_value == "Closest") {
         this.jobservice.getAllJobsByClientByClosest(this.client, "Confirmed")
           .subscribe(data => {
@@ -186,9 +164,18 @@ export class ClientjobsPage implements OnInit {
 
   }
   defaultfilter() {
-    this.defaultsgmt.value = "ClientJobsCreated"
-    this.monthbtn.disabled = false;
-    this.datebtn.disabled = false;
+    this.mySegment = "ClientJobsCreated"
+    this.jobservice.getAllJobsByClient(this.client)
+    .subscribe(data => {
+      this.job = data;
+      if (!data.length) {
+        this.monthbtn.disabled = true;
+        this.datebtn.disabled = true;
+      }else{
+        this.monthbtn.disabled = false;
+        this.datebtn.disabled = false;
+      }
+    })
     this.selectByDate = false;
     this.selectByMonth = false;
   }
@@ -199,16 +186,13 @@ export class ClientjobsPage implements OnInit {
           .subscribe(data => {
             this.jobsconfirmed = data
             if (!data.length) {
-              this.nodata = true;
               this.monthbtn.disabled = true;
               this.datebtn.disabled = true;
-            } else {
-              this.nodata = false;
             }
           })
       }
     })
-    this.defaultsgmt.value = "JobsConfirmed"
+    this.mySegment = "JobsConfirmed"
     this.monthbtn.disabled = false;
     this.datebtn.disabled = false;
     this.selectByDate = false;
@@ -227,3 +211,4 @@ export class ClientjobsPage implements OnInit {
   }
 
 }
+       
