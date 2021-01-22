@@ -25,7 +25,7 @@ ion-item {
     width: 230px;
     height: 230px;
     display: block;
-    margin: 0 auto;
+    margin: auto;
 }
   
 .outer {
@@ -36,5 +36,6 @@ ion-item {
   background-color: #6eafd4;
   border-radius: 100%;
   position: relative;
+  margin: auto !important;
 }
   
