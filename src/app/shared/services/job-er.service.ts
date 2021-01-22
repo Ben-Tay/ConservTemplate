@@ -3,6 +3,7 @@ import { Job } from '../models/Job';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { Observable } from 'rxjs';
+import { ErrandRunner } from '../models/ErrandRunner';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,27 @@ export class JobERService {
     });
   }
 
+  applyjobs(id: string, ER: ErrandRunner) {
+    return firebase.firestore().collection('JobsAvailable').doc(id).collection('Applicants').get().then(collection => {
+      let y = false
+
+      collection.forEach(doc => {
+        if (doc.id == ER.id) {
+          y = true
+        }
+      })
+
+      if (y == false) {
+        firebase.firestore().collection('JobsAvailable').doc(id)
+          .collection('Applicants').doc(ER.id).set({
+            date: ER.date,
+            applicationstatus: ER.applicationstatus
+          })
+      }
+      return y
+    })
+  }
+
   getAllErrandsApplied(id: string): Observable<any> {
     return new Observable(observer => {
       // Read collection '/JobsAvailable'
@@ -50,7 +72,7 @@ export class JobERService {
           // Add jobs into array if there's no error
           try {
             const docRef = ref.doc(doc.id)
-            docRef.collection('Applicants').get().then(sdoc => {
+            docRef.collection('Applicants').where('applicationstatus', '==', 'Pending').get().then(sdoc => {
               let applied = null
               sdoc.forEach(ssdoc => {
                 if (ssdoc.id === id) {
