@@ -1,18 +1,50 @@
 <ion-header>
-      <ion-toolbar style="--ion-background-color: transparent;">
-          <ion-icon name="exit" size="large" slot="end" style="margin-right:1pc; color:#60b5ff;" (click)="logout()"></ion-icon>
-      </ion-toolbar>
-  </ion-header> 
+  <ion-toolbar style="--ion-background-color: transparent;">
+    <ion-icon name="exit" size="large" slot="end" style="margin-right:1pc; color:#60b5ff;" (click)="logout()">
+    </ion-icon>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content [fullscreen]="true" class="homepage">
-  <ion-card class="available-job-card">
-  <div>
-    <ion-item>	
-      <p>Hello {{userEmail}}</p>
-    </ion-item>	
-    <ion-button	expand="block" color="secondary" (click)=profile()>Profile</ion-button>	
-    
-  </div>
-</ion-card>
+  <ion-card class="available-job-card" style="border-radius: 10px; margin: 1.5pc;">
+    <ion-item class="profile-item">
+      <ion-grid>
+        <ion-row>
+          <div class="container">
+            <div class="outer" style="border: 1px solid rgba(0, 0, 0, 0.25); padding: 3px;">
+              <img [src]="users?.image" class="outer">
+            </div>
+          </div>
+        </ion-row>
 
+        <ion-row>
+          <h2 class="profile-name dark">Hello {{users?.name}}!</h2>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button size="large" expand="block" fill="outline" color="secondary" (click)=profile()>
+              <ion-icon name="person" size="large"></ion-icon>&nbsp;Profile
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-card>
+
+  <ion-card class="available-job-card" style="border-radius: 10px; margin: 1.5pc;">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-button size="large" expand="block" color="secondary" (click)=runnerpage()>Go to Errand Runner</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button size="large" expand="block" color="secondary" (click)=clientpage()>Go to Client</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
 </ion-content>
