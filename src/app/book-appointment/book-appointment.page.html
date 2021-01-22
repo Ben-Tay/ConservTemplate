@@ -32,7 +32,8 @@
         <ion-col size="12">
           <ion-item>
             <ion-label>Errand Category:</ion-label>
-            <ion-select formControlName="category">
+            <ion-select formControlName="category" #Bycategory [(ngModel)]="Bycategory.value"
+              (ngModelChange)="onChangeCategory(Bycategory.value)">
               <ion-select-option *ngFor="let option of categories" [value]="option">
                 {{option}}
               </ion-select-option>
@@ -44,6 +45,15 @@
               <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
             </div>
           </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngFor="let prices of errandprice">
+        <ion-col size="12">
+          <ion-item>
+            <ion-label class="disabled">Price/Hour:</ion-label>
+            <ion-input class="input-disabled" disabled="true" value="{{prices.price | currency}}">
+            </ion-input>
+          </ion-item>
         </ion-col>
       </ion-row>
     </ion-card>
@@ -86,7 +96,8 @@
         <ion-col size="6">
           <ion-item>
             <ion-label>Reporting Time:</ion-label>
-            <ion-datetime displayFormat="hh:mm A" formControlName="time" [pickerOptions]="pickerOpt" [min]="min_time" [max]="max_time"></ion-datetime>
+            <ion-datetime displayFormat="hh:mm A" formControlName="time" [pickerOptions]="pickerOpt" [min]="min_time"
+              [max]="max_time"></ion-datetime>
             <ion-button>
               <ion-icon name="time"></ion-icon>
             </ion-button>
@@ -103,6 +114,5 @@
 
     <ion-button expand="block" color="tertiary" type="submit">Submit</ion-button>
   </form>
-
 
 </ion-content>

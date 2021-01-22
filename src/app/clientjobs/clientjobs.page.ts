@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonButton, IonSegment, MenuController, ToastController } from '@ionic/angular';
+import { IonButton, IonSegment, MenuController } from '@ionic/angular';
 import { Job } from '../shared/models/Job';
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
@@ -36,6 +36,7 @@ export class ClientjobsPage implements OnInit {
       month: new FormControl(''),
       orderbydate: new FormControl('')
     })
+
   }
 
   ngOnInit() {
@@ -60,8 +61,16 @@ export class ClientjobsPage implements OnInit {
     this.ionViewWillEnter()
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.menuController.enable(true, 'first')
+  }
+
+  ionViewDidEnter() {
+    this.defaultsgmt.value = "ClientJobsCreated"
+    if(this.nodata === false){
+      this.monthbtn.disabled = false;
+      this.datebtn.disabled = false;
+    }
   }
 
 
@@ -211,6 +220,10 @@ export class ClientjobsPage implements OnInit {
       .subscribe(data => {
         this.jobsconfirmed = data
       })
+  }
+
+  toERProfile(id: string) {
+    this.router.navigate(['/userprofile', id])
   }
 
 }

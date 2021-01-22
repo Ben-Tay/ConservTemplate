@@ -107,6 +107,11 @@
                     <ion-card-subtitle>Errand Category: {{c.category}} </ion-card-subtitle>
                   </ion-row>
                 </ion-col>
+                <ion-col class="align-end" *ngFor="let d of c.applicant">
+                  <ion-button (click)="toERProfile(d.id)">Errand Runner
+                    <ion-icon slot="start" name="person"></ion-icon>
+                  </ion-button>
+                </ion-col>
               </ion-row>
             </ion-card-header>
             <ion-card-content>
