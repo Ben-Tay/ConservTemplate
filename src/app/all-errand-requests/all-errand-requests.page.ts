@@ -22,7 +22,7 @@ export class AllErrandRequestsPage implements OnInit {
   months;
 
   constructor(private jobService: JobERService, private userService: UserService, private menuController: MenuController) {
-    this.categories = ['All', 'Grocery', 'ElderCare', 'Babysit', 'Others']
+    this.categories = ['All', 'Grocery', 'ElderCare', 'Babysit', 'DogWalking', 'Others']
 
     this.months = ['All', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 

@@ -3,6 +3,7 @@ import { MenuController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
+import { ErrandCategory } from '../shared/models/ErrandCategory';
 
 @Component({
   selector: 'app-book-appointment',
@@ -22,21 +23,24 @@ export class BookAppointmentPage implements OnInit {
   min_time = "06:30";
   max_time = "11:59";
   time;
+  errandprice: ErrandCategory[];
+  price: number;
 
 
-  constructor(private jobService: JobService, private toastCtrl: ToastController, private formbuilder: FormBuilder, private userService: UserService, private menuController: MenuController) {
-    this.categories = ['Grocery', 'ElderCare', 'Babysit', 'Others']
+
+  constructor(private jobService: JobService, private toastCtrl: ToastController, private formbuilder: FormBuilder, private userService: UserService, private menuController: MenuController, private jobservice: JobService) {
+    this.categories = ['Grocery', 'ElderCare', 'Babysit', 'DogWalking', 'Others']
     this.makerequestForm = this.formbuilder.group({
       errandname: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
       date: new FormControl('', [Validators.required]),
-      time: new FormControl('', [Validators.required])
+      time: new FormControl('', [Validators.required]),
     })
     this.userService.observeAuthState(user => {
       //	User	is	logged	in
       if (user) {
-          this.client = user.email;
+        this.client = user.email;
       }
     })
 
@@ -46,7 +50,7 @@ export class BookAppointmentPage implements OnInit {
     this.ionViewWillEnter()
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.menuController.enable(true, 'first')
   }
 
@@ -56,10 +60,18 @@ export class BookAppointmentPage implements OnInit {
     const formvalue = this.makerequestForm.value;
     const formdate = new Date(formvalue.date);
 
-
     if (form.valid) {
-      this.jobService.createnewjobrequest(formvalue.errandname, formvalue.category,
-        this.client, formdate, formvalue.description, this.time)
+      this.jobservice.getErrandPricesByCategory(formvalue.category)
+        .subscribe(data => {
+          this.errandprice = data;
+          for(let i of this.errandprice){
+            this.price = i.price
+          }
+          this.jobService.createnewjobrequest(formvalue.errandname, formvalue.category,
+            this.client, formdate, formvalue.description, this.time, this.price)
+
+        })
+
 
       let toast = await this.toastCtrl.create({
         message: "Your request has been created",
@@ -80,6 +92,13 @@ export class BookAppointmentPage implements OnInit {
     m = (m % 12) || 12;
     this.time = m + ":" + n + " " + AmOrPm;
     return this.time;
+  }
+
+  onChangeCategory(value) {
+    this.jobservice.getErrandPricesByCategory(value)
+      .subscribe(data => {
+        this.errandprice = data;
+      })
   }
 
   validation_messages = {

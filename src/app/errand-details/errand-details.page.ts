@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { ErrandRunner } from '../shared/models/ErrandRunner';
 import { Job } from '../shared/models/Job';
+import { JobERService } from '../shared/services/job-er.service';
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
 
@@ -15,7 +17,7 @@ export class ErrandDetailsPage implements OnInit {
   job: Job;
   user: string;
 
-  constructor(private jobService: JobService, private route: ActivatedRoute, 
+  constructor(private jobService: JobService, private jobERService: JobERService, private route: ActivatedRoute, 
     private userService: UserService, private router: Router, private toastController: ToastController) {
     this.errandId = this.route.snapshot.params.id;
     
@@ -36,7 +38,8 @@ export class ErrandDetailsPage implements OnInit {
     this.userService.observeAuthState(user=>{
       if(user){
         if (!(user.email === this.job.client)){
-          this.jobService.applyjobs(this.errandId, user.email, new Date()).then(async retrieve=>{
+          let ERdetails = new ErrandRunner(new Date(), user.email, 'Pending')
+          this.jobERService.applyjobs(this.errandId, ERdetails).then(async retrieve=>{
             if(retrieve == true){
               const toast = await this.toastController.create({
                 message: 'You have already applied for this errand',
