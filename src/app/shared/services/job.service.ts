@@ -225,10 +225,10 @@ export class JobService {
       let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, jobdata.time, doc.id, jobdata.price);
 
       //Read subcollection '/JobsAvailable/<id>/Applicants'
-      return firebase.firestore().collection('JobsAvailable').doc(id).collection('Applicants').get().then(collection => {
+      return firebase.firestore().collection('JobsAvailable').doc(id).collection('Applicants').where('applicationstatus', '==', 'Pending').get().then(collection => {
         job.applicant = [];
         collection.forEach(doc => {
-          let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id)
+          let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus)
           job.applicant.push(applicant)
         })
 
@@ -239,7 +239,7 @@ export class JobService {
   }
 
   acceptapplicantrequest(sjob: Job, applicant: ErrandRunner) {
-    let job = new Job(sjob.errandname, sjob.category, "Accepted", sjob.client, sjob.date, sjob.description, sjob.time)
+    let job = new Job(sjob.errandname, sjob.category, "Accepted", sjob.client, sjob.date, sjob.description, sjob.time, sjob.id, sjob.price)
 
     return firebase.firestore().collection('JobsAccepted').add({
       errandname: job.errandname,
@@ -248,7 +248,8 @@ export class JobService {
       client: job.client,
       date: job.date,
       description: job.description,
-      time: job.time
+      time: job.time,
+      price: job.price
     }).then(doc => {
       job.id = doc.id;
       firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant/').doc(applicant.id).set({
@@ -310,13 +311,14 @@ export class JobService {
               dbApplicant.onSnapshot(applicantCollection => {
                 job.applicant = []; // Empty array
                 applicantCollection.forEach(applicantDoc => {
-                  let applier = new ErrandRunner(applicantDoc.data().date.toDate(), applicantDoc.id);
+                  let applier = new ErrandRunner(applicantDoc.data().date.toDate(), applicantDoc.id, applicantDoc.data().applicationstatus);
                   job.applicant.push(applier);
                 });
               });
             } catch (error) { }
           }
           // Add loan into array if there's no error
+          observer.next(array)
         });
       });
     });
