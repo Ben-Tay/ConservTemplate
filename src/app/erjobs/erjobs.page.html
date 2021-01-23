@@ -10,13 +10,13 @@
 <ion-content class="ER">
   <ion-segment style="--color-checked: #60b5ff;" [(ngModel)]="mySegment" (ionChange)="segmentChanged(mySegment)">
     <ion-segment-button value="ERJobs">
-      <ion-label>Errands To Be Done</ion-label>
+      <ion-label class="ion-text-wrap">Errands</ion-label>
     </ion-segment-button>
     <ion-segment-button value="ERApplied">
-      <ion-label>Errands Applied</ion-label>
+      <ion-label class="ion-text-wrap">Errands<br/>Applied</ion-label>
     </ion-segment-button>
     <ion-segment-button value="ERRejected">
-      <ion-label>Errands Rejected</ion-label>
+      <ion-label class="ion-text-wrap">Errands<br/>Rejected</ion-label>
     </ion-segment-button>
   </ion-segment>
 
