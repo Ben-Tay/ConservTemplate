@@ -25,7 +25,8 @@ const routes: Routes = [
   { path: 'homepage', loadChildren: './homepage/homepage.module#HomepagePageModule' },
   { path: 'users', loadChildren: './users/users.module#UsersPageModule' },
   { path: 'userprofile/:id', loadChildren: './userprofile/userprofile.module#UserprofilePageModule' },
-  { path: 'erjobs', loadChildren: './erjobs/erjobs.module#ERJobsPageModule' }
+  { path: 'erjobs', loadChildren: './erjobs/erjobs.module#ERJobsPageModule' },  { path: 'review', loadChildren: './review/review.module#ReviewPageModule' }
+
 
 ];
 
