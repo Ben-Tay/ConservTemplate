@@ -29,7 +29,7 @@ export class BookAppointmentPage implements OnInit {
 
 
   constructor(private jobService: JobService, private toastCtrl: ToastController, private formbuilder: FormBuilder, private userService: UserService, private menuController: MenuController, private jobservice: JobService) {
-    this.categories = ['Grocery', 'ElderCare', 'Babysit', 'DogWalking', 'Others']
+    this.categories = ['Grocery', 'ElderCare', 'Babysit', 'DogWalking', 'Delivery']
     this.makerequestForm = this.formbuilder.group({
       errandname: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
