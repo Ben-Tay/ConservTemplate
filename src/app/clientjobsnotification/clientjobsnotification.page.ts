@@ -15,6 +15,7 @@ export class ClientjobsnotificationPage implements OnInit {
   jobid: string;
   job: Job;
   jobapplicants: ErrandRunner[]
+  rejectedapplicants: ErrandRunner[]
 
 
   constructor(private route: ActivatedRoute, private jobservice: JobService, private userservice: UserService, private router: Router, private toastCtrl: ToastController) {
@@ -23,11 +24,11 @@ export class ClientjobsnotificationPage implements OnInit {
 
   ngOnInit() {
     this.jobservice.getSpecificJobsById(this.jobid)
-    .then(data => {
-      this.userservice.showLoading();
-      this.job = data;
-      this.jobapplicants = data.applicant;
-    })
+      .then(data => {
+        this.userservice.showLoading();
+        this.job = data;
+        this.jobapplicants = data.applicant;
+      })
   }
 
   toERProfile(id: string) {
@@ -38,14 +39,11 @@ export class ClientjobsnotificationPage implements OnInit {
     this.jobservice.getSpecificJobsById(this.jobid)
       .then(data => {
         this.job = data;
-      })
-
-    //Move document from JobsAvailable Collection to JobsAccepted Collection
-    this.jobservice.acceptapplicantrequest(this.job, applicant)
-      .then(() => {
+      }).then(() => {
+        //Move document from JobsAvailable Collection to JobsAccepted Collection
+        this.jobservice.acceptapplicantrequest(this.job, applicant)
         this.jobservice.deletefromJobsAvailable(this.job)
       })
-
     let toast = await this.toastCtrl.create({
       message: "You have accepted this errand request",
       position: 'top',
@@ -55,8 +53,8 @@ export class ClientjobsnotificationPage implements OnInit {
     toast.present()
 
     this.router.navigate(['clientjobs'])
-
   }
+
   async RejectApplicant(applicant: ErrandRunner) {
 
     //Reject applicant for specificjob
@@ -69,17 +67,17 @@ export class ClientjobsnotificationPage implements OnInit {
       color: 'danger'
     })
     toast.present()
-    
+
     this.jobservice.getSpecificJobsById(this.jobid)
-    .then(data => {
-      this.job = data;
-      this.jobapplicants = data.applicant;
-    }).then(() => {
-      this.ngOnInit()
-    })
+      .then(data => {
+        this.job = data;
+        this.jobapplicants = data.applicant;
+      }).then(() => {
+        this.ngOnInit()
+      })
   }
 
-  async DeleteErrand(job: Job){
+  async DeleteErrand(job: Job) {
     this.jobservice.deletefromJobsAvailable(this.job)
 
     let toast = await this.toastCtrl.create({
