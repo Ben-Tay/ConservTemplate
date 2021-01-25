@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
+import { RejectreasonPage } from '../rejectreason/rejectreason.page';
 import { ErrandRunner } from '../shared/models/ErrandRunner';
 import { Job } from '../shared/models/Job';
 import { JobService } from '../shared/services/job.service';
@@ -15,10 +16,8 @@ export class ClientjobsnotificationPage implements OnInit {
   jobid: string;
   job: Job;
   jobapplicants: ErrandRunner[]
-  rejectedapplicants: ErrandRunner[]
 
-
-  constructor(private route: ActivatedRoute, private jobservice: JobService, private userservice: UserService, private router: Router, private toastCtrl: ToastController) {
+  constructor(private route: ActivatedRoute, private jobservice: JobService, private userservice: UserService, private router: Router, private toastCtrl: ToastController, private modalCtrl: ModalController) {
     this.jobid = this.route.snapshot.params.id;
   }
 
@@ -57,25 +56,24 @@ export class ClientjobsnotificationPage implements OnInit {
 
   async RejectApplicant(applicant: ErrandRunner) {
 
-    //Reject applicant for specificjob
-    this.jobservice.rejectapplicantbyspecificjob(this.jobid, applicant)
+    //create modal to hold rejectreasonpage
+    let modal = await this.modalCtrl.create({
+      component: RejectreasonPage,
+      componentProps: {
+        getapplicant: applicant,
+        getjobid: this.jobid
+      }
+    });
+    //Present modal 
+    modal.onDidDismiss().then(() => {
+      this.ngOnInit()
+    });
+    modal.present()
 
-    let toast = await this.toastCtrl.create({
-      message: "You have rejected the application by " + applicant.id,
-      position: 'top',
-      duration: 2000,
-      color: 'danger'
-    })
-    toast.present()
 
-    this.jobservice.getSpecificJobsById(this.jobid)
-      .then(data => {
-        this.job = data;
-        this.jobapplicants = data.applicant;
-      }).then(() => {
-        this.ngOnInit()
-      })
+    
   }
+
 
   async DeleteErrand(job: Job) {
     this.jobservice.deletefromJobsAvailable(this.job)
