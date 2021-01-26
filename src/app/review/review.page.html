@@ -5,5 +5,30 @@
 </ion-header>
 
 <ion-content>
-  <h1>Reviews of {{ user.name }}</h1>
+  <h1>Reviews of {{ targetEmail }}</h1>
+  <ion-list>
+    <ion-item>
+      <ion-grid>
+        <div *ngFor="let review of allReviews">
+          <ion-row >
+            <ion-col style="">
+              From :
+            </ion-col>
+            <ion-col>
+              {{ review.from }}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="">
+              Review of User :
+            </ion-col>
+            <ion-col>
+              {{ review.comment }}
+            </ion-col>
+          </ion-row>
+          <hr>
+        </div>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
 </ion-content>

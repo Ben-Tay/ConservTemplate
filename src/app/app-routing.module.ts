@@ -24,8 +24,11 @@ const routes: Routes = [
   { path: 'clientjobsnotification/:id', loadChildren: './clientjobsnotification/clientjobsnotification.module#ClientjobsnotificationPageModule' },
   { path: 'homepage', loadChildren: './homepage/homepage.module#HomepagePageModule' },
   { path: 'users', loadChildren: './users/users.module#UsersPageModule' },
+  { path: 'users/:email', loadChildren: './users/users.module#UsersPageModule' },
   { path: 'userprofile/:id', loadChildren: './userprofile/userprofile.module#UserprofilePageModule' },
-  { path: 'erjobs', loadChildren: './erjobs/erjobs.module#ERJobsPageModule' },  { path: 'review', loadChildren: './review/review.module#ReviewPageModule' }
+  { path: 'erjobs', loadChildren: './erjobs/erjobs.module#ERJobsPageModule' },
+  { path: 'review/:email', loadChildren: './review/review.module#ReviewPageModule' },
+  { path: 'post/:email', loadChildren: './post/post.module#PostPageModule' }
 
 
 ];
