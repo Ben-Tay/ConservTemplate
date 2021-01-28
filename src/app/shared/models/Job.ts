@@ -1,4 +1,3 @@
-import { Time } from "@angular/common";
 import { ErrandRunner } from "./ErrandRunner";
 
 export class Job {
@@ -11,7 +10,8 @@ export class Job {
         public client: string,
         public date: Date,
         public description: string,
-        public time: Time,
+        public time: Date,
+        public endtime: Date,
         public id?: string,
         public price?: number
     ) { }

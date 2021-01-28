@@ -46,7 +46,7 @@
         Errand Meeting Time:
       </ion-col>
       <ion-col class="large">
-        {{ job?.date | date:'d MMM yyyy' }}, {{ job?.time }}
+        {{ job?.date | date:'d MMM yyyy' }}, {{ job?.time | date: 'shortTime' }}
       </ion-col>
     </ion-row>
 

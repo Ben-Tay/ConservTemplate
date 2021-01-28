@@ -80,7 +80,8 @@
                     <div text-wrap>
                       <p>Errand Date: {{jobs.date | date:'d MMM yyyy'}}</p>
                       <p>Errand Description: {{jobs.description}}</p>
-                      <p>Errand Time: {{jobs.time}}</p>
+                      <p>Reporting Time: {{jobs.time | date:'shortTime'}}</p>
+                      <p>Estimated End Time: {{jobs.endtime | date:'shortTime'}}</p>
                     </div>
                   </ion-label>
                 </ion-col>
@@ -126,7 +127,8 @@
                     <div text-wrap>
                       <p>Errand Date: {{c.date | date:'d MMM yyyy'}}</p>
                       <p>Errand Description: {{c.description}}</p>
-                      <p>Errand Time: {{c.time}}</p>
+                      <p>Reporting Time: {{c.time | date:'shortTime'}}</p>
+                      <p>Estimated End Time: {{c.endtime | date:'shortTime'}}</p>
                     </div>
                   </ion-label>
                 </ion-col>
