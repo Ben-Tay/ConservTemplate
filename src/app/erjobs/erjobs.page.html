@@ -58,7 +58,7 @@
                 <div text-wrap>
                   <p>Client: {{ item?.client }}</p>
                   <p>Errand Price: {{ item?.price | currency }}</p>
-                  <p>Errand Meeting Time: {{item?.date | date:'d MMM yyyy'}}, {{item?.time}}</p>
+                  <p>Errand Meeting Time: {{item?.date | date:'d MMM yyyy'}}, {{item?.time | date:'shortTime'}}</p>
                   <p>Errand Description: {{ item?.description }}</p>
                 </div>
               </ion-label>
@@ -104,7 +104,7 @@
                 <div text-wrap>
                   <p>Client: {{ item?.client }}</p>
                   <p>Errand Price: {{ item?.price | currency }}</p>
-                  <p>Errand Meeting Time: {{item?.date | date:'d MMM yyyy'}}, {{item?.time}}</p>
+                  <p>Errand Meeting Time: {{item?.date | date:'d MMM yyyy'}}, {{item?.time | date:'shortTime'}}</p>
                   <p>Errand Description: {{ item?.description }}</p>
                 </div>
               </ion-label>
@@ -147,7 +147,7 @@
                 <div text-wrap>
                   <p>Client: {{ item?.client }}</p>
                   <p>Errand Price: {{ item?.price | currency }}</p>
-                  <p>Errand Meeting Time: {{item?.date | date:'d MMM yyyy'}}, {{item?.time}}</p>
+                  <p>Errand Meeting Time: {{item?.date | date:'d MMM yyyy'}}, {{item?.time | date:'shortTime'}}</p>
                   <p>Errand Description: {{ item?.description }}</p>
                 </div>
               </ion-label>

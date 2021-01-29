@@ -16,9 +16,9 @@ export class JobService {
 
   constructor() { }
 
-  createnewjobrequest(errandname: string, category: string, client: string, date: Date, description: string, time: Time, pricing: number) {
+  createnewjobrequest(errandname: string, category: string, client: string, date: Date, description: string, time: Date, end_time: Date, pricing: number) {
 
-    let job = new Job(errandname, category, 'Available', client, date, description, time)
+    let job = new Job(errandname, category, 'Available', client, date, description, time, end_time)
 
     return firebase.firestore().collection('JobsAvailable').add({
       errandname: job.errandname,
@@ -28,6 +28,7 @@ export class JobService {
       date: job.date,
       description: job.description,
       time: job.time,
+      endtime: job.endtime,
       price: pricing
     }).then(() => {
       return job;
@@ -46,7 +47,9 @@ export class JobService {
           try {
             let jobdata = doc.data()
             const date = jobdata.date.toDate()
-            let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, jobdata.time, doc.id, jobdata.price);
+            const reportime = jobdata.time.toDate()
+            const endtime = jobdata.endtime.toDate()
+            let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime,  doc.id, jobdata.price);
             array.push(job);
           } catch (error) { }
 
@@ -68,9 +71,11 @@ export class JobService {
             try {
               let jobdata = doc.data()
               const date = jobdata.date.toDate()
+              const reportime = jobdata.time.toDate()
+              const endtime = jobdata.endtime.toDate()
               const filtermonth = date.toLocaleString('default', { month: 'short' })
               if (filtermonth === month) {
-                let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, jobdata.time, doc.id, jobdata.price);
+                let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
 
                 array.push(job);
 
@@ -98,9 +103,11 @@ export class JobService {
             try {
               let jobdata = doc.data()
               const date = jobdata.date.toDate()
+              const reportime = jobdata.time.toDate()
+              const endtime = jobdata.endtime.toDate()
               const filtermonth = date.toLocaleString('default', { month: 'short' })
               if (filtermonth === month) {
-                let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, jobdata.time, doc.id, jobdata.price);
+                let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
 
                 array.push(job);
               }
@@ -126,7 +133,9 @@ export class JobService {
             try {
               let jobdata = doc.data()
               const date = jobdata.date.toDate()
-              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, jobdata.time, doc.id, jobdata.price);
+              const reportime = jobdata.time.toDate()
+              const endtime = jobdata.endtime.toDate()
+              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
               array.push(job);
 
               let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
@@ -137,9 +146,7 @@ export class JobService {
                   job.applicant.push(applier);
                 });
               });
-
             } catch (error) { }
-
           });
           observer.next(array);
         })
@@ -153,7 +160,9 @@ export class JobService {
             try {
               let jobdata = doc.data()
               const date = jobdata.date.toDate()
-              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, jobdata.time, doc.id, jobdata.price);
+              const reportime = jobdata.time.toDate()
+              const endtime = jobdata.endtime.toDate()
+              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
               array.push(job);
 
             } catch (error) { }
@@ -178,7 +187,9 @@ export class JobService {
             try {
               let jobdata = doc.data()
               const date = jobdata.date.toDate()
-              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, jobdata.time, doc.id, jobdata.price);
+              const reportime = jobdata.time.toDate()
+              const endtime = jobdata.endtime.toDate()
+              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
               array.push(job);
 
             } catch (error) { }
@@ -197,7 +208,9 @@ export class JobService {
             try {
               let jobdata = doc.data()
               const date = jobdata.date.toDate()
-              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, jobdata.time, doc.id, jobdata.price);
+              const reportime = jobdata.time.toDate()
+              const endtime = jobdata.endtime.toDate()
+              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
               array.push(job);
 
               let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
@@ -222,7 +235,9 @@ export class JobService {
     return firebase.firestore().collection('JobsAvailable').doc(id).get().then(doc => {
       let jobdata = doc.data()
       const date = jobdata.date.toDate()
-      let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, jobdata.time, doc.id, jobdata.price);
+      const reportime = jobdata.time.toDate()
+      const endtime = jobdata.endtime.toDate()
+      let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
 
       //Read subcollection '/JobsAvailable/<id>/Applicants'
       return firebase.firestore().collection('JobsAvailable').doc(id).collection('Applicants').where('applicationstatus', '==', 'Pending').get().then(collection => {
@@ -243,7 +258,9 @@ export class JobService {
     return firebase.firestore().collection('JobsAvailable').doc(id).get().then(doc => {
       let jobdata = doc.data()
       const date = jobdata.date.toDate()
-      let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, jobdata.time, doc.id, jobdata.price);
+      const reportime = jobdata.time.toDate()
+      const endtime = jobdata.endtime.toDate()
+      let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
 
       //Read subcollection '/JobsAvailable/<id>/Applicants'
       return firebase.firestore().collection('JobsAvailable').doc(id).collection('Applicants').where('applicationstatus', '==', 'Rejected').get().then(collection => {
@@ -261,7 +278,7 @@ export class JobService {
   }
 
   acceptapplicantrequest(sjob: Job, applicant: ErrandRunner) {
-    let job = new Job(sjob.errandname, sjob.category, "Accepted", sjob.client, sjob.date, sjob.description, sjob.time, sjob.id, sjob.price)
+    let job = new Job(sjob.errandname, sjob.category, "Accepted", sjob.client, sjob.date, sjob.description, sjob.time, sjob.endtime, sjob.id, sjob.price)
 
     return firebase.firestore().collection('JobsAccepted').add({
       errandname: job.errandname,
@@ -271,6 +288,7 @@ export class JobService {
       date: job.date,
       description: job.description,
       time: job.time,
+      endtime: job.endtime,
       price: job.price
     }).then(doc => {
       job.id = doc.id;
@@ -328,7 +346,9 @@ export class JobService {
             try {
               let jobdata = doc.data()
               const date = jobdata.date.toDate()
-              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, jobdata.time, doc.id, jobdata.price);
+              const reportime = jobdata.time.toDate()
+              const endtime = jobdata.endtime.toDate()
+              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
               array.push(job);
               //Read subcoollection '/JobsAccepted/<autoID>/Applicant'
               let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
