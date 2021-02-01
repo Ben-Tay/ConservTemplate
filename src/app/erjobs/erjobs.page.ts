@@ -22,11 +22,11 @@ export class ERJobsPage implements OnInit {
       this.userService.showLoading();
       if(user){
         this.useremail = user.email;
-        this.jobService.getAllErrandsAccepted(user.email)
+        this.jobService.getErrandsAccepted(user.email)
         .subscribe(data=>{
           this.jobs = data
         })
-        this.jobService.getAllErrandsCompleted(user.email)
+        this.jobService.getErrandsApplied(user.email)
         .subscribe(data=>{
           this.jobsApplied = data
         })
@@ -50,11 +50,11 @@ export class ERJobsPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.jobService.getAllErrandsAccepted(this.useremail)
+    this.jobService.getErrandsAccepted(this.useremail)
     .subscribe(async data=>{
       this.jobs = await data
     })
-    this.jobService.getAllErrandsApplied(this.useremail)
+    this.jobService.getErrandsApplied(this.useremail)
     .subscribe(async data=>{
       this.jobsApplied = await data
     })

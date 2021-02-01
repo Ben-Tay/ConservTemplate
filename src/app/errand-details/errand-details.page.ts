@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { async } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { isThisISOWeek } from 'date-fns';
 import { ErrandRunner } from '../shared/models/ErrandRunner';
 import { Job } from '../shared/models/Job';
 import { JobERService } from '../shared/services/job-er.service';
@@ -65,7 +63,7 @@ export class ErrandDetailsPage implements OnInit {
                     this.successfullyapplied(ERdetails)
                   }
                   else {
-                    if(doc.time.getTime()>=this.job.endtime.getTime()||doc.endtime.getTime()<=this.job.time.getTime()){
+                    if(doc.time.getTime()>this.job.endtime.getTime()||doc.endtime.getTime()<this.job.time.getTime()){
                       this.successfullyapplied(ERdetails)
                     }
                     else{
