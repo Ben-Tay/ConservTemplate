@@ -24,10 +24,10 @@ export class JobERService {
           try {
             const docRef = ref.doc(doc.id)
             docRef.collection('Applicants').doc(id).get().then(sdoc => {
-              if(sdoc.exists){
+              if (sdoc.exists) {
                 return;
               }
-              else{
+              else {
                 let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time.toDate(), doc.data().endtime.toDate(), doc.id, doc.data().price);
                 array.push(loan);
               }
@@ -40,26 +40,6 @@ export class JobERService {
     });
   }
 
-  applyjobs(id: string, ER: ErrandRunner) {
-    return firebase.firestore().collection('JobsAvailable').doc(id).collection('Applicants').get().then(collection => {
-      let y = false
-
-      collection.forEach(doc => {
-        if (doc.id == ER.id) {
-          y = true
-        }
-      })
-
-      if (y == false) {
-        firebase.firestore().collection('JobsAvailable').doc(id)
-          .collection('Applicants').doc(ER.id).set({
-            date: ER.date,
-            applicationstatus: ER.applicationstatus
-          })
-      }
-      return y
-    })
-  }
 
   getAllErrandsApplied(id: string): Observable<any> {
     return new Observable(observer => {
@@ -67,7 +47,7 @@ export class JobERService {
       const ref = firebase.firestore().collection('JobsAvailable')
       ref.onSnapshot(collection => {
         let array = [];
-        
+
         collection.forEach(doc => {
           // Add jobs into array if there's no error
           try {
@@ -78,7 +58,7 @@ export class JobERService {
                 if (ssdoc.id === id) {
                   applied = true
                 }
-                else{
+                else {
                   applied = false
                 }
 
@@ -96,13 +76,14 @@ export class JobERService {
     });
   }
 
+
   getAllErrandsRejected(id: string): Observable<any> {
     return new Observable(observer => {
       // Read collection '/JobsAvailable'
       const ref = firebase.firestore().collection('JobsAvailable')
       ref.onSnapshot(collection => {
         let array = [];
-        
+
         collection.forEach(doc => {
           // Add jobs into array if there's no error
           try {
@@ -113,7 +94,7 @@ export class JobERService {
                 if (ssdoc.id === id) {
                   applied = true
                 }
-                else{
+                else {
                   applied = false
                 }
 
@@ -130,6 +111,7 @@ export class JobERService {
       });
     });
   }
+
 
   getAllErrandsAccepted(id: string): Observable<any> {
     return new Observable(observer => {
@@ -162,6 +144,47 @@ export class JobERService {
         });
         observer.next(array);
       });
+    });
+  }
+
+
+  applyjobs(id: string, ER: ErrandRunner) {
+    return firebase.firestore().collection('JobsAvailable').doc(id)
+      .collection('Applicants').doc(ER.id).set({
+        date: ER.date,
+        applicationstatus: ER.applicationstatus
+      })
+  }
+
+  getAllErrandsAppliedPromise(id: string){
+      // Read collection '/JobsAvailable'
+      const ref = firebase.firestore().collection('JobsAvailable')
+      return ref.get().then(collection => {
+        let array = [];
+
+        collection.forEach(doc => {
+          // Add jobs into array if there's no error
+          try {
+            const docRef = ref.doc(doc.id)
+            docRef.collection('Applicants').where('applicationstatus', '==', 'Pending').get().then(sdoc => {
+              let applied = null
+              sdoc.forEach(ssdoc => {
+                if (ssdoc.id === id) {
+                  applied = true
+                }
+                else {
+                  applied = false
+                }
+
+                if (applied === true) {
+                  let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time.toDate(), doc.data().endtime.toDate(), doc.id, doc.data().price);
+                  array.push(loan);
+                }
+              })
+            })
+          } catch (error) { }
+        });
+        return array
     });
   }
 }

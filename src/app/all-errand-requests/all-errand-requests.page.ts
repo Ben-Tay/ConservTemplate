@@ -30,11 +30,11 @@ export class AllErrandRequestsPage implements OnInit {
       category: new FormControl('All'),
       month: new FormControl('All')
     })
-    this.userService.observeAuthState(user=>{
-      this.jobService.getAllErrandsExcept(user.email)
-      .subscribe(data => {
-        this.jobs = data;
-        this.allJobs = data;
+    this.userService.observeAuthState(async user=>{
+      this.jobService.getAllErrandsExcept(await user.email)
+      .subscribe(async data => {
+        this.jobs = await data;
+        this.allJobs = await data;
       })
     })
     this.ionViewWillEnter()
@@ -50,11 +50,11 @@ export class AllErrandRequestsPage implements OnInit {
 
   ionViewDidEnter() {
     this.userService.showLoading()
-    this.userService.observeAuthState(user=>{
-      this.jobService.getAllErrandsExcept(user.email)
-      .subscribe(data => {
-        this.jobs = data;
-        this.allJobs = data;
+    this.userService.observeAuthState(async user=>{
+      this.jobService.getAllErrandsExcept(await user.email)
+      .subscribe(async data => {
+        this.jobs = await data;
+        this.allJobs = await data;
       })
     })
   }
