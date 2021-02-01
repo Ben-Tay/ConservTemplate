@@ -26,7 +26,7 @@ export class ERJobsPage implements OnInit {
         .subscribe(data=>{
           this.jobs = data
         })
-        this.jobService.getAllErrandsApplied(user.email)
+        this.jobService.getAllErrandsCompleted(user.email)
         .subscribe(data=>{
           this.jobsApplied = data
         })

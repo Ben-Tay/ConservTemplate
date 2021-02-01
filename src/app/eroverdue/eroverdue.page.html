@@ -1,30 +1,30 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>My Errands</ion-title>
+    <ion-title>Overdue Errands</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button menuId="second"></ion-menu-button>
-    </ion-buttons>
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ER">
   <ion-segment style="--color-checked: #60b5ff;" [(ngModel)]="mySegment" (ionChange)="segmentChanged(mySegment)">
-    <ion-segment-button value="ERJobs">
-      <ion-label class="ion-text-wrap">Errands</ion-label>
+    <ion-segment-button value="ERJobsO">
+      <ion-label class="ion-text-wrap">Overdue<br/>Errands</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="ERApplied">
-      <ion-label class="ion-text-wrap">Errands<br/>Applied</ion-label>
+    <ion-segment-button value="ERCompleted">
+      <ion-label class="ion-text-wrap">Completed<br/>Errands</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="ERRejected">
-      <ion-label class="ion-text-wrap">Errands<br/>Rejected</ion-label>
+    <ion-segment-button value="ERExpired">
+      <ion-label class="ion-text-wrap">Expired<br/>Errands</ion-label>
     </ion-segment-button>
   </ion-segment>
 
   <div [ngSwitch]="mySegment">
 
-    <ion-grid *ngSwitchCase="'ERJobs'">
+    <ion-grid *ngSwitchCase="'ERJobsO'">
       <div *ngIf="jobs?.length === 0" class="center">
-        <h5 class="center-content"> You have no errands </h5>
+        <h5 class="center-content"> You do not have any overdue errands</h5>
       </div>
       <ion-card *ngFor="let item of jobs">
         <ion-card-header>
@@ -69,11 +69,11 @@
       </ion-card>
     </ion-grid>
 
-    <ion-grid *ngSwitchCase="'ERApplied'">
-      <div *ngIf="jobsApplied?.length === 0" class="center">
-        <h5 class="center-content"> You have not applied for any errands </h5>
+    <ion-grid *ngSwitchCase="'ERCompleted'">
+      <div *ngIf="jobsCompleted?.length === 0" class="center">
+        <h5 class="center-content"> You have not completed any errands</h5>
       </div>
-      <ion-card *ngFor="let item of jobsApplied">
+      <ion-card *ngFor="let item of jobsCompleted">
         <ion-card-header>
           <ion-row>
             <ion-col size="0.5">
@@ -116,11 +116,11 @@
       </ion-card>
     </ion-grid>
 
-    <ion-grid *ngSwitchCase="'ERRejected'">
-      <div *ngIf="jobsRejected?.length === 0" class="center">
-        <h5 class="center-content"> You have not been rejected for any errands </h5>
+    <ion-grid *ngSwitchCase="'ERExpired'">
+      <div *ngIf="jobsExpired?.length === 0" class="center">
+        <h5 class="center-content"> You do not have any expired errands </h5>
       </div>
-      <ion-card *ngFor="let item of jobsRejected">
+      <ion-card *ngFor="let item of jobsExpired">
         <ion-card-header>
           <ion-row>
             <ion-col size="0.5">

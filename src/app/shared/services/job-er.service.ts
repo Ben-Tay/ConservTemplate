@@ -51,23 +51,25 @@ export class JobERService {
         collection.forEach(doc => {
           // Add jobs into array if there's no error
           try {
-            const docRef = ref.doc(doc.id)
-            docRef.collection('Applicants').where('applicationstatus', '==', 'Pending').get().then(sdoc => {
-              let applied = null
-              sdoc.forEach(ssdoc => {
-                if (ssdoc.id === id) {
-                  applied = true
-                }
-                else {
-                  applied = false
-                }
+            if (doc.data().date.toDate() >= new Date()) {
+              const docRef = ref.doc(doc.id)
+              docRef.collection('Applicants').where('applicationstatus', '==', 'Pending').get().then(sdoc => {
+                let applied = null
+                sdoc.forEach(ssdoc => {
+                  if (ssdoc.id === id) {
+                    applied = true
+                  }
+                  else {
+                    applied = false
+                  }
 
-                if (applied === true) {
-                  let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time.toDate(), doc.data().endtime.toDate(), doc.id, doc.data().price);
-                  array.push(loan);
-                }
+                  if (applied === true) {
+                    let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time.toDate(), doc.data().endtime.toDate(), doc.id, doc.data().price);
+                    array.push(loan);
+                  }
+                })
               })
-            })
+            }
           } catch (error) { }
 
         });
@@ -87,23 +89,25 @@ export class JobERService {
         collection.forEach(doc => {
           // Add jobs into array if there's no error
           try {
-            const docRef = ref.doc(doc.id)
-            docRef.collection('Applicants').where('applicationstatus', '==', 'Rejected').get().then(sdoc => {
-              let applied = null
-              sdoc.forEach(ssdoc => {
-                if (ssdoc.id === id) {
-                  applied = true
-                }
-                else {
-                  applied = false
-                }
+            if (doc.data().date.toDate() >= new Date()) {
+              const docRef = ref.doc(doc.id)
+              docRef.collection('Applicants').where('applicationstatus', '==', 'Rejected').get().then(sdoc => {
+                let applied = null
+                sdoc.forEach(ssdoc => {
+                  if (ssdoc.id === id) {
+                    applied = true
+                  }
+                  else {
+                    applied = false
+                  }
 
-                if (applied === true) {
-                  let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time.toDate(), doc.data().endtime.toDate(), doc.id, doc.data().price);
-                  array.push(loan);
-                }
+                  if (applied === true) {
+                    let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time.toDate(), doc.data().endtime.toDate(), doc.id, doc.data().price);
+                    array.push(loan);
+                  }
+                })
               })
-            })
+            }
           } catch (error) { }
 
         });
@@ -123,22 +127,24 @@ export class JobERService {
         collection.forEach(doc => {
           // Add jobs into array if there's no error
           try {
-            const docRef = ref.doc(doc.id)
-            docRef.collection('Applicant').get().then(sdoc => {
-              sdoc.forEach(ssdoc => {
-                if (ssdoc.id === id) {
-                  applied = true
-                }
-                else {
-                  applied = false
-                }
+            if (doc.data().date.toDate() >= new Date()) {
+              const docRef = ref.doc(doc.id)
+              docRef.collection('Applicant').get().then(sdoc => {
+                sdoc.forEach(ssdoc => {
+                  if (ssdoc.id === id) {
+                    applied = true
+                  }
+                  else {
+                    applied = false
+                  }
 
-                if (applied === true) {
-                  let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time.toDate(), doc.data().endtime.toDate(), doc.id, doc.data().price);
-                  array.push(loan);
-                }
+                  if (applied === true) {
+                    let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time.toDate(), doc.data().endtime.toDate(), doc.id, doc.data().price);
+                    array.push(loan);
+                  }
+                })
               })
-            })
+            }
           } catch (error) { }
 
         });
@@ -156,35 +162,108 @@ export class JobERService {
       })
   }
 
-  getAllErrandsAppliedPromise(id: string){
-      // Read collection '/JobsAvailable'
-      const ref = firebase.firestore().collection('JobsAvailable')
-      return ref.get().then(collection => {
+  getAllErrandsOverdue(id: string): Observable<any> {
+    return new Observable(observer => {
+      // Read collection '/JobsAccepted'
+      const ref = firebase.firestore().collection('JobsAccepted')
+      ref.onSnapshot(collection => {
         let array = [];
-
+        let applied = false
         collection.forEach(doc => {
           // Add jobs into array if there's no error
           try {
-            const docRef = ref.doc(doc.id)
-            docRef.collection('Applicants').where('applicationstatus', '==', 'Pending').get().then(sdoc => {
-              let applied = null
-              sdoc.forEach(ssdoc => {
-                if (ssdoc.id === id) {
-                  applied = true
-                }
-                else {
-                  applied = false
-                }
+            if (doc.data().date.toDate() < new Date()) {
+              const docRef = ref.doc(doc.id)
+              docRef.collection('Applicant').get().then(sdoc => {
+                sdoc.forEach(ssdoc => {
+                  if (ssdoc.id === id) {
+                    applied = true
+                  }
+                  else {
+                    applied = false
+                  }
 
-                if (applied === true) {
-                  let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time.toDate(), doc.data().endtime.toDate(), doc.id, doc.data().price);
-                  array.push(loan);
-                }
+                  if (applied === true) {
+                    let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time.toDate(), doc.data().endtime.toDate(), doc.id, doc.data().price);
+                    array.push(loan);
+                  }
+                })
               })
-            })
+            }
           } catch (error) { }
+
         });
-        return array
+        observer.next(array);
+      });
     });
   }
+  
+  getAllErrandsCompleted(id: string): Observable<any> {
+    return new Observable(observer => {
+      // Read collection '/JobsCompleted'
+      const ref = firebase.firestore().collection('JobsCompleted')
+      ref.onSnapshot(collection => {
+        let array = [];
+        let applied = false
+        collection.forEach(doc => {
+          // Add jobs into array if there's no error
+          try {
+              const docRef = ref.doc(doc.id)
+              docRef.collection('Applicant').get().then(sdoc => {
+                sdoc.forEach(ssdoc => {
+                  if (ssdoc.id === id) {
+                    applied = true
+                  }
+                  else {
+                    applied = false
+                  }
+
+                  if (applied === true) {
+                    let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time.toDate(), doc.data().endtime.toDate(), doc.id, doc.data().price);
+                    array.push(loan);
+                  }
+                })
+              })
+          } catch (error) { }
+
+        });
+        observer.next(array);
+      });
+    });
+  }
+
+  getAllErrandsExpired(id: string): Observable<any> {
+    return new Observable(observer => {
+      // Read collection '/JobsCompleted'
+      const ref = firebase.firestore().collection('JobsAccepted')
+      ref.where('status', '==', 'Expired').onSnapshot(collection => {
+        let array = [];
+        let applied = false
+        collection.forEach(doc => {
+          // Add jobs into array if there's no error
+          try {
+              const docRef = ref.doc(doc.id)
+              docRef.collection('Applicant').get().then(sdoc => {
+                sdoc.forEach(ssdoc => {
+                  if (ssdoc.id === id) {
+                    applied = true
+                  }
+                  else {
+                    applied = false
+                  }
+
+                  if (applied === true) {
+                    let loan = new Job(doc.data().errandname, doc.data().category, doc.data().status, doc.data().client, doc.data().date.toDate(), doc.data().description, doc.data().time.toDate(), doc.data().endtime.toDate(), doc.id, doc.data().price);
+                    array.push(loan);
+                  }
+                })
+              })
+          } catch (error) { }
+
+        });
+        observer.next(array);
+      });
+    });
+  }
+
 }

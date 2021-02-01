@@ -57,6 +57,11 @@ export class AppComponent {
         title : "Make Errand Request",
         url   : "/book-appointment",
         icon  : "filing"
+      },
+      {
+        title : "Errands Overdue",
+        url   : "/clientoverdue",
+        icon  : "timer"
       }
     ]
   }
@@ -74,6 +79,11 @@ export class AppComponent {
         title : "Find Errands",
         url   : "/all-errand-requests",
         icon  : "search"
+      },
+      {
+        title : "Errands Overdue",
+        url   : "/eroverdue",
+        icon  : "timer"
       }
     ]
   }
