@@ -73,7 +73,7 @@ export class ErrandDetailsPage implements OnInit {
                         message: 'This job is clashing with a job you have applied',
                         duration: 2000,
                         position: 'top',
-                        color: 'secondary'
+                        color: 'danger'
                       });
                       toast.present();
                       this.router.navigate(['/all-errand-requests'])
@@ -101,7 +101,7 @@ export class ErrandDetailsPage implements OnInit {
                           message: 'This job is clashing with a job you have applied',
                           duration: 2000,
                           position: 'top',
-                          color: 'secondary'
+                          color: 'danger'
                         });
                         toast.present();
                         this.router.navigate(['/all-errand-requests'])
@@ -118,7 +118,7 @@ export class ErrandDetailsPage implements OnInit {
                   message: 'This job is clashing with a job you have',
                   duration: 2000,
                   position: 'top',
-                  color: 'secondary'
+                  color: 'danger'
                 });
                 toast.present();
                 this.router.navigate(['/all-errand-requests'])
