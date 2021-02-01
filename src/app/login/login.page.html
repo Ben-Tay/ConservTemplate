@@ -12,14 +12,14 @@
     <form [formGroup]="loginForm" style="margin: 10px;">
 
       <ion-list>
-        <ion-item lines="none" style="overflow: visible;">
+        <ion-item lines="none" style="overflow: visible; margin: 1.1pc;">
           <ion-label class="google-label" position="floating">
             E-Mail
           </ion-label>
           <ion-input class="google-input" type="email" formControlName="email"></ion-input>
         </ion-item>
 
-        <ion-item lines="none" style="overflow: visible;">
+        <ion-item lines="none" style="overflow: visible; margin: 1.1pc;">
           <ion-label class="google-label" position="floating">
             Password
           </ion-label>
@@ -37,10 +37,10 @@
       </ng-container>
     </div>
 
-    <ion-button style="margin:1.4pc" expand="block" type="submit" (click)=login()>
+    <ion-button style="margin:1.3pc; height: 3pc;" expand="block" type="submit" (click)=login()>
       Login
     </ion-button>
-    <ion-button style="margin:1.4pc" fill="clear" expand="block" (click)="cancel()">
+    <ion-button style="margin:1.3pc; height: 3pc;" fill="clear" expand="block" (click)="cancel()">
       Cancel
     </ion-button>
   </ion-card>

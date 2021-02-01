@@ -80,7 +80,8 @@
                     <div text-wrap>
                       <p>Errand Date: {{jobs.date | date:'d MMM yyyy'}}</p>
                       <p>Errand Description: {{jobs.description}}</p>
-                      <p>Errand Time: {{jobs.time}}</p>
+                      <p>Reporting Time: {{jobs.time | date:'shortTime'}}</p>
+                      <p>Estimated End Time: {{jobs.endtime | date:'shortTime'}}</p>
                     </div>
                   </ion-label>
                 </ion-col>
@@ -88,6 +89,9 @@
             </ion-card-content>
           </ion-card>
         </ion-item>
+        <div *ngIf="job?.length === 0" class="center">
+          <h5 class="center-content"> You have no errand requests currently</h5>
+        </div>
       </ion-grid>
       <ion-grid *ngSwitchCase="'JobsConfirmed'">
         <ion-item lines="none" *ngFor="let c of jobsconfirmed">
@@ -123,7 +127,8 @@
                     <div text-wrap>
                       <p>Errand Date: {{c.date | date:'d MMM yyyy'}}</p>
                       <p>Errand Description: {{c.description}}</p>
-                      <p>Errand Time: {{c.time}}</p>
+                      <p>Reporting Time: {{c.time | date:'shortTime'}}</p>
+                      <p>Estimated End Time: {{c.endtime | date:'shortTime'}}</p>
                     </div>
                   </ion-label>
                 </ion-col>
@@ -131,18 +136,15 @@
             </ion-card-content>
           </ion-card>
         </ion-item>
+        <div *ngIf="jobsconfirmed?.length === 0" class="center">
+          <h5 class="center-content"> You have no errands confirmed </h5>
+        </div>
       </ion-grid>
     </ion-list>
   </div>
-  <div *ngIf="nodata" class="center">
-    <h5 class="center-content"> You have no errand requests currently </h5>
-  </div>
-  <div *ngIf="nodatamonth" class="center">
-    <h5 class="center-content"> You have no errand requests for this month</h5>
-  </div>
 </ion-content>
 <ion-footer class="segment-footer">
-  <ion-segment #defaultsegment style="--color-checked: #60b5ff;" [(ngModel)]="mySegment"
+  <ion-segment style="--color-checked: #60b5ff;" [(ngModel)]="mySegment"
     (ionChange)="segmentChanged(mySegment)">
     <ion-segment-button value="ClientJobsCreated" (click)="defaultfilter()">
       <ion-label>Errands Created</ion-label>

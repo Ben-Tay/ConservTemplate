@@ -10,14 +10,14 @@
 <ion-content>
   <ion-grid style="margin-top: 1.5pc;">
     <ion-row>
-      <ion-col class="large" style="margin-left: 1pc;" size="2">
+      <ion-col class="large" style="margin-left: 1pc;">
         Errand Name:
       </ion-col>
       <ion-col class="large">
         {{ job?.errandname }}
       </ion-col>
 
-      <ion-col class="large" style="margin-left: 1pc;" size="2">
+      <ion-col class="large" style="margin-left: 1pc;">
         Errand Category:
       </ion-col>
       <ion-col class="large">
@@ -26,32 +26,39 @@
     </ion-row>
     
     <ion-row>
-      <ion-col class="large" style="margin-left: 1pc;" size="2">
+      <ion-col class="large" style="margin-left: 1pc;">
         Client:
       </ion-col>
       <ion-col class="large" (click)="redirectprofile()">
         {{ user }}
       </ion-col>
         
-      <ion-col class="large" style="margin-left: 1pc;" size="2">
+      <ion-col class="large" style="margin-left: 1pc;">
         Pricing:
       </ion-col>
       <ion-col class="large">
         {{ job?.price | currency }}
       </ion-col>
-
     </ion-row>
+
     <ion-row>
-      <ion-col class="large" style="margin-left: 1pc;" size="2">
+      <ion-col class="large" style="margin-left: 1pc;" size="2.9">
         Errand Meeting Time:
       </ion-col>
       <ion-col class="large">
-        {{ job?.date | date:'d MMM yyyy' }}, {{ job?.time }}
+        {{ job?.date | date:'d MMM yyyy' }}, {{ job?.time | date: 'shortTime' }}
+      </ion-col>
+
+      <ion-col class="large" style="margin-left: 1pc;" size="2.9">
+        Estimated Ending Time:
+      </ion-col>
+      <ion-col class="large">
+        {{ job?.endtime | date: 'shortTime' }}
       </ion-col>
     </ion-row>
 
     <ion-row class="large" style="margin-left: 1pc;">
-      <ion-col size="2">
+      <ion-col>
         Errand Description:
       </ion-col>
     </ion-row>

@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Reason For Rejecting</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="rejectreasonForm" (ngSubmit)="onReject(job)">
+    <ion-label>
+      <ion-card class="errand-detail-card">
+        <h2> Errand Details</h2>
+        <p>Errand ID: {{job?.id}}</p>
+        <h3>Errand Applicant: <strong>{{applicant.id}}</strong></h3>
+      </ion-card>
+    </ion-label>
+    <ion-item>
+      <!--Display form fields for rejectreasonform-->
+      <ion-label>Reason:</ion-label>
+      <ion-select formControlName="reason">
+        <ion-select-option value="Bad Reviews">
+          Bad Reviews
+        </ion-select-option>
+        <ion-select-option value="Not Suitable">
+          Not Suitable
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Description:</ion-label>
+      <ion-textarea formControlName="description" maxlength="50" rows="1">
+      </ion-textarea>
+      <p>{{50 - rejectreasonForm.value.description.length}} characters left</p>
+    </ion-item>
+    <!--Validate for description field-->
+    <ion-item *ngIf="rejectreasonForm.controls.description.errors && submitted">
+      <ion-label color="danger">
+        Description is required
+      </ion-label>
+    </ion-item>
+    <!--Trigger submit event upon click-->
+    <ion-button expand="block" color="tertiary" type="submit">Submit</ion-button>
+  </form>
+</ion-content>

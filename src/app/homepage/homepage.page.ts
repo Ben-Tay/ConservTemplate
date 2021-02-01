@@ -41,12 +41,7 @@ export class HomepagePage implements OnInit {
         })
     }
   
-    ionViewDidEnter() {
-      this.userService.getUserImage(this.userEmail).subscribe(async doc => {
-        this.userService.showLoading()
-        this.users = await doc;
-        })
-    }
+   
 
 logout()	{	
   this.authService.logout();
