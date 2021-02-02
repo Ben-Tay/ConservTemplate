@@ -15,6 +15,7 @@ import { CarddetailsPageModule } from './carddetails/carddetails.module';
 import { PaymentcompletePageModule } from './paymentcomplete/paymentcomplete.module';
 import { ReceivepaymentPageModule } from './receivepayment/receivepayment.module';
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
