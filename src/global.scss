@@ -82,6 +82,31 @@ ion-footer.segment-footer{
     background-color: transparent;
     --ion-background-color: transparent;
 }
+
+.pop-over-style {
+    .popover-content {
+        //width: 80% !important; - this wont work or the bottom one.
+        --width: 200px !important;
+        border: 1px solid black;
+        top: 100;
+    }
+}
+.notifications-badge {
+    background-color: red;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    border-radius: 100%;
+}
+
+.menu-button {            
+    position: relative;
+    width: 42px;
+    top:1px;
+    right: 1px;
+    overflow: visible!important;
+}
+
 @import "~@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */

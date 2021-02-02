@@ -266,7 +266,7 @@ export class JobService {
       return firebase.firestore().collection('JobsAvailable').doc(id).collection('Applicants').where('applicationstatus', '==', 'Rejected').get().then(collection => {
         job.applicant = [];
         collection.forEach(doc => {
-          let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus)
+          let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus, doc.data().reason, doc.data().description)
           job.applicant.push(applicant)
         })
 
@@ -274,8 +274,8 @@ export class JobService {
       })
 
     })
-
   }
+
 
   acceptapplicantrequest(sjob: Job, applicant: ErrandRunner) {
     let job = new Job(sjob.errandname, sjob.category, "Accepted", sjob.client, sjob.date, sjob.description, sjob.time, sjob.endtime, sjob.id, sjob.price)
@@ -386,31 +386,4 @@ export class JobService {
   }
 
 }
-  // getErrandCategoryPrices(): Observable<any> {
-  //   return new Observable(observer => {
-  //     //Read collection '/price'
-  //     firebase.firestore().collection('JobsAvailable').onSnapshot(collection => {
-  //       let array = [];
-  //       collection.forEach(doc => {
-  //         //Add job into array if theres no error
-  //         try {
-  //           let jobdata = doc.data()
-  //           const date = jobdata.date.toDate()
-  //           this.pricesRef.get().then(snapshot => {
-  //             if (snapshot.empty) {
-  //             } else {
-  //               snapshot.forEach(doc => {
-  //                 if (doc.id === jobdata.category) {
-  //                   let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, jobdata.time, doc.id, doc.data().price);
-  //                   array.push(job);
-  //                   observer.next(array)
-  //                 }
-  //               })
-  //             }
-  //           })
-  //         } catch (error) { }
-  //       })
-  //     });
-  //   });
-  // }
-
+  

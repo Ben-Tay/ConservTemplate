@@ -57,6 +57,12 @@ export class AppComponent {
         title : "Make Errand Request",
         url   : "/book-appointment",
         icon  : "filing"
+      },
+      {
+        title : "Notifications",
+        url   : "app-notification",
+        icon  : "notifications",
+        badge : "5"
       }
     ]
   }
@@ -74,6 +80,12 @@ export class AppComponent {
         title : "Find Errands",
         url   : "/all-errand-requests",
         icon  : "search"
+      },
+      {
+        title : "Notifications",
+        url   : "erapp-notification",
+        icon  : "notifications",
+        badge : "5"
       }
     ]
   }

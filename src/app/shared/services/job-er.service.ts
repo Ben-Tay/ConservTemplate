@@ -187,4 +187,36 @@ export class JobERService {
         return array
     });
   }
+
+  getRejectedJobsByApplicant(client: string): Observable<any> {
+    return new Observable(observer => {
+      // Read collection '/JobsAvailable'
+      firebase.firestore().collection('JobsAvailable').orderBy('date').onSnapshot(collection => {
+        let array = [];
+        collection.forEach(doc => {
+          // Add job into array if there's no error
+          if (doc.data().client !== client) {
+            try {
+              let jobdata = doc.data()
+              const date = jobdata.date.toDate()
+              const reportime = jobdata.time.toDate()
+              const endtime = jobdata.endtime.toDate()
+              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+              array.push(job);
+              return firebase.firestore().collection('JobsAvailable').doc(doc.id).collection('Applicants').where('applicationstatus', '==', 'Rejected').get().then(collection => {
+                job.applicant = [];
+                collection.forEach(doc => {
+                  let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus, doc.data().reason, doc.data().description)
+                  job.applicant.push(applicant)
+                })
+        
+              });
+            } catch (error) { }
+          }
+          // Add loan into array if there's no error
+          observer.next(array)
+        });
+      });
+    });
+  }
 }
