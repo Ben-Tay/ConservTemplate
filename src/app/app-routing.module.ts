@@ -25,9 +25,12 @@ const routes: Routes = [
   { path: 'homepage', loadChildren: './homepage/homepage.module#HomepagePageModule' },
   { path: 'users', loadChildren: './users/users.module#UsersPageModule' },
   { path: 'userprofile/:id', loadChildren: './userprofile/userprofile.module#UserprofilePageModule' },
-  { path: 'erjobs', loadChildren: './erjobs/erjobs.module#ERJobsPageModule' },  { path: 'rejectreason', loadChildren: './rejectreason/rejectreason.module#RejectreasonPageModule' },
+  { path: 'erjobs', loadChildren: './erjobs/erjobs.module#ERJobsPageModule' },
+  { path: 'rejectreason', loadChildren: './rejectreason/rejectreason.module#RejectreasonPageModule' },
   { path: 'eroverdue', loadChildren: './eroverdue/eroverdue.module#ERoverduePageModule' },
-  { path: 'clientoverdue', loadChildren: './clientoverdue/clientoverdue.module#ClientoverduePageModule' }
+  { path: 'clientoverdue', loadChildren: './clientoverdue/clientoverdue.module#ClientoverduePageModule' },
+  { path: 'app-notification', loadChildren: './app-notification/app-notification.module#AppNotificationPageModule' },
+  { path: 'erapp-notification', loadChildren: './erapp-notification/erapp-notification.module#ErappNotificationPageModule' }
 
 
 ];
