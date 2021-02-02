@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IonButton, MenuController } from '@ionic/angular';
+import { ErrandRunner } from '../shared/models/ErrandRunner';
 import { Job } from '../shared/models/Job';
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
@@ -64,12 +65,15 @@ export class ClientoverduePage implements OnInit {
       })
   }
 
-  toApplicants(id: string) {
-    this.router.navigate(['clientjobsnotification', id])
-  }
-
   toERProfile(id: string) {
     this.router.navigate(['/userprofile', id])
+  }
+
+  ExpiringJobs(id: string){
+    this.jobservice.getSpecificAcceptedJobsById(id, this.client)
+    .subscribe(data=>{
+      this.jobservice.expireJobById(data, data.applicant)
+    })
   }
 
 }
