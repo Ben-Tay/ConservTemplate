@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RejectreasonPageModule } from './rejectreason/rejectreason.module';
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
