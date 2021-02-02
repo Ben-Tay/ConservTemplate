@@ -1,0 +1,32 @@
+ion-card-header{
+    border-bottom: 1px solid black;
+    padding-bottom: 0;
+    position: relative;
+}
+
+ion-card {
+    margin: 1.2pc;
+    border-radius: 15px;
+    border: 1.5px solid black;
+    color: black;
+    background-color: white;
+    --background-hover: #d7d8da;
+}
+
+.center-right {
+    position: absolute;
+    top: 50%;
+    right: 30%;
+    transform: translateY(-50%) translateX(30%);
+}
+
+.center {
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.center-content{
+    color: red;
+}
