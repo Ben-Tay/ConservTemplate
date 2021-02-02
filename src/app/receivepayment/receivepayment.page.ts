@@ -5,11 +5,11 @@ import { CarddetailsPage } from '../carddetails/carddetails.page';
 import { PaynowPage } from '../paynow/paynow.page';
 
 @Component({
-  selector: 'app-confirm-payment',
-  templateUrl: './confirm-payment.page.html',
-  styleUrls: ['./confirm-payment.page.scss'],
+  selector: 'app-receivepayment',
+  templateUrl: './receivepayment.page.html',
+  styleUrls: ['./receivepayment.page.scss'],
 })
-export class ConfirmPaymentPage implements OnInit {
+export class ReceivepaymentPage implements OnInit {
 
   constructor(private modalController: ModalController, private router: Router) { }
 

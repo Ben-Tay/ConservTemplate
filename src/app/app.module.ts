@@ -10,6 +10,10 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RejectreasonPageModule } from './rejectreason/rejectreason.module';
 import { ConfirmPaymentPageModule } from './confirm-payment/confirm-payment.module';
+import { PaynowPageModule } from './paynow/paynow.module';
+import { CarddetailsPageModule } from './carddetails/carddetails.module';
+import { PaymentcompletePageModule } from './paymentcomplete/paymentcomplete.module';
+import { ReceivepaymentPageModule } from './receivepayment/receivepayment.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +23,11 @@ import { ConfirmPaymentPageModule } from './confirm-payment/confirm-payment.modu
     IonicModule.forRoot(),
     AppRoutingModule,
     RejectreasonPageModule,
-    ConfirmPaymentPageModule
+    ConfirmPaymentPageModule,
+    PaynowPageModule,
+    CarddetailsPageModule,
+    PaymentcompletePageModule,
+    ReceivepaymentPageModule
   ],
   providers: [
     StatusBar,

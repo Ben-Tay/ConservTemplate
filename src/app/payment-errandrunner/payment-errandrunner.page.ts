@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { ReceivepaymentPage } from '../receivepayment/receivepayment.page';
 
 @Component({
   selector: 'app-payment-errandrunner',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentErrandrunnerPage implements OnInit {
 
-  constructor() { }
+  constructor(private modalController: ModalController) { }
 
   ngOnInit() {
+  }
+
+  async receive() {
+    const modal = await this.modalController.create({
+      component: ReceivepaymentPage
+    });
+    return await modal.present();
   }
 
 }
