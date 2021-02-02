@@ -32,7 +32,8 @@ export class UserService {
       gender: p.gender,
       email: p.email,
       password: p.password,
-      phoneno: p.phoneno
+      phoneno: p.phoneno,
+      image: 'person-icon.png'
     });
   }
 

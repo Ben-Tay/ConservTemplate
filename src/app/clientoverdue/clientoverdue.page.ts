@@ -58,14 +58,6 @@ export class ClientoverduePage implements OnInit {
 
   ionViewDidEnter() {
     this.mySegment = "ClientJobsOverdue"
-    this.jobservice.getCompletedJobsByClient(this.client)
-      .subscribe(async data => {
-        this.jobsconfirmed = await data
-      })
-    this.jobservice.getExpiredJobsByClient(this.client)
-      .subscribe(async data => {
-        this.jobsexpired = await data
-      })
   }
 
   toERProfile(id: string) {
@@ -74,6 +66,32 @@ export class ClientoverduePage implements OnInit {
 
   ExpiringJobs(job: Job) {
     this.jobservice.expireJobById(job)
+    this.segmentChanged('ClientJobsOverdue')
+  }
+
+  segmentChanged(mySegment) {
+    if (mySegment == 'ClientJobsOverdue') {
+      this.jobservice.getAllAvailableOverdueJobsByClient(this.client)
+        .subscribe(data => {
+          this.job = data;
+        })
+      this.jobservice.getAllOverdueJobsByClient(this.client)
+        .subscribe(data => {
+          this.jobsAccepted = data;
+        })
+    }
+    else if (mySegment == 'JobsCompleted') {
+      this.jobservice.getCompletedJobsByClient(this.client)
+        .subscribe(data => {
+          this.jobsconfirmed = data
+        })
+    }
+    else if (mySegment == 'JobsExpired') {
+      this.jobservice.getExpiredJobsByClient(this.client)
+        .subscribe(data => {
+          this.jobsexpired = data
+        })
+    }
   }
 
   toApplicants(id: string) {

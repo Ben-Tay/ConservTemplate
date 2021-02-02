@@ -526,7 +526,7 @@ export class JobService {
 
   expireJobById(sjob: Job) {
     const ref = firebase.firestore().collection('JobsAccepted').doc(sjob.id)
-    ref.update({
+    return ref.update({
       status: 'Expired'
     })
   }

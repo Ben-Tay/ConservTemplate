@@ -69,9 +69,6 @@ export class ClientjobsnotificationPage implements OnInit {
       this.ngOnInit()
     });
     modal.present()
-
-
-    
   }
 
 
