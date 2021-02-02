@@ -475,7 +475,7 @@ export class JobService {
                   let applier = new ErrandRunner(applicantDoc.data().date.toDate(), applicantDoc.id, applicantDoc.data().applicationstatus);
                   job.applicant.push(applier);
                 });
-              });
+              })
             } catch (error) { }
           }
           // Add loan into array if there's no error
