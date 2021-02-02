@@ -45,12 +45,14 @@ export class JobService {
 
           // Add job into array if there's no error
           try {
-            let jobdata = doc.data()
-            const date = jobdata.date.toDate()
-            const reportime = jobdata.time.toDate()
-            const endtime = jobdata.endtime.toDate()
-            let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime,  doc.id, jobdata.price);
-            array.push(job);
+            if (doc.data().date.toDate() >= new Date()) {
+              let jobdata = doc.data()
+              const date = jobdata.date.toDate()
+              const reportime = jobdata.time.toDate()
+              const endtime = jobdata.endtime.toDate()
+              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+              array.push(job);
+            }
           } catch (error) { }
 
         });
@@ -69,24 +71,26 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              let jobdata = doc.data()
-              const date = jobdata.date.toDate()
-              const reportime = jobdata.time.toDate()
-              const endtime = jobdata.endtime.toDate()
-              const filtermonth = date.toLocaleString('default', { month: 'short' })
-              if (filtermonth === month) {
-                let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+              if (doc.data().date.toDate() >= new Date()) {
+                let jobdata = doc.data()
+                const date = jobdata.date.toDate()
+                const reportime = jobdata.time.toDate()
+                const endtime = jobdata.endtime.toDate()
+                const filtermonth = date.toLocaleString('default', { month: 'short' })
+                if (filtermonth === month) {
+                  let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
 
-                array.push(job);
+                  array.push(job);
 
-                let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
-                dbApplicant.onSnapshot(applicantCollection => {
-                  job.applicant = []; // Empty array
-                  applicantCollection.forEach(applicantDoc => {
-                    let applier = new ErrandRunner(applicantDoc.data().date.toDate(), applicantDoc.id);
-                    job.applicant.push(applier);
+                  let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
+                  dbApplicant.onSnapshot(applicantCollection => {
+                    job.applicant = []; // Empty array
+                    applicantCollection.forEach(applicantDoc => {
+                      let applier = new ErrandRunner(applicantDoc.data().date.toDate(), applicantDoc.id);
+                      job.applicant.push(applier);
+                    });
                   });
-                });
+                }
               }
             } catch (error) { }
           });
@@ -101,15 +105,17 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              let jobdata = doc.data()
-              const date = jobdata.date.toDate()
-              const reportime = jobdata.time.toDate()
-              const endtime = jobdata.endtime.toDate()
-              const filtermonth = date.toLocaleString('default', { month: 'short' })
-              if (filtermonth === month) {
-                let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+              if (doc.data().date.toDate() >= new Date()) {
+                let jobdata = doc.data()
+                const date = jobdata.date.toDate()
+                const reportime = jobdata.time.toDate()
+                const endtime = jobdata.endtime.toDate()
+                const filtermonth = date.toLocaleString('default', { month: 'short' })
+                if (filtermonth === month) {
+                  let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
 
-                array.push(job);
+                  array.push(job);
+                }
               }
             } catch (error) { }
 
@@ -131,21 +137,23 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              let jobdata = doc.data()
-              const date = jobdata.date.toDate()
-              const reportime = jobdata.time.toDate()
-              const endtime = jobdata.endtime.toDate()
-              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
-              array.push(job);
+              if (doc.data().date.toDate() >= new Date()) {
+                let jobdata = doc.data()
+                const date = jobdata.date.toDate()
+                const reportime = jobdata.time.toDate()
+                const endtime = jobdata.endtime.toDate()
+                let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+                array.push(job);
 
-              let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
-              dbApplicant.onSnapshot(applicantCollection => {
-                job.applicant = []; // Empty array
-                applicantCollection.forEach(applicantDoc => {
-                  let applier = new ErrandRunner(applicantDoc.data().date.toDate(), applicantDoc.id);
-                  job.applicant.push(applier);
+                let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
+                dbApplicant.onSnapshot(applicantCollection => {
+                  job.applicant = []; // Empty array
+                  applicantCollection.forEach(applicantDoc => {
+                    let applier = new ErrandRunner(applicantDoc.data().date.toDate(), applicantDoc.id);
+                    job.applicant.push(applier);
+                  });
                 });
-              });
+              }
             } catch (error) { }
           });
           observer.next(array);
@@ -158,13 +166,14 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              let jobdata = doc.data()
-              const date = jobdata.date.toDate()
-              const reportime = jobdata.time.toDate()
-              const endtime = jobdata.endtime.toDate()
-              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
-              array.push(job);
-
+              if (doc.data().date.toDate() >= new Date()) {
+                let jobdata = doc.data()
+                const date = jobdata.date.toDate()
+                const reportime = jobdata.time.toDate()
+                const endtime = jobdata.endtime.toDate()
+                let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+                array.push(job);
+              }
             } catch (error) { }
 
           });
@@ -185,13 +194,14 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              let jobdata = doc.data()
-              const date = jobdata.date.toDate()
-              const reportime = jobdata.time.toDate()
-              const endtime = jobdata.endtime.toDate()
-              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
-              array.push(job);
-
+              if (doc.data().date.toDate() >= new Date()) {
+                let jobdata = doc.data()
+                const date = jobdata.date.toDate()
+                const reportime = jobdata.time.toDate()
+                const endtime = jobdata.endtime.toDate()
+                let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+                array.push(job);
+              }
             } catch (error) { }
 
           });
@@ -206,21 +216,23 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              let jobdata = doc.data()
-              const date = jobdata.date.toDate()
-              const reportime = jobdata.time.toDate()
-              const endtime = jobdata.endtime.toDate()
-              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
-              array.push(job);
+              if (doc.data().date.toDate() >= new Date()) {
+                let jobdata = doc.data()
+                const date = jobdata.date.toDate()
+                const reportime = jobdata.time.toDate()
+                const endtime = jobdata.endtime.toDate()
+                let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+                array.push(job);
 
-              let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
-              dbApplicant.onSnapshot(applicantCollection => {
-                job.applicant = []; // Empty array
-                applicantCollection.forEach(applicantDoc => {
-                  let applier = new ErrandRunner(applicantDoc.data().date.toDate(), applicantDoc.id);
-                  job.applicant.push(applier);
+                let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
+                dbApplicant.onSnapshot(applicantCollection => {
+                  job.applicant = []; // Empty array
+                  applicantCollection.forEach(applicantDoc => {
+                    let applier = new ErrandRunner(applicantDoc.data().date.toDate(), applicantDoc.id);
+                    job.applicant.push(applier);
+                  });
                 });
-              });
+              }
             } catch (error) { }
 
           });
@@ -344,21 +356,23 @@ export class JobService {
           // Add job into array if there's no error
           if (doc.data().client === client) {
             try {
-              let jobdata = doc.data()
-              const date = jobdata.date.toDate()
-              const reportime = jobdata.time.toDate()
-              const endtime = jobdata.endtime.toDate()
-              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
-              array.push(job);
-              //Read subcoollection '/JobsAccepted/<autoID>/Applicant'
-              let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
-              dbApplicant.onSnapshot(applicantCollection => {
-                job.applicant = []; // Empty array
-                applicantCollection.forEach(applicantDoc => {
-                  let applier = new ErrandRunner(applicantDoc.data().date.toDate(), applicantDoc.id, applicantDoc.data().applicationstatus);
-                  job.applicant.push(applier);
+              if (doc.data().date.toDate() >= new Date()) {
+                let jobdata = doc.data()
+                const date = jobdata.date.toDate()
+                const reportime = jobdata.time.toDate()
+                const endtime = jobdata.endtime.toDate()
+                let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+                array.push(job);
+                //Read subcoollection '/JobsAccepted/<autoID>/Applicant'
+                let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
+                dbApplicant.onSnapshot(applicantCollection => {
+                  job.applicant = []; // Empty array
+                  applicantCollection.forEach(applicantDoc => {
+                    let applier = new ErrandRunner(applicantDoc.data().date.toDate(), applicantDoc.id, applicantDoc.data().applicationstatus);
+                    job.applicant.push(applier);
+                  });
                 });
-              });
+              }
             } catch (error) { }
           }
           // Add loan into array if there's no error
@@ -383,6 +397,181 @@ export class JobService {
         observer.next(array);
       })
     })
+  }
+
+  getAllOverdueJobsByClient(client: string): Observable<any> {
+    return new Observable(observer => {
+      let array = [];
+      // Read collection '/JobsAvailable'
+      firebase.firestore().collection('JobsAvailable').where('client', '==', client).onSnapshot(collection => {
+        collection.forEach(doc => {
+
+          // Add job into array if there's no error
+          try {
+            if (doc.data().date.toDate() < new Date()) {
+              let jobdata = doc.data()
+              const date = jobdata.date.toDate()
+              const reportime = jobdata.time.toDate()
+              const endtime = jobdata.endtime.toDate()
+              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+              array.push(job);
+            }
+          } catch (error) { }
+
+        });
+      });
+
+      firebase.firestore().collection('JobsAccepted').where('status', '==', 'Accepted').onSnapshot(collection => {
+        collection.forEach(doc => {
+          // Add job into array if there's no error
+          if (doc.data().client === client) {
+            try {
+              if (doc.data().date.toDate() < new Date()) {
+                let jobdata = doc.data()
+                const date = jobdata.date.toDate()
+                const reportime = jobdata.time.toDate()
+                const endtime = jobdata.endtime.toDate()
+                let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+                array.push(job);
+                //Read subcoollection '/JobsAccepted/<autoID>/Applicant'
+                let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
+                dbApplicant.onSnapshot(applicantCollection => {
+                  job.applicant = []; // Empty array
+                  applicantCollection.forEach(applicantDoc => {
+                    let applier = new ErrandRunner(applicantDoc.data().date.toDate(), applicantDoc.id, applicantDoc.data().applicationstatus);
+                    job.applicant.push(applier);
+                  });
+                });
+              }
+            } catch (error) { }
+          }
+        });
+
+        observer.next(array);
+      });
+    });
+  }
+
+  getCompletedJobsByClient(client: string): Observable<any> {
+    return new Observable(observer => {
+      // Read collection '/JobsAccepted'
+      firebase.firestore().collection('JobsCompleted').orderBy('date').onSnapshot(collection => {
+        let array = [];
+        collection.forEach(doc => {
+          // Add job into array if there's no error
+          if (doc.data().client === client) {
+            try {
+              let jobdata = doc.data()
+              const date = jobdata.date.toDate()
+              const reportime = jobdata.time.toDate()
+              const endtime = jobdata.endtime.toDate()
+              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+              array.push(job);
+              //Read subcoollection '/JobsAccepted/<autoID>/Applicant'
+              let dbApplicant = firebase.firestore().collection('JobsCompleted/' + doc.id + '/Applicant');
+              dbApplicant.onSnapshot(applicantCollection => {
+                job.applicant = []; // Empty array
+                applicantCollection.forEach(applicantDoc => {
+                  let applier = new ErrandRunner(applicantDoc.data().date.toDate(), applicantDoc.id, applicantDoc.data().applicationstatus);
+                  job.applicant.push(applier);
+                });
+              })
+            } catch (error) { }
+          }
+          // Add loan into array if there's no error
+          observer.next(array)
+        });
+      });
+    });
+  }
+
+  getExpiredJobsByClient(client: string): Observable<any> {
+    return new Observable(observer => {
+      // Read collection '/JobsAccepted'
+      firebase.firestore().collection('JobsAccepted').where('status', '==', 'Expired').onSnapshot(collection => {
+        let array = [];
+        collection.forEach(doc => {
+          // Add job into array if there's no error
+          if (doc.data().client === client) {
+            try {
+              let jobdata = doc.data()
+              const date = jobdata.date.toDate()
+              const reportime = jobdata.time.toDate()
+              const endtime = jobdata.endtime.toDate()
+              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+              array.push(job);
+              //Read subcoollection '/JobsAccepted/<autoID>/Applicant'
+              let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
+              dbApplicant.onSnapshot(applicantCollection => {
+                job.applicant = []; // Empty array
+                applicantCollection.forEach(applicantDoc => {
+                  let applier = new ErrandRunner(applicantDoc.data().date.toDate(), applicantDoc.id, applicantDoc.data().applicationstatus);
+                  job.applicant.push(applier);
+                });
+              });
+            } catch (error) { }
+          }
+          // Add loan into array if there's no error
+          observer.next(array)
+        });
+      });
+    });
+  }
+
+  expireJobById(sjob: Job, applicant: ErrandRunner) {
+    let job = new Job(sjob.errandname, sjob.category, "Expired", sjob.client, sjob.date, sjob.description, sjob.time, sjob.endtime, sjob.id, sjob.price)
+
+    return firebase.firestore().collection('JobsAccepted').add({
+      errandname: job.errandname,
+      category: job.category,
+      status: job.status,
+      client: job.client,
+      date: job.date,
+      description: job.description,
+      time: job.time,
+      endtime: job.endtime,
+      price: job.price
+    }).then(doc => {
+      job.id = doc.id;
+      firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant/').doc(applicant.id).set({
+        date: applicant.date,
+        applicationstatus: applicant.applicationstatus
+      })
+      return job;
+    })
+  }
+
+  getSpecificAcceptedJobsById(id: string, client: string): Observable<any> {
+    return new Observable(observer => {
+      // Read collection '/JobsAccepted'
+      firebase.firestore().collection('JobsAccepted').onSnapshot(collection => {
+        let array = [];
+        collection.forEach(doc => {
+          // Add job into array if there's no error
+          if (doc.data().client === client) {
+            try {
+              let jobdata = doc.data()
+              const date = jobdata.date.toDate()
+              const reportime = jobdata.time.toDate()
+              const endtime = jobdata.endtime.toDate()
+              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+              array.push(job);
+              //Read subcoollection '/JobsAccepted/<autoID>/Applicant'
+              let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
+              dbApplicant.onSnapshot(applicantCollection => {
+                job.applicant = []; // Empty array
+                applicantCollection.forEach(applicantDoc => {
+                  let applier = new ErrandRunner(applicantDoc.data().date.toDate(), applicantDoc.id, applicantDoc.data().applicationstatus);
+                  job.applicant.push(applier);
+                });
+              });
+            } catch (error) { }
+          }
+          // Add loan into array if there's no error
+          observer.next(array)
+        });
+      });
+    });
   }
 
 }

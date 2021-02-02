@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { async } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { isThisISOWeek } from 'date-fns';
 import { ErrandRunner } from '../shared/models/ErrandRunner';
 import { Job } from '../shared/models/Job';
 import { JobERService } from '../shared/services/job-er.service';
@@ -18,6 +16,7 @@ export class ErrandDetailsPage implements OnInit {
   errandId: string;
   job: Job;
   user: string;
+  useremail: string;
 
   array: Job[] = [];
   acceptedarray: Job[] = [];
@@ -35,11 +34,12 @@ export class ErrandDetailsPage implements OnInit {
       })
 
     this.userService.observeAuthState(user => {
+      this.useremail = user.email
       this.jobERService.getAllErrandsApplied(user.email).subscribe(data => {
         this.array = data
       })
 
-      this.jobERService.getAllErrandsAccepted(user.email).subscribe(data=>{
+      this.jobERService.getAllErrandsAccepted(user.email).subscribe(data => {
         this.acceptedarray = data
       })
     })
@@ -51,69 +51,20 @@ export class ErrandDetailsPage implements OnInit {
 
   applyErrand() {
     //Check user is logged in
-    this.userService.observeAuthState(user => {
-      if (user) {
-        let ERdetails = new ErrandRunner(new Date(), user.email, 'Pending')
+
+        let ERdetails = new ErrandRunner(new Date(), this.useremail, 'Pending')
 
         //If array is not 0 then check
-        if(this.acceptedarray.length != 0){
-          this.acceptedarray.forEach(async mdoc=>{
+        if (this.acceptedarray.length != 0) {
+          this.acceptedarray.forEach(async mdoc => {
             if (mdoc.date.getDate() != this.job.date.getDate()) {
-              if (this.array.length != 0) {
-                this.array.forEach(async doc => {
-                  if (doc.date.getDate() != this.job.date.getDate()) {
-                    this.successfullyapplied(ERdetails)
-                  }
-                  else {
-                    if(doc.time.getTime()>=this.job.endtime.getTime()||doc.endtime.getTime()<=this.job.time.getTime()){
-                      this.successfullyapplied(ERdetails)
-                    }
-                    else{
-                      const toast = await this.toastController.create({
-                        message: 'This job is clashing with a job you have applied',
-                        duration: 2000,
-                        position: 'top',
-                        color: 'danger'
-                      });
-                      toast.present();
-                      this.router.navigate(['/all-errand-requests'])
-                    }
-                  }
-                })
-              }
-              else {
-                this.successfullyapplied(ERdetails)
-              }
+              this.AppliedCheck(ERdetails)
             }
             else {
-              if(mdoc.time.getTime()>=this.job.endtime.getTime() || mdoc.endtime.getTime()<=this.job.time.getTime()){
-                if (this.array.length != 0) {
-                  this.array.forEach(async doc => {
-                    if (doc.date.getDate() != this.job.date.getDate()) {
-                      this.successfullyapplied(ERdetails)
-                    }
-                    else {
-                      if(doc.time.getTime()>=this.job.endtime.getTime() || doc.endtime.getTime()<=this.job.time.getTime()){
-                        this.successfullyapplied(ERdetails)
-                      }
-                      else{
-                        const toast = await this.toastController.create({
-                          message: 'This job is clashing with a job you have applied',
-                          duration: 2000,
-                          position: 'top',
-                          color: 'danger'
-                        });
-                        toast.present();
-                        this.router.navigate(['/all-errand-requests'])
-                      }
-                    }
-                  })
-                }
-                else {
-                  this.successfullyapplied(ERdetails)
-                }
+              if (mdoc.time.getTime() >= this.job.endtime.getTime() || mdoc.endtime.getTime() <= this.job.time.getTime()) {
+                this.AppliedCheck(ERdetails)
               }
-              else{
+              else {
                 const toast = await this.toastController.create({
                   message: 'This job is clashing with a job you have',
                   duration: 2000,
@@ -126,8 +77,9 @@ export class ErrandDetailsPage implements OnInit {
             }
           })
         }
-      }
-    })
+        else {
+          this.AppliedCheck(ERdetails)
+        }
   }
 
   successfullyapplied(ER: ErrandRunner) {
@@ -143,7 +95,35 @@ export class ErrandDetailsPage implements OnInit {
     })
   }
 
-  redirectprofile(){
+  AppliedCheck(ERdetails: ErrandRunner){
+    if (this.array.length != 0) {
+      this.array.forEach(async doc => {
+        if (doc.date.getDate() != this.job.date.getDate()) {
+          this.successfullyapplied(ERdetails)
+        }
+        else {
+          if (doc.time.getTime() >= this.job.endtime.getTime() || doc.endtime.getTime() <= this.job.time.getTime()) {
+            this.successfullyapplied(ERdetails)
+          }
+          else {
+            const toast = await this.toastController.create({
+              message: 'This job is clashing with a job you have applied',
+              duration: 2000,
+              position: 'top',
+              color: 'danger'
+            });
+            toast.present();
+            this.router.navigate(['/all-errand-requests'])
+          }
+        }
+      })
+    }
+    else {
+      this.successfullyapplied(ERdetails)
+    }
+  }
+
+  redirectprofile() {
     this.router.navigate(['/userprofile', this.job.client])
   }
 }
