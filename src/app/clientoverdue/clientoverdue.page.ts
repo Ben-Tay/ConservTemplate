@@ -12,6 +12,7 @@ import { UserService } from '../shared/services/user.service';
 })
 export class ClientoverduePage implements OnInit {
   job: Job[];
+  jobsAccepted: Job[];
   jobsconfirmed: Job[];
   jobsexpired: Job[];
   client: string;
@@ -29,16 +30,20 @@ export class ClientoverduePage implements OnInit {
     this.userservice.observeAuthState(user => {
       if (user) {
         this.client = user.email;
-        this.jobservice.getAllOverdueJobsByClient(this.client)
+        this.jobservice.getAllAvailableOverdueJobsByClient(this.client)
           .subscribe(data => {
             this.job = data;
           })
+        this.jobservice.getAllOverdueJobsByClient(this.client)
+          .subscribe(data => {
+            this.jobsAccepted = data;
+          })
         this.jobservice.getCompletedJobsByClient(this.client)
-          .subscribe( data => {
+          .subscribe(data => {
             this.jobsconfirmed = data
           })
         this.jobservice.getExpiredJobsByClient(this.client)
-          .subscribe( data => {
+          .subscribe(data => {
             this.jobsexpired = data
           })
         this.mySegment = 'ClientJobsOverdue'
@@ -67,11 +72,16 @@ export class ClientoverduePage implements OnInit {
     this.router.navigate(['/userprofile', id])
   }
 
-  ExpiringJobs(id: string){
+  ExpiringJobs(id: string) {
     this.jobservice.getSpecificAcceptedJobsById(id, this.client)
-    .subscribe(data=>{
-      this.jobservice.expireJobById(data, data.applicant)
-    })
+      .subscribe(data => {
+        this.jobservice.expireJobById(data, data.applicant)
+      })
+  }
+
+  toApplicants(id: string) {
+    this.router.navigate(['clientjobsnotification', id])
+
   }
 
 }

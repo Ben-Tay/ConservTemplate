@@ -3,7 +3,7 @@
     <ion-title>Overdue Errands</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button menuId="first"></ion-menu-button>
-      </ion-buttons>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -12,57 +12,115 @@
     <ion-list style="background-color: transparent; --ion-background-color: transparent">
 
       <ion-grid *ngSwitchCase="'ClientJobsOverdue'">
-        <ion-item lines="none" *ngFor="let jobs of job">
-          <ion-card style="background-color: #00F4F4;">
-            <ion-card-header>
-              <ion-row>
-                <ion-col size="0.5">
-                  <ion-thumbnail text-wrap>
-                    <ion-icon size="large" class="center-right" name="briefcase" color="medium"></ion-icon>
-                  </ion-thumbnail>
-                </ion-col>
-                <ion-col>
-                  <ion-row>
-                    <ion-card-title>{{jobs.errandname}}</ion-card-title>
-                  </ion-row>
-                  <ion-row>
-                    <ion-card-subtitle>Errand Category: {{jobs.category}} </ion-card-subtitle>
-                  </ion-row>
-                </ion-col>
-                <ion-col class="align-end" *ngFor="let m of jobs?.applicant">
-                  <ion-button (click)="toERProfile(m.id)">Errand Runner
-                    <ion-icon slot="start" name="person"></ion-icon>
-                  </ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-row>
-                <ion-col size="0.5">
-                </ion-col>
-                <ion-col>
-                  <ion-label>
-                    <div text-wrap>
-                      <p>Errand Date: {{jobs.date | date:'d MMM yyyy'}}</p>
-                      <p>Errand Description: {{jobs.description}}</p>
-                      <p>Reporting Time: {{jobs.time | date:'shortTime'}}</p>
-                      <p>Estimated End Time: {{jobs.endtime | date:'shortTime'}}</p>
-                    </div>
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col>
-                  <ion-button size="default" color="danger" expand="block" (click)="ExpiringJobs(jobs.id)">Expired</ion-button>
-                </ion-col>
-                <ion-col>
-                  <ion-button size="default" color="success" expand="block">Completed</ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-card-content>
-          </ion-card>
-        </ion-item>
-        <div *ngIf="job?.length === 0" class="center">
+        <ion-item-divider *ngIf="job?.length != 0">
+          <h5 style="color: black;">
+            Overdue Available Jobs
+          </h5>
+        </ion-item-divider>
+        <ion-item-group>
+          <ion-item lines="none" *ngFor="let jobs of job">
+            <ion-card style="background-color: #00F4F4;">
+              <ion-card-header>
+                <ion-row>
+                  <ion-col size="0.5">
+                    <ion-thumbnail text-wrap>
+                      <ion-icon size="large" class="center-right" name="briefcase" color="medium"></ion-icon>
+                    </ion-thumbnail>
+                  </ion-col>
+                  <ion-col>
+                    <ion-row>
+                      <ion-card-title>{{jobs.errandname}}</ion-card-title>
+                    </ion-row>
+                    <ion-row>
+                      <ion-card-subtitle>Errand Category: {{jobs.category}} </ion-card-subtitle>
+                    </ion-row>
+                  </ion-col>
+                  <ion-col class="align-end">
+                    <ion-button (click)="toApplicants(jobs.id)">Applicants
+                      <ion-icon slot="start" name="notifications"></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-row>
+                  <ion-col size="0.5">
+                  </ion-col>
+                  <ion-col>
+                    <ion-label>
+                      <div text-wrap>
+                        <p>Errand Date: {{jobs.date | date:'d MMM yyyy'}}</p>
+                        <p>Errand Description: {{jobs.description}}</p>
+                        <p>Reporting Time: {{jobs.time | date:'shortTime'}}</p>
+                        <p>Estimated End Time: {{jobs.endtime | date:'shortTime'}}</p>
+                      </div>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </ion-item>
+        </ion-item-group>
+
+        <ion-item-divider *ngIf="jobsAccepted?.length != 0">
+          <h5 style="color: black;">
+            Overdue Jobs
+          </h5>
+        </ion-item-divider>
+        <ion-item-group>
+          <ion-item lines="none" *ngFor="let jobs of jobsAccepted">
+            <ion-card style="background-color: #00F4F4;">
+              <ion-card-header>
+                <ion-row>
+                  <ion-col size="0.5">
+                    <ion-thumbnail text-wrap>
+                      <ion-icon size="large" class="center-right" name="briefcase" color="medium"></ion-icon>
+                    </ion-thumbnail>
+                  </ion-col>
+                  <ion-col>
+                    <ion-row>
+                      <ion-card-title>{{jobs.errandname}}</ion-card-title>
+                    </ion-row>
+                    <ion-row>
+                      <ion-card-subtitle>Errand Category: {{jobs.category}} </ion-card-subtitle>
+                    </ion-row>
+                  </ion-col>
+                  <ion-col class="align-end" *ngFor="let m of jobs?.applicant">
+                    <ion-button (click)="toERProfile(m.id)">Errand Runner
+                      <ion-icon slot="start" name="person"></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-row>
+                  <ion-col size="0.5">
+                  </ion-col>
+                  <ion-col>
+                    <ion-label>
+                      <div text-wrap>
+                        <p>Errand Date: {{jobs.date | date:'d MMM yyyy'}}</p>
+                        <p>Errand Description: {{jobs.description}}</p>
+                        <p>Reporting Time: {{jobs.time | date:'shortTime'}}</p>
+                        <p>Estimated End Time: {{jobs.endtime | date:'shortTime'}}</p>
+                      </div>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-button size="default" color="danger" expand="block" (click)="ExpiringJobs(jobs.id)">Expired
+                    </ion-button>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button size="default" color="success" expand="block">Completed</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </ion-item>
+        </ion-item-group>
+        <div *ngIf="job?.length === 0 && jobsAccepted?.length === 0" class="center">
           <h5 class="center-content"> You have no errand requests currently</h5>
         </div>
       </ion-grid>
@@ -165,16 +223,15 @@
 </ion-content>
 
 <ion-footer class="segment-footer">
-  <ion-segment style="--color-checked: #60b5ff;" [(ngModel)]="mySegment"
-    (ionChange)="segmentChanged(mySegment)">
+  <ion-segment style="--color-checked: #60b5ff;" [(ngModel)]="mySegment" (ionChange)="segmentChanged(mySegment)">
     <ion-segment-button value="ClientJobsOverdue">
-      <ion-label>Errands<br/>Overdue</ion-label>
+      <ion-label>Errands<br />Overdue</ion-label>
     </ion-segment-button>
     <ion-segment-button value="JobsCompleted">
-      <ion-label>Errands<br/>Completed</ion-label>
+      <ion-label>Errands<br />Completed</ion-label>
     </ion-segment-button>
     <ion-segment-button value="JobsExpired">
-      <ion-label>Errands<br/>Expired</ion-label>
+      <ion-label>Errands<br />Expired</ion-label>
     </ion-segment-button>
   </ion-segment>
 </ion-footer>

@@ -399,7 +399,7 @@ export class JobService {
     })
   }
 
-  getAllOverdueJobsByClient(client: string): Observable<any> {
+  getAllAvailableOverdueJobsByClient(client: string): Observable<any> {
     return new Observable(observer => {
       let array = [];
       // Read collection '/JobsAvailable'
@@ -417,9 +417,15 @@ export class JobService {
               array.push(job);
             }
           } catch (error) { }
-
         });
+        observer.next(array);
       });
+    });
+  }
+
+  getAllOverdueJobsByClient(client: string): Observable<any> {
+    return new Observable(observer => {
+      let array = [];
 
       firebase.firestore().collection('JobsAccepted').where('status', '==', 'Accepted').onSnapshot(collection => {
         collection.forEach(doc => {
