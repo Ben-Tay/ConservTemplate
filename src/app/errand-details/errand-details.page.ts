@@ -16,6 +16,7 @@ export class ErrandDetailsPage implements OnInit {
   errandId: string;
   job: Job;
   user: string;
+  useremail: string;
 
   array: Job[] = [];
   acceptedarray: Job[] = [];
@@ -33,7 +34,7 @@ export class ErrandDetailsPage implements OnInit {
       })
 
     this.userService.observeAuthState(user => {
-      this.user = user.email
+      this.useremail = user.email
       this.jobERService.getAllErrandsApplied(user.email).subscribe(data => {
         this.array = data
       })
@@ -51,7 +52,7 @@ export class ErrandDetailsPage implements OnInit {
   applyErrand() {
     //Check user is logged in
 
-        let ERdetails = new ErrandRunner(new Date(), this.user, 'Pending')
+        let ERdetails = new ErrandRunner(new Date(), this.useremail, 'Pending')
 
         //If array is not 0 then check
         if (this.acceptedarray.length != 0) {
