@@ -27,7 +27,8 @@ const routes: Routes = [
   { path: 'userprofile/:id', loadChildren: './userprofile/userprofile.module#UserprofilePageModule' },
   { path: 'erjobs', loadChildren: './erjobs/erjobs.module#ERJobsPageModule' },  { path: 'rejectreason', loadChildren: './rejectreason/rejectreason.module#RejectreasonPageModule' },
   { path: 'eroverdue', loadChildren: './eroverdue/eroverdue.module#ERoverduePageModule' },
-  { path: 'clientoverdue', loadChildren: './clientoverdue/clientoverdue.module#ClientoverduePageModule' }
+  { path: 'clientoverdue', loadChildren: './clientoverdue/clientoverdue.module#ClientoverduePageModule' },
+  { path: 'changedate', loadChildren: './changedate/changedate.module#ChangedatePageModule' }
 
 
 ];
