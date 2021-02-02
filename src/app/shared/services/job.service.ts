@@ -532,7 +532,7 @@ export class JobService {
   }
 
   changedateandtime(sjob: Job){
-    const ref = firebase.firestore().collection('JobsAccepted').doc(sjob.id)
+    const ref = firebase.firestore().collection('JobsAvailable').doc(sjob.id)
     return ref.update({
       date: sjob.date,
       time: sjob.time,
