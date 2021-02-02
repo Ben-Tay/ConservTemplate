@@ -82,6 +82,12 @@ ion-footer.segment-footer{
     background-color: transparent;
     --ion-background-color: transparent;
 }
+
+.modal-wrapper {
+    --max-height: 60vh;
+    --max-width: 90vw;
+}
+
 @import "~@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
