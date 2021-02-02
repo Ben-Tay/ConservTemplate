@@ -2,12 +2,11 @@
   <ion-toolbar color="primary">
     <ion-title>My Errands</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="shownotifications($event)">
-        <ion-icon name="notifications"></ion-icon>
-      </ion-button>
       <ion-menu-button menuId="first">
         <ion-icon class="menu-button" name="menu"></ion-icon>
-        <ion-badge class="notifications-badge" color="danger">5</ion-badge>
+        <ion-badge class="notifications-badge">
+          <ion-icon name="alert"></ion-icon>
+        </ion-badge> 
       </ion-menu-button>
       </ion-buttons>
   </ion-toolbar>
@@ -72,6 +71,7 @@
                 </ion-col>
                 <ion-col class="align-end">
                   <ion-button (click)="toApplicants(jobs.id)">Applicants
+                    <ion-icon slot="start" name="notifications"></ion-icon>
                   </ion-button>
                 </ion-col>
               </ion-row>

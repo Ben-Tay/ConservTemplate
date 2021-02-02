@@ -2,13 +2,18 @@
   <ion-toolbar color="primary">
     <ion-title>Errand Notifications</ion-title>
     <ion-buttons slot="end">
-      <ion-menu-button menuId="second"></ion-menu-button>
+      <ion-menu-button menuId="second">
+        <ion-icon class="menu-button" name="menu"></ion-icon>
+        <ion-badge class="notifications-badge">
+          <ion-icon name="alert"></ion-icon>
+        </ion-badge> 
+      </ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ER">
-  <ion-card class="available-job-card">
+  <ion-card class="available-job-card" *ngIf="jobsAccepted?.length !==0 && jobsRejected?.length !==0">
     <ion-list>
       <ion-item *ngFor="let item of jobsRejected">
         <ion-row>
@@ -28,12 +33,16 @@
                 <ion-row>
                   <p>Client Name: {{item?.client}}</p>
                 </ion-row>
+                <ion-row>
+                  <p>Errand Date: {{item?.date | date: 'd MMM yyyy'}}</p>
+                </ion-row>
                   <p>Application Status: {{details.applicationstatus}} </p>
                 <ion-row>
                   <p>Rejection Reason: {{details.reason}}</p>
                 </ion-row>
                 <ion-row>
                   <p>Rejection Description: {{details.description}}</p>
+                  <p></p>
                 </ion-row>
               </div>
             </div>
@@ -71,9 +80,10 @@
             </div>
           </ion-card-content>
         </ion-row>
-
       </ion-item>
     </ion-list>
   </ion-card>
-
+  <div class="center" *ngIf="jobsAccepted?.length ===0 && jobsRejected?.length ===0">
+    <ion-label color="danger">You have no notifications today</ion-label>
+  </div>
 </ion-content>

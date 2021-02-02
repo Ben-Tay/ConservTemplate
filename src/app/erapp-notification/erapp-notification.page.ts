@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ErrandRunner } from '../shared/models/ErrandRunner';
+import { NavController } from '@ionic/angular';
 import { Job } from '../shared/models/Job';
 import { JobERService } from '../shared/services/job-er.service';
-import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
+
 
 
 @Component({
@@ -15,26 +15,33 @@ export class ErappNotificationPage implements OnInit {
   jobsRejected: Job[];
   jobsAccepted: Job[];
   useremail: string;
+  rejectedcount;
+  notification_count;
 
-  constructor(private jobService: JobERService, private userService: UserService, private clientjobservice: JobService) {
+  constructor(private jobService: JobERService, private userService: UserService, private navCtrl: NavController) {
     this.userService.observeAuthState(user=>{
       this.userService.showLoading();
       if(user){
         this.useremail = user.email;
-
-        this.jobService.getRejectedJobsByApplicant(user.email)
+        
+        this.jobService.getRejectedJobsByApplicant(this.useremail)
         .subscribe(data=>{
-          this.jobsRejected = data
+          this.jobsRejected =  data
+          this.rejectedcount.push("hi")
+          this.notification_count = Object.keys(this.jobsRejected).length
         })
-        this.clientjobservice.getConfirmedJobsByClient(user.email)
+        this.jobService.getAcceptedJobsByApplicant(user.email)
         .subscribe(data => {
           this.jobsAccepted = data;
+
         })
       }
     })
-   }
-
+  }
+  
   ngOnInit() {
+
   }
 
 }
+

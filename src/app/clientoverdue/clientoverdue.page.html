@@ -2,7 +2,12 @@
   <ion-toolbar color="primary">
     <ion-title>Overdue Errands</ion-title>
     <ion-buttons slot="end">
-      <ion-menu-button menuId="first"></ion-menu-button>
+      <ion-menu-button menuId="first">
+        <ion-icon class="menu-button" name="menu"></ion-icon>
+        <ion-badge class="notifications-badge">
+          <ion-icon name="alert"></ion-icon>
+          </ion-badge>
+      </ion-menu-button>
       </ion-buttons>
   </ion-toolbar>
 </ion-header>
