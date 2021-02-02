@@ -80,7 +80,10 @@ export class ClientjobsnotificationPage implements OnInit {
         getjobid: this.jobid
       }
     });
-    //Present modal 
+    //Present modal
+    modal.onDidDismiss().then(() => {
+      this.router.navigate(['clientjobs'])
+    });
     modal.present()
   }
 
