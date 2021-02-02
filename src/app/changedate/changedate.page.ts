@@ -13,12 +13,15 @@ import { JobService } from '../shared/services/job.service';
 export class ChangedatePage implements OnInit {
   changedateForm: FormGroup;
   submitted: boolean = false;
-  applicant: ErrandRunner;
   jobid: string;
   job: Job
 
-  constructor(private jobservice: JobService, public navParams: NavParams, private toastCtrl: ToastController, private modalCtrl: ModalController) {
+  constructor(private jobservice: JobService, private modalCtrl: ModalController) {
   }
+
+  dismiss() {
+    this.modalCtrl.dismiss();
+    }
 
   ngOnInit() {
   }

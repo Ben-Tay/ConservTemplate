@@ -73,7 +73,6 @@ export class ClientjobsnotificationPage implements OnInit {
   }
 
   async changedate() {
-
     //create modal to hold rejectreasonpage
     let modal = await this.modalCtrl.create({
       component: ChangedatePage,
@@ -82,7 +81,6 @@ export class ClientjobsnotificationPage implements OnInit {
       }
     });
     //Present modal 
-
     modal.present()
   }
 
