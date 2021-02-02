@@ -72,16 +72,12 @@ export class ClientoverduePage implements OnInit {
     this.router.navigate(['/userprofile', id])
   }
 
-  ExpiringJobs(id: string) {
-    this.jobservice.getSpecificAcceptedJobsById(id, this.client)
-      .subscribe(data => {
-        this.jobservice.expireJobById(data, data.applicant)
-      })
+  ExpiringJobs(job: Job) {
+    this.jobservice.expireJobById(job)
   }
 
   toApplicants(id: string) {
     this.router.navigate(['clientjobsnotification', id])
-
   }
 
 }

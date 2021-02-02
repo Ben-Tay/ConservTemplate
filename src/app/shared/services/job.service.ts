@@ -524,26 +524,10 @@ export class JobService {
     });
   }
 
-  expireJobById(sjob: Job, applicant: ErrandRunner) {
-    let job = new Job(sjob.errandname, sjob.category, "Expired", sjob.client, sjob.date, sjob.description, sjob.time, sjob.endtime, sjob.id, sjob.price)
-
-    return firebase.firestore().collection('JobsAccepted').add({
-      errandname: job.errandname,
-      category: job.category,
-      status: job.status,
-      client: job.client,
-      date: job.date,
-      description: job.description,
-      time: job.time,
-      endtime: job.endtime,
-      price: job.price
-    }).then(doc => {
-      job.id = doc.id;
-      firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant/').doc(applicant.id).set({
-        date: applicant.date,
-        applicationstatus: applicant.applicationstatus
-      })
-      return job;
+  expireJobById(sjob: Job) {
+    const ref = firebase.firestore().collection('JobsAccepted').doc(sjob.id)
+    ref.update({
+      status: 'Expired'
     })
   }
 
