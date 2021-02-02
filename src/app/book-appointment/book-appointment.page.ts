@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
 import { ErrandCategory } from '../shared/models/ErrandCategory';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-book-appointment',
@@ -23,6 +24,8 @@ export class BookAppointmentPage implements OnInit {
   min_time = "06:30";
   max_time = "11:59";
   time;
+  end_time;
+  ending_time;
   errandprice: ErrandCategory[];
   price: number;
 
@@ -36,6 +39,7 @@ export class BookAppointmentPage implements OnInit {
       description: new FormControl('', [Validators.required]),
       date: new FormControl('', [Validators.required]),
       time: new FormControl('', [Validators.required]),
+      endtime: new FormControl('', [Validators.required])
     })
     this.userService.observeAuthState(user => {
       //	User	is	logged	in
@@ -43,7 +47,6 @@ export class BookAppointmentPage implements OnInit {
         this.client = user.email;
       }
     })
-
   }
 
   ngOnInit() {
@@ -55,10 +58,11 @@ export class BookAppointmentPage implements OnInit {
   }
 
   async onCreateRequest() {
-    this.time = this.getTimeValue();
     const form = this.makerequestForm
     const formvalue = this.makerequestForm.value;
     const formdate = new Date(formvalue.date);
+    const reportime = new Date(formvalue.time)
+    const endtime = new Date(formvalue.endtime)
 
     if (form.valid) {
       this.jobservice.getErrandPricesByCategory(formvalue.category)
@@ -68,8 +72,7 @@ export class BookAppointmentPage implements OnInit {
             this.price = i.price
           }
           this.jobService.createnewjobrequest(formvalue.errandname, formvalue.category,
-            this.client, formdate, formvalue.description, this.time, this.price)
-
+            this.client, formdate, formvalue.description, reportime, endtime, this.price)
         })
 
 
@@ -83,17 +86,6 @@ export class BookAppointmentPage implements OnInit {
     this.makerequestForm.reset()
   }
 
-  getTimeValue() {
-    this.time = this.makerequestForm.value.time
-    let d = this.time.split('T')[1];
-    let m = d.split(':')[0];
-    let n = d.split(':')[1];
-    var AmOrPm = m >= 12 ? 'pm' : 'am';
-    m = (m % 12) || 12;
-    this.time = m + ":" + n + " " + AmOrPm;
-    return this.time;
-  }
-
   onChangeCategory(value) {
     this.jobservice.getErrandPricesByCategory(value)
       .subscribe(data => {
@@ -101,6 +93,10 @@ export class BookAppointmentPage implements OnInit {
       })
   }
 
+  onReportTimeChange(){
+    this.ending_time = this.makerequestForm.value.time;
+  }
+ 
   validation_messages = {
     'errandname': [
       { type: 'required', message: 'Errand Name is required.' }
@@ -116,6 +112,9 @@ export class BookAppointmentPage implements OnInit {
     ],
     'time': [
       { type: 'required', message: 'Time is required' }
+    ],
+    'endtime': [
+      { type: 'required', message: 'Ending Time is required' }
     ]
   }
 }

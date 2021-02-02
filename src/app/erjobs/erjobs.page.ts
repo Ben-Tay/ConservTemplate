@@ -16,32 +16,20 @@ export class ERJobsPage implements OnInit {
   jobsRejected: Job[];
   mySegment: string;
   useremail: string;
-  
+
   constructor(private jobService: JobERService, private userService: UserService, private router: Router, private menuController: MenuController) {
-    this.userService.observeAuthState(user=>{
+    this.userService.observeAuthState(user => {
       this.userService.showLoading();
-      if(user){
+      if (user) {
         this.useremail = user.email;
-        this.jobService.getAllErrandsAccepted(user.email)
-        .subscribe(data=>{
-          this.jobs = data
-        })
-        this.jobService.getAllErrandsApplied(user.email)
-        .subscribe(data=>{
-          this.jobsApplied = data
-        })
-        this.jobService.getAllErrandsRejected(user.email)
-        .subscribe(data=>{
-          this.jobsRejected = data
-        })
       }
     })
     this.mySegment = 'ERJobs'
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.menuController.enable(true, 'second')
   }
 
@@ -50,18 +38,40 @@ export class ERJobsPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.jobService.getAllErrandsAccepted(this.useremail)
-    .subscribe(async data=>{
-      this.jobs = await data
-    })
-    this.jobService.getAllErrandsApplied(this.useremail)
-    .subscribe(async data=>{
-      this.jobsApplied = await data
-    })
+    this.userService.showLoading()
+    this.jobService.getErrandsAccepted(this.useremail)
+      .subscribe(async data => {
+        this.jobs = await data
+      })
+    this.jobService.getErrandsApplied(this.useremail)
+      .subscribe(async data => {
+        this.jobsApplied = await data
+      })
     this.jobService.getAllErrandsRejected(this.useremail)
-        .subscribe(async data=>{
-          this.jobsRejected = await data
-        })
+      .subscribe(async data => {
+        this.jobsRejected = await data
+      })
   }
 
+  segmentChanged(mySegment: string) {
+    this.userService.showLoading()
+    if (mySegment == 'ERJobs') {
+      this.jobService.getErrandsAccepted(this.useremail)
+        .subscribe(async data => {
+          this.jobs = await data
+        })
+    }
+    else if (mySegment == 'ERApplied') {
+      this.jobService.getErrandsApplied(this.useremail)
+        .subscribe(async data => {
+          this.jobsApplied = await data
+        })
+    }
+    else if (mySegment == 'ERRejected') {
+      this.jobService.getAllErrandsRejected(this.useremail)
+        .subscribe(async data => {
+          this.jobsRejected = await data
+        })
+    }
+  }
 }

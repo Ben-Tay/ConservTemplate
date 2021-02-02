@@ -63,8 +63,9 @@
           <ion-col>
             <ion-label>
               <div text-wrap>
-                <p>Job Date: {{item.date | date:'d MMM yyyy'}}</p>
-                <p>Job Time: {{item.time}}</p>
+                <p>Errand Date: {{item.date | date:'d MMM yyyy'}}</p>
+                <p>Errand Start Time: {{item.time | date: 'shortTime'}}</p>
+                <p>Errand End Time: {{item.endtime | date: 'shortTime'}}</p>
               </div>
             </ion-label>
           </ion-col>

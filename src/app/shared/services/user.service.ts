@@ -116,6 +116,5 @@ export class UserService {
     });
     loading.present();
   }
-
-
+  
 }
