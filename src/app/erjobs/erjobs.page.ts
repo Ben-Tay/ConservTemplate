@@ -13,6 +13,7 @@ import { UserService } from '../shared/services/user.service';
 export class ERJobsPage implements OnInit {
   jobs: Job[];
   jobsApplied: Job[];
+  jobsRejected: Job[];
   mySegment: string;
   useremail: string;
   
@@ -29,28 +30,16 @@ export class ERJobsPage implements OnInit {
         .subscribe(data=>{
           this.jobsApplied = data
         })
+        this.jobService.getAllErrandsRejected(user.email)
+        .subscribe(data=>{
+          this.jobsRejected = data
+        })
       }
     })
     this.mySegment = 'ERJobs'
   }
 
-  ngOnInit() {
-    this.userService.observeAuthState(user=>{
-      this.userService.showLoading();
-      if(user){
-        this.useremail = user.email;
-        this.jobService.getAllErrandsAccepted(user.email)
-        .subscribe(data=>{
-          this.jobs = data
-        })
-        this.jobService.getAllErrandsApplied(user.email)
-        .subscribe(data=>{
-          this.jobsApplied = data
-        })
-      }
-    })
-    this.mySegment = 'ERJobs'
-  }
+  ngOnInit() {}
 
   ionViewWillEnter(){
     this.menuController.enable(true, 'second')
@@ -69,6 +58,10 @@ export class ERJobsPage implements OnInit {
     .subscribe(async data=>{
       this.jobsApplied = await data
     })
+    this.jobService.getAllErrandsRejected(this.useremail)
+        .subscribe(async data=>{
+          this.jobsRejected = await data
+        })
   }
 
 }

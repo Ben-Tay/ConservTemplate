@@ -188,6 +188,9 @@ export class ClientjobsPage implements OnInit {
             if (!data.length) {
               this.monthbtn.disabled = true;
               this.datebtn.disabled = true;
+            }else{
+              this.monthbtn.disabled = false;
+              this.datebtn.disabled = false;
             }
           })
       }

@@ -238,6 +238,28 @@ export class JobService {
     })
   }
 
+  getRejectedApplicantsById(id: string) {
+    //read document '/JobsAvailable/<id>'
+    return firebase.firestore().collection('JobsAvailable').doc(id).get().then(doc => {
+      let jobdata = doc.data()
+      const date = jobdata.date.toDate()
+      let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, jobdata.time, doc.id, jobdata.price);
+
+      //Read subcollection '/JobsAvailable/<id>/Applicants'
+      return firebase.firestore().collection('JobsAvailable').doc(id).collection('Applicants').where('applicationstatus', '==', 'Rejected').get().then(collection => {
+        job.applicant = [];
+        collection.forEach(doc => {
+          let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus)
+          job.applicant.push(applicant)
+        })
+
+        return job;
+      })
+
+    })
+
+  }
+
   acceptapplicantrequest(sjob: Job, applicant: ErrandRunner) {
     let job = new Job(sjob.errandname, sjob.category, "Accepted", sjob.client, sjob.date, sjob.description, sjob.time, sjob.id, sjob.price)
 
@@ -260,11 +282,13 @@ export class JobService {
     })
   }
 
-  rejectapplicantbyspecificjob(jobid: string, applicant: ErrandRunner) {
+  rejectapplicantbyspecificjob(jobid: string, applicant: ErrandRunner, reason: string, description: string) {
     const ref = firebase.firestore().collection('JobsAvailable/' + jobid + '/Applicants/').doc(applicant.id)
     ref.set({
       date: applicant.date,
-      applicationstatus: "Rejected"
+      applicationstatus: "Rejected",
+      reason: reason,
+      description: description
     })
   }
 
@@ -330,17 +354,16 @@ export class JobService {
       this.pricesRef.onSnapshot(collection => {
         let array = [];
         collection.forEach(doc => {
-          if(doc.id === category)
-          try {
-            let errandprice = new ErrandCategory(doc.data().price, doc.id)
-            array.push(errandprice);
-          } catch (error) { }
+          if (doc.id === category)
+            try {
+              let errandprice = new ErrandCategory(doc.data().price, doc.id)
+              array.push(errandprice);
+            } catch (error) { }
         });
         observer.next(array);
       })
     })
   }
-
   getCompletedJobs(client: string, runner: string){
     return new Observable(observer => {
       firebase.firestore().collection('JobsCompleted').orderBy('client').onSnapshot(collection => {

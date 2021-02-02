@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
+import { RejectreasonPage } from '../rejectreason/rejectreason.page';
 import { ErrandRunner } from '../shared/models/ErrandRunner';
 import { Job } from '../shared/models/Job';
 import { JobService } from '../shared/services/job.service';
@@ -16,18 +17,17 @@ export class ClientjobsnotificationPage implements OnInit {
   job: Job;
   jobapplicants: ErrandRunner[]
 
-
-  constructor(private route: ActivatedRoute, private jobservice: JobService, private userservice: UserService, private router: Router, private toastCtrl: ToastController) {
+  constructor(private route: ActivatedRoute, private jobservice: JobService, private userservice: UserService, private router: Router, private toastCtrl: ToastController, private modalCtrl: ModalController) {
     this.jobid = this.route.snapshot.params.id;
   }
 
   ngOnInit() {
     this.jobservice.getSpecificJobsById(this.jobid)
-    .then(data => {
-      this.userservice.showLoading();
-      this.job = data;
-      this.jobapplicants = data.applicant;
-    })
+      .then(data => {
+        this.userservice.showLoading();
+        this.job = data;
+        this.jobapplicants = data.applicant;
+      })
   }
 
   toERProfile(id: string) {
@@ -38,14 +38,11 @@ export class ClientjobsnotificationPage implements OnInit {
     this.jobservice.getSpecificJobsById(this.jobid)
       .then(data => {
         this.job = data;
-      })
-
-    //Move document from JobsAvailable Collection to JobsAccepted Collection
-    this.jobservice.acceptapplicantrequest(this.job, applicant)
-      .then(() => {
+      }).then(() => {
+        //Move document from JobsAvailable Collection to JobsAccepted Collection
+        this.jobservice.acceptapplicantrequest(this.job, applicant)
         this.jobservice.deletefromJobsAvailable(this.job)
       })
-
     let toast = await this.toastCtrl.create({
       message: "You have accepted this errand request",
       position: 'top',
@@ -55,31 +52,30 @@ export class ClientjobsnotificationPage implements OnInit {
     toast.present()
 
     this.router.navigate(['clientjobs'])
-
   }
+
   async RejectApplicant(applicant: ErrandRunner) {
 
-    //Reject applicant for specificjob
-    this.jobservice.rejectapplicantbyspecificjob(this.jobid, applicant)
-
-    let toast = await this.toastCtrl.create({
-      message: "You have rejected the application by " + applicant.id,
-      position: 'top',
-      duration: 2000,
-      color: 'danger'
-    })
-    toast.present()
-    
-    this.jobservice.getSpecificJobsById(this.jobid)
-    .then(data => {
-      this.job = data;
-      this.jobapplicants = data.applicant;
-    }).then(() => {
+    //create modal to hold rejectreasonpage
+    let modal = await this.modalCtrl.create({
+      component: RejectreasonPage,
+      componentProps: {
+        getapplicant: applicant,
+        getjobid: this.jobid
+      }
+    });
+    //Present modal 
+    modal.onDidDismiss().then(() => {
       this.ngOnInit()
-    })
+    });
+    modal.present()
+
+
+    
   }
 
-  async DeleteErrand(job: Job){
+
+  async DeleteErrand(job: Job) {
     this.jobservice.deletefromJobsAvailable(this.job)
 
     let toast = await this.toastCtrl.create({
