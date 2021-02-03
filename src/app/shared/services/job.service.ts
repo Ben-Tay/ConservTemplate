@@ -540,7 +540,6 @@ export class JobService {
       return job;
     })
   }
-<<<<<<< HEAD
   getCompletedJobs(client: string, runner: string){
     return new Observable(observer => {
       firebase.firestore().collection('JobsCompleted').orderBy('client').onSnapshot(collection => {
@@ -554,7 +553,6 @@ export class JobService {
       });
     })
   }
-=======
 
   getSpecificAcceptedJobsById(id: string, client: string): Observable<any> {
     return new Observable(observer => {
@@ -589,7 +587,6 @@ export class JobService {
     });
   }
 
->>>>>>> cdc518c977d179435a0e6aa4bfbec88e2b786ddf
 }
   // getErrandCategoryPrices(): Observable<any> {
   //   return new Observable(observer => {
