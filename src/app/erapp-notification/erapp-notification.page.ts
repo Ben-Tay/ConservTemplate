@@ -27,8 +27,6 @@ export class ErappNotificationPage implements OnInit {
         this.jobService.getRejectedJobsByApplicant(this.useremail)
         .subscribe(data=>{
           this.jobsRejected =  data
-          this.rejectedcount.push("hi")
-          this.notification_count = Object.keys(this.jobsRejected).length
         })
         this.jobService.getAcceptedJobsByApplicant(user.email)
         .subscribe(data => {

@@ -64,7 +64,7 @@ export class ClientjobsnotificationPage implements OnInit {
         getapplicant: applicant,
         getjobid: this.jobid,
       },
-      cssClass: 'select-modal' 
+      cssClass: 'modal-wrapper' 
 
     });
     //Present modal 
@@ -81,7 +81,7 @@ export class ClientjobsnotificationPage implements OnInit {
       componentProps: {
         getjobid: this.jobid
       },
-      cssClass: 'select-modal' 
+      cssClass: 'modal-wrapper' 
 
     });
     //Present modal
