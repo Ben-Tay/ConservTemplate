@@ -10,6 +10,11 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RejectreasonPageModule } from './rejectreason/rejectreason.module';
 import { ChangedatePageModule } from './changedate/changedate.module';
+import { CarddetailsPageModule } from './carddetails/carddetails.module';
+import { ConfirmPaymentPageModule } from './confirm-payment/confirm-payment.module';
+import { PaymentcompletePageModule } from './paymentcomplete/paymentcomplete.module';
+import { PaynowPageModule } from './paynow/paynow.module';
+import { ReceivepaymentPageModule } from './receivepayment/receivepayment.module';
 
 
 @NgModule({
@@ -20,6 +25,11 @@ import { ChangedatePageModule } from './changedate/changedate.module';
     IonicModule.forRoot(),
     AppRoutingModule,
     RejectreasonPageModule,
+    ConfirmPaymentPageModule,
+    PaynowPageModule,
+    CarddetailsPageModule,
+    PaymentcompletePageModule,
+    ReceivepaymentPageModule,
     ChangedatePageModule
   ],
   providers: [
