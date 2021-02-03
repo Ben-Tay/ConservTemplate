@@ -27,6 +27,14 @@ const routes: Routes = [
   { path: 'userprofile/:id', loadChildren: './userprofile/userprofile.module#UserprofilePageModule' },
   { path: 'erjobs', loadChildren: './erjobs/erjobs.module#ERJobsPageModule' },
   { path: 'rejectreason', loadChildren: './rejectreason/rejectreason.module#RejectreasonPageModule' },
+  { path: 'payment-client', loadChildren: './payment-client/payment-client.module#PaymentClientPageModule' },
+  { path: 'payment-errandrunner', loadChildren: './payment-errandrunner/payment-errandrunner.module#PaymentErrandrunnerPageModule' },
+  { path: 'confirm-payment', loadChildren: './confirm-payment/confirm-payment.module#ConfirmPaymentPageModule' },
+  { path: 'confirm-receivepayment', loadChildren: './confirm-receivepayment/confirm-receivepayment.module#ConfirmReceivepaymentPageModule' },
+  { path: 'paynow', loadChildren: './paynow/paynow.module#PaynowPageModule' },
+  { path: 'carddetails', loadChildren: './carddetails/carddetails.module#CarddetailsPageModule' },
+  { path: 'paymentcomplete', loadChildren: './paymentcomplete/paymentcomplete.module#PaymentcompletePageModule' },
+  { path: 'receivepayment', loadChildren: './receivepayment/receivepayment.module#ReceivepaymentPageModule' },
   { path: 'eroverdue', loadChildren: './eroverdue/eroverdue.module#ERoverduePageModule' },
   { path: 'clientoverdue', loadChildren: './clientoverdue/clientoverdue.module#ClientoverduePageModule' },
   { path: 'changedate', loadChildren: './changedate/changedate.module#ChangedatePageModule' },
@@ -43,4 +51,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
-
