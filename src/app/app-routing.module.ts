@@ -37,6 +37,9 @@ const routes: Routes = [
   { path: 'receivepayment', loadChildren: './receivepayment/receivepayment.module#ReceivepaymentPageModule' },
   { path: 'eroverdue', loadChildren: './eroverdue/eroverdue.module#ERoverduePageModule' },
   { path: 'clientoverdue', loadChildren: './clientoverdue/clientoverdue.module#ClientoverduePageModule' },
+  { path: 'review/:email', loadChildren: './review/review.module#ReviewPageModule' },
+  { path: 'post/:email', loadChildren: './post/post.module#PostPageModule' },
+  { path: 'users/:email', loadChildren: './users/users.module#UsersPageModule' },
   { path: 'changedate', loadChildren: './changedate/changedate.module#ChangedatePageModule' },
   { path: 'app-notification', loadChildren: './app-notification/app-notification.module#AppNotificationPageModule' },
   { path: 'erapp-notification', loadChildren: './erapp-notification/erapp-notification.module#ErappNotificationPageModule' }
