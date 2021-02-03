@@ -355,13 +355,13 @@ export class JobERService {
                 job.applicant = [];
                 collection.forEach(doc => {
                   if (doc.id === client) {
-                    const date_difference = today - date.getDate()
-                    if (date.getDate() === today || date_difference === 1) {
+                    // const date_difference = today - date.getDate()
+                    // if (date.getDate() === today || date_difference === 1) {
                       array.push(job);
 
                       let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus, doc.data().reason, doc.data().description)
                       job.applicant.push(applicant)
-                    }
+                    // }
                   }
                 })
               });
