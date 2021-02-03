@@ -35,6 +35,13 @@ const routes: Routes = [
   { path: 'carddetails', loadChildren: './carddetails/carddetails.module#CarddetailsPageModule' },
   { path: 'paymentcomplete', loadChildren: './paymentcomplete/paymentcomplete.module#PaymentcompletePageModule' },
   { path: 'receivepayment', loadChildren: './receivepayment/receivepayment.module#ReceivepaymentPageModule' },
+  { path: 'eroverdue', loadChildren: './eroverdue/eroverdue.module#ERoverduePageModule' },
+  { path: 'clientoverdue', loadChildren: './clientoverdue/clientoverdue.module#ClientoverduePageModule' },
+  { path: 'changedate', loadChildren: './changedate/changedate.module#ChangedatePageModule' },
+  { path: 'app-notification', loadChildren: './app-notification/app-notification.module#AppNotificationPageModule' },
+  { path: 'erapp-notification', loadChildren: './erapp-notification/erapp-notification.module#ErappNotificationPageModule' }
+
+
 ];
 
 @NgModule({
