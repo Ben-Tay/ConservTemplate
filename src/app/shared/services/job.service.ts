@@ -539,6 +539,19 @@ export class JobService {
       endtime: sjob.endtime
     })
   }
+  getCompletedJobs(client: string, runner: string){
+    return new Observable(observer => {
+      firebase.firestore().collection('JobsCompleted').orderBy('client').onSnapshot(collection => {
+        let allData = [];
+        collection.forEach(doc => {
+          if(doc.data().client == client && doc.data().runner == runner){
+            allData.push(doc.data());
+          }
+        });
+        observer.next(allData.length);
+      });
+    })
+  }
 
   getSpecificAcceptedJobsById(id: string, client: string): Observable<any> {
     return new Observable(observer => {
