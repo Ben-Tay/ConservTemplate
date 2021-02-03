@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Confirm Payment</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+          <ion-label class="title">
+            Personal Information
+          </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+          <ion-label>
+            Name: Amy 
+          </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+          <ion-label>
+            Email: amy@gmail.com 
+          </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+          <ion-label>
+            Phone Number: +65 91234567
+          </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-card class="available-job-card" style="border-radius: 10px; margin: 1.5pc;">
+      <ion-card-header>
+        <ion-card-title class="title">Receive Payment by:</ion-card-title>
+      </ion-card-header>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-button size="medium" expand="block" color="primary" (click)=paynow()>PayNow</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button size="medium" expand="block" color="primary" (click)=carddetails()>Card</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </ion-grid>
+
+</ion-content>

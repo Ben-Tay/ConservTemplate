@@ -1,0 +1,23 @@
+ion-label.google-label {
+    background-color: white;
+    font-size: 12px;
+    margin-left: 10px !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+    position: absolute !important;
+    margin-bottom: 5px !important;
+    z-index: 9;
+}
+
+.google-input {
+    padding-top: 10px !important;
+    color: black;
+    border: 2px solid black;
+    width: 100%;
+    max-width: 100%;
+    padding-left: 10px !important;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
