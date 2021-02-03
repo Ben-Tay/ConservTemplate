@@ -11,7 +11,7 @@ export class PostPage implements OnInit {
   targetEmail: any;
   data: any;
   userEmail: any;
-  constructor(private userService: UserService, private reviewService: ReviewService, private route: ActivatedRoute) { }
+  constructor(private userService: UserService, private reviewService: ReviewService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.data = {};
@@ -29,7 +29,9 @@ export class PostPage implements OnInit {
   }
 
   postReview() {
-    this.reviewService.createReview(this.data.comment, this.userEmail, this.targetEmail);
+    this.reviewService.createReview(this.data.comment, this.userEmail, this.targetEmail).then(data=>{
+      this.router.navigate(['userprofile', this.targetEmail])
+    });
   }
 
 }

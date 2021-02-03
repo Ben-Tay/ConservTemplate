@@ -19,10 +19,10 @@ export class ReviewService {
     // let review = new Review(Date.now(), comment, from, to);
     console.log(comment)
     let review = {
-      'id' : Date.now(),
-      'comment' : comment,
-      'from' : from,
-      'to' : to
+      id : Date.now(),
+      comment : comment,
+      from : from,
+      to : to
     }
     return firebase.firestore().collection('review').add(review).then(() => {
       return review;

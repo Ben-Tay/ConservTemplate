@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Change Date</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="changedateForm" (ngSubmit)="editanddimiss(job)">
+    <ion-card class="available-job-card">
+      <ion-label>
+        <ion-card class="errand-detail-card">
+          <h2> Errand Details</h2>
+          <p>Errand ID: {{job?.id}}</p>
+          <p>Errand Name: {{job?.errandname}}</p>
+          <p>Errand Date: {{job?.date | date:'d MMM yyyy'}}</p>
+          <p>Reporting Time: {{job?.time | date:'shortTime'}}</p>
+          <p>End Time: {{job?.endtime | date:'shortTime' }}</p>
+        </ion-card>
+      </ion-label>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>Reporting Date:</ion-label>
+            <ion-datetime formControlName="date" [min]="date"></ion-datetime>
+            <ion-button>
+              <ion-icon name="calendar"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.date">
+            <div class="error-message"
+              *ngIf="changedateForm.get('date').hasError(validation.type) && (changedateForm.get('date').dirty || changedateForm.get('date').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+            </div>
+          </ng-container>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label>Reporting Time:</ion-label>
+            <ion-datetime displayFormat="hh:mm A" formControlName="time" [pickerOptions]="pickerOpt" [min]="min_time"
+              [max]="max_time" (ngModelChange)="onReportTimeChange()"></ion-datetime>
+            <ion-button>
+              <ion-icon name="time"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.time">
+            <div class="error-message"
+              *ngIf="changedateForm.get('time').hasError(validation.type) && (changedateForm.get('time').dirty || changedateForm.get('time').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+            </div>
+          </ng-container>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label>Estimated Ending Time:</ion-label>
+            <ion-datetime displayFormat="hh:mm A" formControlName="endtime" [pickerOptions]="pickerOpt" [min]="changedateForm.value.time"
+              [max]="max_time" [(ngModel)]="ending_time"></ion-datetime>
+            <ion-button>
+              <ion-icon name="time"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.endtime">
+            <div class="error-message"
+              *ngIf="changedateForm.get('endtime').hasError(validation.type) && (changedateForm.get('endtime').dirty || changedateForm.get('endtime').touched)">
+              <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+            </div>
+            <div class="error-message"
+              *ngIf="!changedateForm.value.time">
+              <ion-icon name="information-circle-outline"></ion-icon> You have to select a reporting time first
+            </div>
+          </ng-container>
+          
+        </ion-col>
+      </ion-row>
+    </ion-card>
+    <ion-button expand="block" color="tertiary" type="submit">Submit</ion-button>
+  </form>
+</ion-content>

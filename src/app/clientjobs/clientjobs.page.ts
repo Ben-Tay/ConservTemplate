@@ -163,8 +163,8 @@ export class ClientjobsPage implements OnInit {
 
   toApplicants(id: string) {
     this.router.navigate(['clientjobsnotification', id])
-
   }
+  
   defaultfilter() {
     this.mySegment = "ClientJobsCreated"
     this.jobservice.getAllJobsByClient(this.client)

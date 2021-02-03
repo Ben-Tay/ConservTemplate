@@ -399,7 +399,7 @@ export class JobService {
     })
   }
 
-  getAllOverdueJobsByClient(client: string): Observable<any> {
+  getAllAvailableOverdueJobsByClient(client: string): Observable<any> {
     return new Observable(observer => {
       let array = [];
       // Read collection '/JobsAvailable'
@@ -417,9 +417,15 @@ export class JobService {
               array.push(job);
             }
           } catch (error) { }
-
         });
+        observer.next(array);
       });
+    });
+  }
+
+  getAllOverdueJobsByClient(client: string): Observable<any> {
+    return new Observable(observer => {
+      let array = [];
 
       firebase.firestore().collection('JobsAccepted').where('status', '==', 'Accepted').onSnapshot(collection => {
         collection.forEach(doc => {
@@ -518,26 +524,19 @@ export class JobService {
     });
   }
 
-  expireJobById(sjob: Job, applicant: ErrandRunner) {
-    let job = new Job(sjob.errandname, sjob.category, "Expired", sjob.client, sjob.date, sjob.description, sjob.time, sjob.endtime, sjob.id, sjob.price)
+  expireJobById(sjob: Job) {
+    const ref = firebase.firestore().collection('JobsAccepted').doc(sjob.id)
+    return ref.update({
+      status: 'Expired'
+    })
+  }
 
-    return firebase.firestore().collection('JobsAccepted').add({
-      errandname: job.errandname,
-      category: job.category,
-      status: job.status,
-      client: job.client,
-      date: job.date,
-      description: job.description,
-      time: job.time,
-      endtime: job.endtime,
-      price: job.price
-    }).then(doc => {
-      job.id = doc.id;
-      firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant/').doc(applicant.id).set({
-        date: applicant.date,
-        applicationstatus: applicant.applicationstatus
-      })
-      return job;
+  changedateandtime(sjob: Job){
+    const ref = firebase.firestore().collection('JobsAvailable').doc(sjob.id)
+    return ref.update({
+      date: sjob.date,
+      time: sjob.time,
+      endtime: sjob.endtime
     })
   }
   getCompletedJobs(client: string, runner: string){

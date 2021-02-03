@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
+import { ChangedatePage } from '../changedate/changedate.page';
 import { RejectreasonPage } from '../rejectreason/rejectreason.page';
 import { ErrandRunner } from '../shared/models/ErrandRunner';
 import { Job } from '../shared/models/Job';
@@ -69,9 +70,21 @@ export class ClientjobsnotificationPage implements OnInit {
       this.ngOnInit()
     });
     modal.present()
+  }
 
-
-    
+  async changedate() {
+    //create modal to hold rejectreasonpage
+    let modal = await this.modalCtrl.create({
+      component: ChangedatePage,
+      componentProps: {
+        getjobid: this.jobid
+      }
+    });
+    //Present modal
+    modal.onDidDismiss().then(() => {
+      this.router.navigate(['clientjobs'])
+    });
+    modal.present()
   }
 
 
