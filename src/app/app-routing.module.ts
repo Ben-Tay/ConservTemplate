@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
@@ -33,8 +32,6 @@ const routes: Routes = [
   { path: 'review/:email', loadChildren: './review/review.module#ReviewPageModule' },
   { path: 'post/:email', loadChildren: './post/post.module#PostPageModule' },
   { path: 'users/:email', loadChildren: './users/users.module#UsersPageModule' }
-
-
 ];
 
 @NgModule({

@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonButton, IonLabel, IonSegment, MenuController } from '@ionic/angular';
+import { IonButton, MenuController } from '@ionic/angular';
 import { Job } from '../shared/models/Job';
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
+import { PopoverController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-clientjobs',
