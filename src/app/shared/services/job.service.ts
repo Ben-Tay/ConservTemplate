@@ -608,11 +608,11 @@ export class JobService {
                   job.applicant = [];
                   collection.forEach(doc => {
                     if (doc.id !== client) {
-                      if (date.getDate() === today){
+                      // if (date.getDate() === today){
                         array.push(job);
                         let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus, doc.data().reason, doc.data().description)
                         job.applicant.push(applicant)       
-                      } 
+                      // } 
                     }
                   })
                 });
