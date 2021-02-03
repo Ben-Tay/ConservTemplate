@@ -65,4 +65,8 @@ export class ERoverduePage implements OnInit {
       })
   }
 
+  toReceive(){
+    this.router.navigate(['payment-errandrunner'])
+  }
+
 }
