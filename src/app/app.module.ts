@@ -9,6 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RejectreasonPageModule } from './rejectreason/rejectreason.module';
+import { ChangedatePageModule } from './changedate/changedate.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { RejectreasonPageModule } from './rejectreason/rejectreason.module';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    RejectreasonPageModule
+    RejectreasonPageModule,
+    ChangedatePageModule
   ],
   providers: [
     StatusBar,

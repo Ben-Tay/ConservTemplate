@@ -1,0 +1,26 @@
+ion-datetime{
+    font-weight: bold;
+    color: blue;
+}
+
+ion-item, ion-button {
+    margin: 10px;
+}
+
+.error-message
+{
+    color: red;
+    font-size: 14px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.disabled {
+    opacity: 1 !important;
+}
+
+.input-disabled {
+    opacity: 0.8 !important;
+    margin-right: 10px;
+    
+}

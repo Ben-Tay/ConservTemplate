@@ -29,6 +29,7 @@ const routes: Routes = [
   { path: 'rejectreason', loadChildren: './rejectreason/rejectreason.module#RejectreasonPageModule' },
   { path: 'eroverdue', loadChildren: './eroverdue/eroverdue.module#ERoverduePageModule' },
   { path: 'clientoverdue', loadChildren: './clientoverdue/clientoverdue.module#ClientoverduePageModule' },
+  { path: 'changedate', loadChildren: './changedate/changedate.module#ChangedatePageModule' },
   { path: 'app-notification', loadChildren: './app-notification/app-notification.module#AppNotificationPageModule' },
   { path: 'erapp-notification', loadChildren: './erapp-notification/erapp-notification.module#ErappNotificationPageModule' }
 
