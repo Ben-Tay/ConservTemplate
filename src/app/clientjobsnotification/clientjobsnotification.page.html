@@ -51,7 +51,12 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-button expand="block" color="tertiary" (click)="DeleteErrand(job)">Delete Errand</ion-button>
+          <ion-col>
+            <ion-button size="default" expand="block" color="tertiary" (click)="DeleteErrand(job)">Delete Errand</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button size="default" expand="block" color="tertiary" (click)="changedate()">Change Errand Date</ion-button>
+          </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>
@@ -62,19 +67,20 @@
       <ion-card-title>List of Applicants</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <div id="container" *ngIf="jobapplicants?.length===0" >
+      <div id="container" *ngIf="jobapplicants?.length===0">
         <p class="center">There are currently no applicants for this errand</p>
-        </div>
+      </div>
       <ion-grid>
         <ion-row>
           <ion-col size-md="6" size-sm *ngFor="let applicant of jobapplicants">
             <ion-card class="applicant-card">
               <ion-card-header>
-                  <ion-card-title>Applicant Details:
-                    <p>
-                      <ion-button color="secondary" class="profilebtn" (click)="toERProfile(applicant.id)">Profile</ion-button>      
-                    </p>
-                  </ion-card-title>
+                <ion-card-title>Applicant Details:
+                  <p>
+                    <ion-button color="secondary" class="profilebtn" (click)="toERProfile(applicant.id)">Profile
+                    </ion-button>
+                  </p>
+                </ion-card-title>
               </ion-card-header>
               <ion-card-content>
                 <ion-card class="applicant-child-card">
@@ -92,7 +98,7 @@
                 <div class="ion-text-end">
                   <ion-button color="success" class="acceptbtn" (click)="AcceptApplicant(applicant)">Accept</ion-button>
                   <ion-button color="danger" class="rejectbtn" (click)="RejectApplicant(applicant)">Reject</ion-button>
-                </div>   
+                </div>
               </ion-card-content>
             </ion-card>
           </ion-col>

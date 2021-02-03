@@ -110,6 +110,11 @@ ion-footer.segment-footer{
     overflow: visible!important;
 }
 
+.select-modal {
+    background: rgba(0, 0, 0, 0.5) !important;
+    padding: 20% 10%  !important;
+ }
+
 @import "~@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */

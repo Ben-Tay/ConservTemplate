@@ -12,6 +12,7 @@ import { UserService } from '../shared/services/user.service';
 })
 export class ClientoverduePage implements OnInit {
   job: Job[];
+  jobsAccepted: Job[];
   jobsconfirmed: Job[];
   jobsexpired: Job[];
   client: string;
@@ -29,16 +30,20 @@ export class ClientoverduePage implements OnInit {
     this.userservice.observeAuthState(user => {
       if (user) {
         this.client = user.email;
-        this.jobservice.getAllOverdueJobsByClient(this.client)
+        this.jobservice.getAllAvailableOverdueJobsByClient(this.client)
           .subscribe(data => {
             this.job = data;
           })
+        this.jobservice.getAllOverdueJobsByClient(this.client)
+          .subscribe(data => {
+            this.jobsAccepted = data;
+          })
         this.jobservice.getCompletedJobsByClient(this.client)
-          .subscribe( data => {
+          .subscribe(data => {
             this.jobsconfirmed = data
           })
         this.jobservice.getExpiredJobsByClient(this.client)
-          .subscribe( data => {
+          .subscribe(data => {
             this.jobsexpired = data
           })
         this.mySegment = 'ClientJobsOverdue'
@@ -53,25 +58,44 @@ export class ClientoverduePage implements OnInit {
 
   ionViewDidEnter() {
     this.mySegment = "ClientJobsOverdue"
-    this.jobservice.getCompletedJobsByClient(this.client)
-      .subscribe(async data => {
-        this.jobsconfirmed = await data
-      })
-    this.jobservice.getExpiredJobsByClient(this.client)
-      .subscribe(async data => {
-        this.jobsexpired = await data
-      })
   }
 
   toERProfile(id: string) {
     this.router.navigate(['/userprofile', id])
   }
 
-  ExpiringJobs(id: string){
-    this.jobservice.getSpecificAcceptedJobsById(id, this.client)
-    .subscribe(data=>{
-      this.jobservice.expireJobById(data, data.applicant)
-    })
+  ExpiringJobs(job: Job) {
+    this.jobservice.expireJobById(job)
+    this.segmentChanged('ClientJobsOverdue')
+  }
+
+  segmentChanged(mySegment) {
+    if (mySegment == 'ClientJobsOverdue') {
+      this.jobservice.getAllAvailableOverdueJobsByClient(this.client)
+        .subscribe(data => {
+          this.job = data;
+        })
+      this.jobservice.getAllOverdueJobsByClient(this.client)
+        .subscribe(data => {
+          this.jobsAccepted = data;
+        })
+    }
+    else if (mySegment == 'JobsCompleted') {
+      this.jobservice.getCompletedJobsByClient(this.client)
+        .subscribe(data => {
+          this.jobsconfirmed = data
+        })
+    }
+    else if (mySegment == 'JobsExpired') {
+      this.jobservice.getExpiredJobsByClient(this.client)
+        .subscribe(data => {
+          this.jobsexpired = data
+        })
+    }
+  }
+
+  toApplicants(id: string) {
+    this.router.navigate(['clientjobsnotification', id])
   }
 
 }
