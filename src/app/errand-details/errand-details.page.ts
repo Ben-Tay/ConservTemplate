@@ -157,34 +157,6 @@ export class ErrandDetailsPage implements OnInit {
     })
   }
 
-  AppliedCheck(ERdetails: ErrandRunner) {
-    if (this.array.length != 0) {
-      this.array.forEach(async doc => {
-        if (doc.date.getDate() != this.job.date.getDate()) {
-          this.successfullyapplied(ERdetails)
-        }
-        else {
-          if (doc.time.getTime() >= this.job.endtime.getTime() || doc.endtime.getTime() <= this.job.time.getTime()) {
-            this.successfullyapplied(ERdetails)
-          }
-          else {
-            const toast = await this.toastController.create({
-              message: 'This job is clashing with a job you have applied',
-              duration: 2000,
-              position: 'top',
-              color: 'danger'
-            });
-            toast.present();
-            this.router.navigate(['/all-errand-requests'])
-          }
-        }
-      })
-    }
-    else {
-      this.successfullyapplied(ERdetails)
-    }
-  }
-
   redirectprofile() {
     this.router.navigate(['/userprofile', this.job.client])
   }
