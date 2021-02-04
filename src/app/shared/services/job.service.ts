@@ -45,7 +45,7 @@ export class JobService {
 
           // Add job into array if there's no error
           try {
-            if (doc.data().date.toDate() >= new Date()) {
+            if (doc.data().time.toDate() > new Date()) {
               let jobdata = doc.data()
               const date = jobdata.date.toDate()
               const reportime = jobdata.time.toDate()
@@ -71,7 +71,7 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              if (doc.data().date.toDate() >= new Date()) {
+              if (doc.data().time.toDate() > new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
@@ -105,7 +105,7 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              if (doc.data().date.toDate() >= new Date()) {
+              if (doc.data().time.toDate() > new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
@@ -137,7 +137,7 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              if (doc.data().date.toDate() >= new Date()) {
+              if (doc.data().time.toDate() > new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
@@ -166,7 +166,7 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              if (doc.data().date.toDate() >= new Date()) {
+              if (doc.data().time.toDate() > new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
@@ -194,7 +194,7 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              if (doc.data().date.toDate() >= new Date()) {
+              if (doc.data().time.toDate() > new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
@@ -216,7 +216,7 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              if (doc.data().date.toDate() >= new Date()) {
+              if (doc.data().time.toDate() > new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
@@ -356,7 +356,7 @@ export class JobService {
           // Add job into array if there's no error
           if (doc.data().client === client) {
             try {
-              if (doc.data().date.toDate() >= new Date()) {
+              if (doc.data().time.toDate() > new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
@@ -408,7 +408,7 @@ export class JobService {
 
           // Add job into array if there's no error
           try {
-            if (doc.data().date.toDate() < new Date()) {
+            if (doc.data().time.toDate() <= new Date()) {
               let jobdata = doc.data()
               const date = jobdata.date.toDate()
               const reportime = jobdata.time.toDate()
@@ -432,7 +432,7 @@ export class JobService {
           // Add job into array if there's no error
           if (doc.data().client === client) {
             try {
-              if (doc.data().date.toDate() < new Date()) {
+              if (doc.data().time.toDate() <= new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
@@ -539,6 +539,7 @@ export class JobService {
       endtime: sjob.endtime
     })
   }
+
   getCompletedJobs(client: string, runner: string){
     return new Observable(observer => {
       firebase.firestore().collection('JobsCompleted').orderBy('client').onSnapshot(collection => {
@@ -595,7 +596,7 @@ export class JobService {
           // Add job into array if there's no error
           if (doc.data().client === client) {
             try {
-              if (doc.data().date.toDate() >= new Date()) {
+              if (doc.data().time.toDate() > new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
