@@ -17,6 +17,7 @@ export class ClientjobsnotificationPage implements OnInit {
   jobid: string;
   job: Job;
   jobapplicants: ErrandRunner[]
+  appear: Boolean = false;
 
   constructor(private route: ActivatedRoute, private jobservice: JobService, private userservice: UserService, private router: Router, private toastCtrl: ToastController, private modalCtrl: ModalController) {
     this.jobid = this.route.snapshot.params.id;
@@ -28,6 +29,9 @@ export class ClientjobsnotificationPage implements OnInit {
         this.userservice.showLoading();
         this.job = data;
         this.jobapplicants = data.applicant;
+        if(data.time <= new Date()){
+          this.appear = true
+        }
       })
   }
 

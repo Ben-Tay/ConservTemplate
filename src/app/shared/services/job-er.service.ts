@@ -22,7 +22,7 @@ export class JobERService {
 
           // Add jobs into array if there's no error
           try {
-            if (doc.data().date.toDate().getDate() >= new Date().getDate()) {
+            if (doc.data().time.toDate().getDate() > new Date().getDate()) {
               const docRef = ref.doc(doc.id)
               docRef.collection('Applicants').doc(id).get().then(sdoc => {
                 if (sdoc.exists) {
@@ -52,7 +52,7 @@ export class JobERService {
         collection.forEach(doc => {
           // Add jobs into array if there's no error
           try {
-            if (doc.data().date.toDate().getDate() >= new Date().getDate()) {
+            if (doc.data().time.toDate() > new Date()) {
               const docRef = ref.doc(doc.id)
               docRef.collection('Applicants').where('applicationstatus', '==', 'Pending').get().then(sdoc => {
                 let applied = null
@@ -124,7 +124,7 @@ export class JobERService {
         collection.forEach(doc => {
           // Add jobs into array if there's no error
           try {
-            if (doc.data().date.toDate() >= new Date()) {
+            if (doc.data().date.toDate() > new Date()) {
               const docRef = ref.doc(doc.id)
               docRef.collection('Applicants').where('applicationstatus', '==', 'Rejected').get().then(sdoc => {
                 let applied = null
@@ -197,7 +197,7 @@ export class JobERService {
         collection.forEach(doc => {
           // Add jobs into array if there's no error
           try {
-            if (doc.data().date.toDate() >= new Date()) {
+            if (doc.data().time.toDate() > new Date()) {
               const docRef = ref.doc(doc.id)
               docRef.collection('Applicant').get().then(sdoc => {
                 sdoc.forEach(ssdoc => {
@@ -242,7 +242,7 @@ export class JobERService {
         collection.forEach(doc => {
           // Add jobs into array if there's no error
           try {
-            if (doc.data().date.toDate() <= new Date()) {
+            if (doc.data().time.toDate() <= new Date()) {
               const docRef = ref.doc(doc.id)
               docRef.collection('Applicant').get().then(sdoc => {
                 sdoc.forEach(ssdoc => {
