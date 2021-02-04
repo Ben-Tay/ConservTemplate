@@ -63,6 +63,8 @@ export class BookAppointmentPage implements OnInit {
     const formdate = new Date(formvalue.date);
     const reportime = new Date(formvalue.time)
     const endtime = new Date(formvalue.endtime)
+    const realreporttime = new Date(formdate.getFullYear(), formdate.getMonth(), formdate.getDate(), reportime.getHours(), reportime.getMinutes(), reportime.getSeconds(), reportime.getMilliseconds())
+    const realendtime = new Date(formdate.getFullYear(), formdate.getMonth(), formdate.getDate(), endtime.getHours(), endtime.getMinutes(), endtime.getSeconds(), endtime.getMilliseconds())
 
     if (form.valid) {
       this.jobservice.getErrandPricesByCategory(formvalue.category)
@@ -72,7 +74,7 @@ export class BookAppointmentPage implements OnInit {
             this.price = i.price
           }
           this.jobService.createnewjobrequest(formvalue.errandname, formvalue.category,
-            this.client, formdate, formvalue.description, reportime, endtime, this.price)
+            this.client, formdate, formvalue.description, realreporttime, realendtime, this.price)
         })
 
 
