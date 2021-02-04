@@ -52,34 +52,96 @@ export class ErrandDetailsPage implements OnInit {
   applyErrand() {
     //Check user is logged in
 
-        let ERdetails = new ErrandRunner(new Date(), this.useremail, 'Pending')
+    let ERdetails = new ErrandRunner(new Date(), this.useremail, 'Pending')
+    let clash = true
 
-        //If array is not 0 then check
-        if (this.acceptedarray.length != 0) {
-          this.acceptedarray.forEach(async mdoc => {
-            if (mdoc.date.getDate() != this.job.date.getDate()) {
-              this.AppliedCheck(ERdetails)
-            }
-            else {
-              if (mdoc.time.getTime() >= this.job.endtime.getTime() || mdoc.endtime.getTime() <= this.job.time.getTime()) {
-                this.AppliedCheck(ERdetails)
+    //If array is not 0 then check
+    if (this.acceptedarray.length != 0) {
+      this.acceptedarray.forEach(async mdoc => {
+        if (mdoc.date.getDate() != this.job.date.getDate()) {
+          if (this.array.length != 0) {
+            this.array.forEach(async doc => {
+              if (doc.date.getDate() != this.job.date.getDate()) {
+                clash = false
               }
               else {
-                const toast = await this.toastController.create({
-                  message: 'This job is clashing with a job you have',
-                  duration: 2000,
-                  position: 'top',
-                  color: 'danger'
-                });
-                toast.present();
-                this.router.navigate(['/all-errand-requests'])
+                if (doc.time.getTime() >= this.job.endtime.getTime() || doc.endtime.getTime() <= this.job.time.getTime()) {
+                  clash = false
+                }
+                else {
+                  clash = true
+                }
               }
-            }
-          })
+            })
+          }
+          else {
+            clash = false
+          }
         }
         else {
-          this.AppliedCheck(ERdetails)
+          if (mdoc.time.getTime() >= this.job.endtime.getTime() || mdoc.endtime.getTime() <= this.job.time.getTime()) {
+            if (this.array.length != 0) {
+              this.array.forEach(async doc => {
+                if (doc.date.getDate() != this.job.date.getDate()) {
+                  clash = false
+                }
+                else {
+                  if (doc.time.getTime() >= this.job.endtime.getTime() || doc.endtime.getTime() <= this.job.time.getTime()) {
+                    clash = false
+                  }
+                  else {
+                    clash = true
+                  }
+                }
+              })
+            }
+            else {
+              clash = false
+            }
+          }
+          else {
+            clash = true
+          }
         }
+      })
+    }
+    else {
+      if (this.array.length != 0) {
+        this.array.forEach(async doc => {
+          if (doc.date.getDate() != this.job.date.getDate()) {
+            clash = false
+          }
+          else {
+            if (doc.time.getTime() >= this.job.endtime.getTime() || doc.endtime.getTime() <= this.job.time.getTime()) {
+              clash = false
+            }
+            else {
+              clash = true
+            }
+          }
+        })
+      }
+      else {
+        clash = false
+      }
+    }
+
+    if (clash == false) {
+      this.successfullyapplied(ERdetails)
+    }
+    else {
+      this.failureapplied()
+    }
+  }
+
+  async failureapplied() {
+    const toast = await this.toastController.create({
+      message: 'You cannot apply for this job as you have another job during this period',
+      duration: 2000,
+      position: 'top',
+      color: 'danger'
+    });
+    toast.present();
   }
 
   successfullyapplied(ER: ErrandRunner) {
@@ -95,7 +157,7 @@ export class ErrandDetailsPage implements OnInit {
     })
   }
 
-  AppliedCheck(ERdetails: ErrandRunner){
+  AppliedCheck(ERdetails: ErrandRunner) {
     if (this.array.length != 0) {
       this.array.forEach(async doc => {
         if (doc.date.getDate() != this.job.date.getDate()) {
