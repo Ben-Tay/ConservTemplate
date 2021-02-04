@@ -13,18 +13,6 @@
 </ion-header>
 
 <ion-content class="ER">
-  <ion-segment style="--color-checked: #60b5ff;" [(ngModel)]="mySegment" (ionChange)="segmentChanged(mySegment)">
-    <ion-segment-button value="ERJobsO">
-      <ion-label class="ion-text-wrap">Overdue<br/>Errands</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="ERCompleted">
-      <ion-label class="ion-text-wrap">Completed<br/>Errands</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="ERExpired">
-      <ion-label class="ion-text-wrap">Expired<br/>Errands</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-
   <div [ngSwitch]="mySegment">
 
     <ion-grid *ngSwitchCase="'ERJobsO'">
@@ -117,6 +105,8 @@
               </ion-label>
             </ion-col>
           </ion-row>
+            <ion-button style="width: 97%; margin: auto; font-size: 15px; height: 3pc; margin-top: 1pc; margin-bottom: 1pc;" size="default" expand="block" (click)="toReceive()">Receive Payment
+            </ion-button>
         </ion-card-content>
       </ion-card>
     </ion-grid>
@@ -170,3 +160,17 @@
 
   </div>
 </ion-content>
+
+<ion-footer class="segment-footer">
+  <ion-segment style="--color-checked: #60b5ff;" [(ngModel)]="mySegment" (ionChange)="segmentChanged(mySegment)">
+    <ion-segment-button value="ERJobsO">
+      <ion-label class="ion-text-wrap">Overdue<br/>Errands</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="ERCompleted">
+      <ion-label class="ion-text-wrap">Completed<br/>Errands</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="ERExpired">
+      <ion-label class="ion-text-wrap">Expired<br/>Errands</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-footer>

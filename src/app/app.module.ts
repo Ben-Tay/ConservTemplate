@@ -17,6 +17,7 @@ import { PaynowPageModule } from './paynow/paynow.module';
 import { ReceivepaymentPageModule } from './receivepayment/receivepayment.module';
 
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

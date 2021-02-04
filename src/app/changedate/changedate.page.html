@@ -9,12 +9,9 @@
     <ion-card class="available-job-card">
       <ion-label>
         <ion-card class="errand-detail-card">
-          <h2> Errand Details</h2>
-          <p>Errand ID: {{job?.id}}</p>
           <p>Errand Name: {{job?.errandname}}</p>
           <p>Errand Date: {{job?.date | date:'d MMM yyyy'}}</p>
-          <p>Reporting Time: {{job?.time | date:'shortTime'}}</p>
-          <p>End Time: {{job?.endtime | date:'shortTime' }}</p>
+          <p>Time: {{job?.time | date:'shortTime'}} to {{job?.endtime | date:'shortTime' }}</p>
         </ion-card>
       </ion-label>
       <ion-row>

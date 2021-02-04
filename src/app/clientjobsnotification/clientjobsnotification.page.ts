@@ -62,8 +62,10 @@ export class ClientjobsnotificationPage implements OnInit {
       component: RejectreasonPage,
       componentProps: {
         getapplicant: applicant,
-        getjobid: this.jobid
-      }
+        getjobid: this.jobid,
+      },
+      cssClass: 'modal-wrapper' 
+
     });
     //Present modal 
     modal.onDidDismiss().then(() => {
@@ -78,7 +80,9 @@ export class ClientjobsnotificationPage implements OnInit {
       component: ChangedatePage,
       componentProps: {
         getjobid: this.jobid
-      }
+      },
+      cssClass: 'modal-wrapper' 
+
     });
     //Present modal
     modal.onDidDismiss().then(() => {

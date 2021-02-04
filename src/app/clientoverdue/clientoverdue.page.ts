@@ -98,4 +98,8 @@ export class ClientoverduePage implements OnInit {
     this.router.navigate(['clientjobsnotification', id])
   }
 
+  toPayment(){
+    this.router.navigate(['payment-client'])
+  }
+
 }

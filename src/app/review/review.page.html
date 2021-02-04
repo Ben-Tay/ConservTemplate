@@ -7,13 +7,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <h1>Reviews of {{ targetEmail }}</h1>
-  <ion-list>
-    <ion-item>
+<ion-content class="homepage">
+  <h1 style="text-align: center;">Reviews of {{ targetEmail }}</h1>
+  <ion-list class="transparent-stylebackground">
+    <ion-item *ngFor="let review of allReviews">
       <ion-grid>
-        <div *ngFor="let review of allReviews">
-          <ion-row >
+          <ion-row>
             <ion-col>
               From :
             </ion-col>
@@ -29,8 +28,6 @@
               {{ review.comment }}
             </ion-col>
           </ion-row>
-          <hr>
-        </div>
       </ion-grid>
     </ion-item>
   </ion-list>
