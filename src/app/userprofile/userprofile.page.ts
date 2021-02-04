@@ -41,10 +41,11 @@ export class UserprofilePage implements OnInit {
           this.users = doc;
         })
         this.jobService.getCompletedJobs(this.userEmail, this.targetEmail).subscribe(doc => {
+          console.log(doc)
           this.count = doc;
         })
         this.reviewService.getReviewCount(this.targetEmail).subscribe(doc => {
-          
+          console.log(doc)
           this.reviewCount = doc;
         })
       }
