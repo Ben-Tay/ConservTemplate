@@ -16,7 +16,8 @@ export class ChangedatePage implements OnInit {
   submitted: boolean = false;
   jobid: string;
   job: Job;
-  ending_time;
+  start_time;
+  end_time;
   today = new Date()
   date = new Date()
   formdate;
@@ -29,6 +30,8 @@ export class ChangedatePage implements OnInit {
         this.userservice.showLoading();
         this.job = data;
         this.formdate = new Date(data.date).toISOString()
+        this.start_time = new Date(data.time).toISOString()
+        this.end_time = new Date(data.endtime).toISOString()
       })
 
     this.changedateForm = new FormGroup({
