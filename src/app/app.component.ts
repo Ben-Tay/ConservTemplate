@@ -63,7 +63,7 @@ export class AppComponent {
         icon  : "filing"
       },
       {
-        title : "Errands Overdue",
+        title : "Pending, Completed & Expired Errands",
         url   : "/clientoverdue",
         icon  : "timer"
       },
@@ -91,7 +91,7 @@ export class AppComponent {
         icon  : "search"
       },
       {
-        title : "Errands Overdue",
+        title : "Pending, Completed & Expired Errands",
         url   : "/eroverdue",
         icon  : "timer"
       },
