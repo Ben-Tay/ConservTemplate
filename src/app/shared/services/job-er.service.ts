@@ -22,7 +22,7 @@ export class JobERService {
 
           // Add jobs into array if there's no error
           try {
-            if (doc.data().time.toDate().getDate() > new Date().getDate()) {
+            if (doc.data().time.toDate() > new Date()) {
               const docRef = ref.doc(doc.id)
               docRef.collection('Applicants').doc(id).get().then(sdoc => {
                 if (sdoc.exists) {
