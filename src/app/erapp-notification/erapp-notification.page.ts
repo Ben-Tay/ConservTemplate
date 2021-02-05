@@ -15,7 +15,6 @@ export class ErappNotificationPage implements OnInit {
   jobsRejected: Job[];
   jobsAccepted: Job[];
   useremail: string;
-  rejectedcount;
   notification_count;
 
   constructor(private jobService: JobERService, private userService: UserService, private navCtrl: NavController) {
@@ -26,12 +25,13 @@ export class ErappNotificationPage implements OnInit {
         
         this.jobService.getRejectedJobsByApplicant(this.useremail)
         .subscribe(data=>{
-          this.jobsRejected =  data
+          if(data){
+            this.jobsRejected =  data
+          }
         })
         this.jobService.getAcceptedJobsByApplicant(user.email)
         .subscribe(data => {
           this.jobsAccepted = data;
-
         })
       }
     })
