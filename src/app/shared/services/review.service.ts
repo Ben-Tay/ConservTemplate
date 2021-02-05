@@ -15,12 +15,14 @@ export class ReviewService {
 
   constructor() { }
 
-  createReview(comment: string, from: string, to: string){
+  createReview(comment: string,starReview: string, from: string, to: string){
     // let review = new Review(Date.now(), comment, from, to);
-    console.log(comment)
+    console.log(comment);
+    console.log(starReview);
     let review = {
       id : Date.now(),
       comment : comment,
+      starReview : starReview,
       from : from,
       to : to
     }
@@ -35,7 +37,8 @@ export class ReviewService {
         let allData = [];
         collection.forEach(doc => {
           if(doc.data().to == to){
-            let review = new Review(doc.data().id, doc.data().comment, doc.data().from, doc.data().to);
+            console.log("starreview : " + doc.data().starReview);
+            let review = new Review(doc.data().id, doc.data().comment, doc.data().starReview, doc.data().from, doc.data().to);
             allData.push(review);
           }
         });
@@ -52,7 +55,7 @@ export class ReviewService {
         let allData = [];
         collection.forEach(doc => {
           if(doc.data().to == to){
-            let review = new Review(doc.data().id, doc.data().comment, doc.data().from, doc.data().to);
+            let review = new Review(doc.data().id, doc.data().comment, doc.data().starReview, doc.data().from, doc.data().to);
             allData.push(review);
           }
         });
