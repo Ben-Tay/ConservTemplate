@@ -22,7 +22,7 @@ export class ReviewService {
     let review = {
       id : Date.now(),
       comment : comment,
-      starReview : starReview,
+      starReview : parseInt(starReview),
       from : from,
       to : to
     }
