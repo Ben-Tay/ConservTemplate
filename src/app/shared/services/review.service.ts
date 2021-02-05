@@ -55,7 +55,7 @@ export class ReviewService {
         let allData = [];
         collection.forEach(doc => {
           if(doc.data().to == to){
-            let review = new Review(doc.data().id, doc.data().comment, doc.data().from, doc.data().to);
+            let review = new Review(doc.data().id, doc.data().comment, doc.data().starReview, doc.data().from, doc.data().to);
             allData.push(review);
           }
         });

@@ -10,10 +10,13 @@
 <ion-content class="homepage">
   <h1 style="background-color: transparent; --ion-background-color: transparent; text-align: center;">Leave a review for {{ targetEmail }}</h1>
       <ion-textarea style=" margin: auto; width:97%; color: black; border: 1px solid black; background-color: white; border-radius: 10px;" [(ngModel)]="data.comment"></ion-textarea>
-      <ion-icon name="star-outline"></ion-icon>
-      <ion-select style="padding-top: 10px; margin: auto; width:97%; color: black; border: 1px solid black; background-color: white; border-radius: 10px;" [(ngModel)]="data.starReview">
+      <h2 style="background-color: transparent; --ion-background-color: transparent; text-align: center;">
+      <ion-label>Star Ratings</ion-label>
+      </h2>
+
+      <ion-select style="padding-top: 10px; margin: auto; width:90%; color: black; border: 1px solid black; background-color: white; border-radius: 10px;" [(ngModel)]="data.starReview">
         <ion-select-option default>0</ion-select-option>
-        <ion-select-option >1</ion-select-option>
+        <ion-select-option>1</ion-select-option>
         <ion-select-option>2</ion-select-option>
         <ion-select-option>3</ion-select-option>
         <ion-select-option>4</ion-select-option>
