@@ -28,6 +28,12 @@
               {{ review.comment }}
             </ion-col>
           </ion-row>
+          <ion-row>
+            <ion-col>
+              
+              <ion-icon *ngFor="let i of [].constructor(review.starReview)" name="star-outline"></ion-icon>
+            </ion-col>
+          </ion-row>
       </ion-grid>
     </ion-item>
   </ion-list>

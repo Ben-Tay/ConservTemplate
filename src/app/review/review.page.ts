@@ -35,6 +35,7 @@ export class ReviewPage implements OnInit {
             console.log(review);
             let newData = {
               'comment' : review.comment,
+              'starReview' : parseInt(review.starReview),
               'from' : review.from
             }
             this.allReviews.push(newData);
