@@ -3,7 +3,6 @@ import { Job } from '../models/Job';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { Observable } from 'rxjs';
-import { Time } from '@angular/common';
 import { ErrandRunner } from '../models/ErrandRunner';
 import { ErrandCategory } from '../models/ErrandCategory';
 
@@ -45,7 +44,7 @@ export class JobService {
 
           // Add job into array if there's no error
           try {
-            if (doc.data().date.toDate() >= new Date()) {
+            if (doc.data().time.toDate() > new Date()) {
               let jobdata = doc.data()
               const date = jobdata.date.toDate()
               const reportime = jobdata.time.toDate()
@@ -71,7 +70,7 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              if (doc.data().date.toDate() >= new Date()) {
+              if (doc.data().time.toDate() > new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
@@ -105,7 +104,7 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              if (doc.data().date.toDate() >= new Date()) {
+              if (doc.data().time.toDate() > new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
@@ -137,7 +136,7 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              if (doc.data().date.toDate() >= new Date()) {
+              if (doc.data().time.toDate() > new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
@@ -166,7 +165,7 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              if (doc.data().date.toDate() >= new Date()) {
+              if (doc.data().time.toDate() > new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
@@ -194,7 +193,7 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              if (doc.data().date.toDate() >= new Date()) {
+              if (doc.data().time.toDate() > new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
@@ -216,7 +215,7 @@ export class JobService {
 
             // Add job into array if there's no error
             try {
-              if (doc.data().date.toDate() >= new Date()) {
+              if (doc.data().time.toDate() > new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
@@ -275,7 +274,7 @@ export class JobService {
       let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
 
       //Read subcollection '/JobsAvailable/<id>/Applicants'
-      return firebase.firestore().collection('JobsAvailable').doc(id).collection('Applicants').where('applicationstatus', '==', 'Rejected').get().then(collection => {
+      return firebase.firestore().collection('JobsAvailable').doc(id).collection('Applicants').where('applicationstatus', '==', 'Not Selected').get().then(collection => {
         job.applicant = [];
         collection.forEach(doc => {
           let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus, doc.data().reason, doc.data().description)
@@ -316,7 +315,7 @@ export class JobService {
     const ref = firebase.firestore().collection('JobsAvailable/' + jobid + '/Applicants/').doc(applicant.id)
     ref.set({
       date: applicant.date,
-      applicationstatus: "Rejected",
+      applicationstatus: "Not Selected",
       reason: reason,
       description: description
     })
@@ -356,7 +355,7 @@ export class JobService {
           // Add job into array if there's no error
           if (doc.data().client === client) {
             try {
-              if (doc.data().date.toDate() >= new Date()) {
+              if (doc.data().time.toDate() > new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
@@ -408,7 +407,7 @@ export class JobService {
 
           // Add job into array if there's no error
           try {
-            if (doc.data().date.toDate() < new Date()) {
+            if (doc.data().time.toDate() <= new Date()) {
               let jobdata = doc.data()
               const date = jobdata.date.toDate()
               const reportime = jobdata.time.toDate()
@@ -432,7 +431,7 @@ export class JobService {
           // Add job into array if there's no error
           if (doc.data().client === client) {
             try {
-              if (doc.data().date.toDate() < new Date()) {
+              if (doc.data().time.toDate() <= new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
@@ -539,6 +538,7 @@ export class JobService {
       endtime: sjob.endtime
     })
   }
+
   getCompletedJobs(client: string, runner: string){
     return new Observable(observer => {
       firebase.firestore().collection('JobsCompleted').orderBy('client').onSnapshot(collection => {
@@ -595,12 +595,11 @@ export class JobService {
           // Add job into array if there's no error
           if (doc.data().client === client) {
             try {
-              if (doc.data().date.toDate() >= new Date()) {
+              if (doc.data().time.toDate() > new Date()) {
                 let jobdata = doc.data()
                 const date = jobdata.date.toDate()
                 const reportime = jobdata.time.toDate()
                 const endtime = jobdata.endtime.toDate()
-                const today = new Date().getDate()
                 let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
 
                 //Read subcoollection '/JobsAccepted/<autoID>/Applicant'
@@ -608,11 +607,9 @@ export class JobService {
                   job.applicant = [];
                   collection.forEach(doc => {
                     if (doc.id !== client) {
-                      // if (date.getDate() === today){
                         array.push(job);
                         let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus, doc.data().reason, doc.data().description)
                         job.applicant.push(applicant)       
-                      // } 
                     }
                   })
                 });

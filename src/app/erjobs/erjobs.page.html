@@ -5,7 +5,7 @@
       <ion-menu-button menuId="second">
         <ion-icon class="menu-button" name="menu"></ion-icon>
         <ion-badge class="notifications-badge">
-          <ion-icon name="alert"></ion-icon>
+          {{jobsRejectedCount?.length + jobsAcceptedCount?.length}}
         </ion-badge> 
       </ion-menu-button>
     </ion-buttons>
@@ -163,7 +163,7 @@
 <ion-footer class="segment-footer">
   <ion-segment style="--color-checked: #60b5ff;" [(ngModel)]="mySegment" (ionChange)="segmentChanged(mySegment)">
     <ion-segment-button value="ERJobs">
-      <ion-label class="ion-text-wrap">Errands</ion-label>
+      <ion-label class="ion-text-wrap">My Errands</ion-label>
     </ion-segment-button>
     <ion-segment-button value="ERApplied">
       <ion-label class="ion-text-wrap">Errands<br/>Applied</ion-label>

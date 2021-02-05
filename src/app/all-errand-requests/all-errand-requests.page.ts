@@ -20,6 +20,8 @@ export class AllErrandRequestsPage implements OnInit {
 
   categories: string[];
   months;
+  jobsRejectedCount: Job[];
+  jobsAcceptedCount: Job[];
 
   constructor(private jobService: JobERService, private userService: UserService, private menuController: MenuController) {
     this.categories = ['All', 'Grocery', 'ElderCare', 'Babysit', 'DogWalking', 'Delivery']
@@ -36,6 +38,16 @@ export class AllErrandRequestsPage implements OnInit {
         this.jobs = await data;
         this.allJobs = await data;
       })
+      this.jobService.getRejectedJobsByApplicant(await user.email)
+        .subscribe(data=>{
+          if(data){
+            this.jobsRejectedCount =  data
+          }
+        })
+        this.jobService.getAcceptedJobsByApplicant(await user.email)
+        .subscribe(data => {
+          this.jobsAcceptedCount = data;
+        })
     })
     this.ionViewWillEnter()
   }

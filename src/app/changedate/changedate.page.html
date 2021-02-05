@@ -18,7 +18,7 @@
         <ion-col>
           <ion-item>
             <ion-label>Reporting Date:</ion-label>
-            <ion-datetime formControlName="date" [min]="date"></ion-datetime>
+            <ion-datetime formControlName="date" [min]="formdate"></ion-datetime>
             <ion-button>
               <ion-icon name="calendar"></ion-icon>
             </ion-button>
@@ -35,8 +35,7 @@
         <ion-col size="6">
           <ion-item>
             <ion-label>Reporting Time:</ion-label>
-            <ion-datetime displayFormat="hh:mm A" formControlName="time" [pickerOptions]="pickerOpt" [min]="min_time"
-              [max]="max_time" (ngModelChange)="onReportTimeChange()"></ion-datetime>
+            <ion-datetime displayFormat="hh:mm A" formControlName="time" [pickerOptions]="pickerOpt" [(ngModel)]="start_time"></ion-datetime>
             <ion-button>
               <ion-icon name="time"></ion-icon>
             </ion-button>
@@ -50,9 +49,8 @@
         </ion-col>
         <ion-col size="6">
           <ion-item>
-            <ion-label>Estimated Ending Time:</ion-label>
-            <ion-datetime displayFormat="hh:mm A" formControlName="endtime" [pickerOptions]="pickerOpt" [min]="changedateForm.value.time"
-              [max]="max_time" [(ngModel)]="ending_time"></ion-datetime>
+            <ion-label>Ending Time:</ion-label>
+            <ion-datetime displayFormat="hh:mm A" formControlName="endtime" [pickerOptions]="pickerOpt" [(ngModel)]="end_time"></ion-datetime>
             <ion-button>
               <ion-icon name="time"></ion-icon>
             </ion-button>
@@ -62,12 +60,7 @@
               *ngIf="changedateForm.get('endtime').hasError(validation.type) && (changedateForm.get('endtime').dirty || changedateForm.get('endtime').touched)">
               <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
             </div>
-            <div class="error-message"
-              *ngIf="!changedateForm.value.time">
-              <ion-icon name="information-circle-outline"></ion-icon> You have to select a reporting time first
-            </div>
           </ng-container>
-          
         </ion-col>
       </ion-row>
     </ion-card>

@@ -4,7 +4,7 @@
       <ion-menu-button menuId="second">
         <ion-icon class="menu-button" name="menu"></ion-icon>
         <ion-badge class="notifications-badge">
-          <ion-icon name="alert"></ion-icon>
+          {{jobsRejectedCount?.length + jobsAcceptedCount?.length}}
         </ion-badge>
       </ion-menu-button>
     </ion-buttons>
@@ -42,6 +42,9 @@
   </ion-grid>
 
   <ion-grid style="margin: 1pc;">
+    <div *ngIf="jobs?.length === 0" class="center">
+      <h5 class="center-content" style="color: red;"> There are no errands to apply </h5>
+    </div>
     <ion-card *ngFor="let item of jobs" [routerLink]="['/errand-details', item.id]">
       <ion-card-header>
         <ion-row>
