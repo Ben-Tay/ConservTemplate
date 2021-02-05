@@ -5,7 +5,7 @@
       <ion-menu-button menuId="second">
         <ion-icon class="menu-button" name="menu"></ion-icon>
         <ion-badge class="notifications-badge">
-          <ion-icon name="alert"></ion-icon>
+          {{jobsRejected?.length + jobsAccepted?.length}}
         </ion-badge> 
       </ion-menu-button>
     </ion-buttons>
@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content class="ER">
-  <ion-card class="available-job-card">
+  <ion-card class="available-job-card" *ngIf="jobsAccepted?.length !==0 || jobsRejected?.length !==0">
     <ion-list>
       <ion-item *ngFor="let item of jobsRejected">
         <ion-row>
@@ -29,7 +29,7 @@
           </ion-col>
           <ion-card-content>
             <div *ngFor="let details of item.applicant">
-              <div *ngIf="details.applicationstatus==='Rejected'">
+              <div *ngIf="details.applicationstatus==='Not Selected'">
                 <ion-row>
                   <p>Client Name: {{item?.client}}</p>
                 </ion-row>
@@ -38,10 +38,10 @@
                 </ion-row>
                   <p>Application Status: {{details.applicationstatus}} </p>
                 <ion-row>
-                  <p>Rejection Reason: {{details.reason}}</p>
+                  <p>Reason: {{details.reason}}</p>
                 </ion-row>
                 <ion-row>
-                  <p>Rejection Description: {{details.description}}</p>
+                  <p>Reason Description: {{details.description}}</p>
                   <p></p>
                 </ion-row>
               </div>

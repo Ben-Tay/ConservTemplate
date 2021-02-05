@@ -16,12 +16,24 @@ export class ERJobsPage implements OnInit {
   jobsRejected: Job[];
   mySegment: string;
   useremail: string;
+  jobsRejectedCount: Job[];
+  jobsAcceptedCount: Job[];
 
   constructor(private jobService: JobERService, private userService: UserService, private router: Router, private menuController: MenuController) {
     this.userService.observeAuthState(user => {
       this.userService.showLoading();
       if (user) {
         this.useremail = user.email;
+        this.jobService.getRejectedJobsByApplicant(this.useremail)
+        .subscribe(data=>{
+          if(data){
+            this.jobsRejectedCount =  data
+          }
+        })
+        this.jobService.getAcceptedJobsByApplicant(user.email)
+        .subscribe(data => {
+          this.jobsAcceptedCount = data;
+        })
       }
     })
     this.mySegment = 'ERJobs'

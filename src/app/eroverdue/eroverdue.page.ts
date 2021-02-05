@@ -16,6 +16,8 @@ export class ERoverduePage implements OnInit {
   jobsExpired: Job[];
   mySegment: string;
   useremail: string;
+  jobsRejectedCount: Job[];
+  jobsAcceptedCount: Job[];
 
   constructor(private jobService: JobERService, private userService: UserService, private router: Router, private menuController: MenuController) {
     this.userService.observeAuthState(user => {
@@ -33,6 +35,16 @@ export class ERoverduePage implements OnInit {
         this.jobService.getAllErrandsExpired(user.email)
           .subscribe(data => {
             this.jobsExpired = data
+          })
+          this.jobService.getRejectedJobsByApplicant(this.useremail)
+          .subscribe(data=>{
+            if(data){
+              this.jobsRejectedCount =  data
+            }
+          })
+          this.jobService.getAcceptedJobsByApplicant(user.email)
+          .subscribe(data => {
+            this.jobsAcceptedCount = data;
           })
       }
     })

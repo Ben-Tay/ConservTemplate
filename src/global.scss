@@ -59,6 +59,16 @@ ion-card-title{
     margin-left: 10px;
     margin-right: 10px;
 }
+
+.applicant-detail-card{
+    margin-bottom: 25px;
+    border: 1px solid black;
+    color: black;
+    padding: 5px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
 //background styling 
 ion-content.homepage{
     --ion-background-color: linear-gradient(#ffffff, #60b5ff);
@@ -90,13 +100,13 @@ ion-footer.segment-footer{
  
 .notifications-badge {
     position: absolute;
-    top: 6px;
+    top: 2.5px;
+    right: 2.5px;
+    padding: 3px;
+    margin: 1px;
     color: white;
     background-color: red;
-    right: 6px;
     border-radius: 100%;
-    padding: 0;
-    margin: 0;
 }
 
 .menu-button {            
