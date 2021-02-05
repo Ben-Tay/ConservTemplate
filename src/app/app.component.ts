@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-
-import { Platform, ToastController } from '@ionic/angular';
+import { Platform} from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { UserService } from './shared/services/user.service';
 import	firebase	from	'firebase/app';	
 import	'firebase/analytics';	
 
@@ -11,13 +9,11 @@ import	'firebase/analytics';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  providers:  [ UserService ]
 
 })
 export class AppComponent {
   navigate: any;
   navigateER: any;
-  badge = 6;
   
   constructor(
     private platform: Platform,
@@ -71,7 +67,6 @@ export class AppComponent {
         title : "Notifications",
         url   : "app-notification",
         icon  : "notifications",
-        badge : this.badge
       }
     ]
   }
@@ -99,7 +94,6 @@ export class AppComponent {
         title : "Notifications",
         url   : "erapp-notification",
         icon  : "notifications",
-        badge : this.badge
       }
     ]
   }
