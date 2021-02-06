@@ -5,85 +5,140 @@
       <ion-menu-button menuId="second">
         <ion-icon class="menu-button" name="menu"></ion-icon>
         <ion-badge class="notifications-badge">
-          {{jobsRejected?.length + jobsAccepted?.length}}
-        </ion-badge> 
+          {{jobsRejected?.length + jobsAccepted?.length + unselected?.length}}
+        </ion-badge>
       </ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ER">
-  <ion-card class="available-job-card" *ngIf="jobsAccepted?.length !==0 || jobsRejected?.length !==0">
-    <ion-list>
-      <ion-item *ngFor="let item of jobsRejected">
-        <ion-row>
-          <ion-col size-md="12" size-sm>
-            <ion-card-header>
-              <ion-row>
-                <ion-thumbnail text-wrap>
-                  <ion-icon size="large" class="center-right" name="briefcase" color="medium"></ion-icon>
-                </ion-thumbnail>
-                <ion-card-title>{{item?.errandname}}</ion-card-title>
-              </ion-row>
-            </ion-card-header>
-          </ion-col>
-          <ion-card-content>
-            <div *ngFor="let details of item.applicant">
-              <div *ngIf="details.applicationstatus==='Not Selected'">
-                <ion-row>
-                  <p>Client Name: {{item?.client}}</p>
-                </ion-row>
-                <ion-row>
-                  <p>Errand Date: {{item?.date | date: 'd MMM yyyy'}}</p>
-                </ion-row>
-                  <p>Application Status: {{details.applicationstatus}} </p>
-                <ion-row>
-                  <p>Reason: {{details.reason}}</p>
-                </ion-row>
-                <ion-row>
-                  <p>Reason Description: {{details.description}}</p>
-                  <p></p>
-                </ion-row>
-              </div>
-            </div>
-          </ion-card-content>
-        </ion-row>
+  <div [ngSwitch]="mySegment">
 
-      </ion-item>
-
-      <ion-item *ngFor="let item of jobsAccepted">
-        <ion-row>
-          <ion-col size="12">
-            <ion-card-header>
-              <ion-row>
-                <ion-thumbnail text-wrap>
-                  <ion-icon size="large" class="center-right" name="briefcase" color="medium"></ion-icon>
-                </ion-thumbnail>
-                <ion-card-title>{{item?.errandname}}</ion-card-title>
-              </ion-row>
-            </ion-card-header>
-          </ion-col>
-          <ion-card-content>
-            <div *ngFor="let details of item.applicant">
-              <div *ngIf="details.applicationstatus==='Accepted'">
-                <ion-row>
-                  <p>Client Name: {{item?.client}}</p>
-                </ion-row>
-                  <p>Application Status: {{details.applicationstatus}} </p>
-                <ion-row>
-                  <p>Reporting Time: {{item?.time | date:'shortTime'}}</p>
-                </ion-row>
-                <ion-row>
-                  <p>Reporting Date: {{item?.date | date: 'd MMM yyyy'}}</p>
-                </ion-row>
-              </div>
-            </div>
-          </ion-card-content>
-        </ion-row>
-      </ion-item>
-    </ion-list>
-  </ion-card>
-  <div class="center" *ngIf="jobsAccepted?.length ===0 && jobsRejected?.length ===0">
-    <ion-label color="danger">You have no notifications today</ion-label>
+    <ion-card class="available-job-card"
+      *ngIf="jobsAccepted?.length !==0 || jobsRejected?.length !==0 || unselected?.length !==0">
+      <ion-list>
+        <ion-grid *ngSwitchCase="'Upcoming Errands'">
+          <ion-item *ngFor="let item of jobsAccepted">
+            <ion-row>
+              <ion-col size-md="12" size-sm>
+                <ion-card-header>
+                  <ion-row>
+                    <ion-thumbnail text-wrap>
+                      <ion-icon size="large" class="center-right" name="briefcase" color="medium"></ion-icon>
+                    </ion-thumbnail>
+                    <ion-card-title>{{item?.errandname}}</ion-card-title>
+                  </ion-row>
+                </ion-card-header>
+              </ion-col>
+              <ion-card-content>
+                <div *ngFor="let details of item.applicant">
+                  <div *ngIf="details.applicationstatus==='Accepted'">
+                    <ion-row>
+                      <p>Client Name: {{item?.client}}</p>
+                    </ion-row>
+                    <p>Application Status: {{details.applicationstatus}} </p>
+                    <ion-row>
+                      <p>Reporting Time: {{item?.time | date:'shortTime'}}</p>
+                    </ion-row>
+                    <ion-row>
+                      <p>Reporting Date: {{item?.date | date: 'd MMM yyyy'}}</p>
+                    </ion-row>
+                  </div>
+                </div>
+              </ion-card-content>
+            </ion-row>
+          </ion-item>
+          <div class="center" *ngIf="jobsAccepted?.length ===0">
+            <ion-label color="danger">You have no errands upcoming</ion-label>
+          </div>
+        </ion-grid>
+        <ion-grid *ngSwitchCase="'Errands Cancelled'">
+          <ion-item *ngFor="let item of jobsRejected">
+            <ion-row>
+              <ion-col size-md="12" size-sm>
+                <ion-card-header>
+                  <ion-row>
+                    <ion-thumbnail text-wrap>
+                      <ion-icon size="large" class="center-right" name="briefcase" color="medium"></ion-icon>
+                    </ion-thumbnail>
+                    <ion-card-title>{{item?.errandname}}</ion-card-title>
+                  </ion-row>
+                </ion-card-header>
+              </ion-col>
+              <ion-card-content>
+                <div *ngFor="let details of item.applicant">
+                    <ion-row>
+                      <p>Client Name: {{item?.client}}</p>
+                    </ion-row>
+                    <ion-row>
+                      <p>Errand Date: {{item?.date | date: 'd MMM yyyy'}}</p>
+                    </ion-row>
+                    <p>Application Status: {{details.applicationstatus}} </p>
+                    <ion-row>
+                      <p>Reason: {{details.reason}}</p>
+                    </ion-row>
+                    <ion-row>
+                      <p>Reason Description: {{details.description}}</p>
+                    </ion-row>
+                </div>
+              </ion-card-content>
+            </ion-row>
+          </ion-item>
+          <div class="center" *ngIf="jobsRejected?.length ===0">
+            <ion-label color="danger">You have no errands cancelled</ion-label>
+          </div>
+        </ion-grid>
+        <ion-grid *ngSwitchCase="'Errands Gone'">
+          <ion-item *ngFor="let not_selected of unselected">
+            <ion-row>
+              <ion-col size-md="12" size-sm>
+                <ion-card-header>
+                  <ion-row>
+                    <ion-thumbnail text-wrap>
+                      <ion-icon size="large" class="center-right" name="briefcase" color="medium"></ion-icon>
+                    </ion-thumbnail>
+                    <ion-card-title>{{not_selected?.errandname}}</ion-card-title>
+                  </ion-row>
+                </ion-card-header>
+              </ion-col>
+              <ion-card-content>
+                <div *ngIf="not_selected.applicationstatus==='Not Selected'">
+                  <ion-row>
+                    <p>Client Name: {{not_selected?.client}}</p>
+                  </ion-row>
+                  <ion-row>
+                    <p>Errand Date: {{not_selected?.erranddate | date: 'd MMM yyyy'}}</p>
+                  </ion-row>
+                  <p>Application Status: {{not_selected?.applicationstatus}} </p>
+                  <ion-row>
+                    <p>Reason: {{not_selected?.reason}}</p>
+                  </ion-row>
+                  <ion-row>
+                    <p>Reason Description: {{not_selected?.description}}</p>
+                  </ion-row>
+                </div>
+              </ion-card-content>
+            </ion-row>
+          </ion-item>
+          <div class="center" *ngIf="unselected?.length ===0">
+            <ion-label color="danger">You have no errands gone</ion-label>
+          </div>
+        </ion-grid>
+      </ion-list>
+    </ion-card>
   </div>
 </ion-content>
+<ion-footer class="segment-footer">
+  <ion-segment style="--color-checked: #60b5ff;" [(ngModel)]="mySegment" (ionChange)="segmentChanged(mySegment)">
+    <ion-segment-button value="Upcoming Errands">
+      <ion-label>Upcoming<br />Errands</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Errands Cancelled">
+      <ion-label>Errands<br />Cancelled</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Errands Gone">
+      <ion-label>Errands<br />Gone</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-footer>
