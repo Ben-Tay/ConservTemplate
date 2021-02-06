@@ -16,6 +16,7 @@ import { PopoverController } from '@ionic/angular';
 export class ClientjobsPage implements OnInit {
   job: Job[];
   jobsconfirmed: Job[];
+  jobsApplied: Job[];
   client: string;
   filterform: FormGroup;
   orderbyfilter: string[]
@@ -53,6 +54,10 @@ export class ClientjobsPage implements OnInit {
               this.monthbtn.disabled = false;
               this.datebtn.disabled = false;
             }
+          })
+        this.jobservice.getErrandsAppliedByClient(user.email)
+          .subscribe(data => {
+            this.jobsApplied = data;
           })
         this.mySegment = 'ClientJobsCreated'
 

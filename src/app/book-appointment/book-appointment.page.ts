@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
 import { ErrandCategory } from '../shared/models/ErrandCategory';
-import { ThrowStmt } from '@angular/compiler';
+import { Job } from '../shared/models/Job';
 
 @Component({
   selector: 'app-book-appointment',
@@ -27,6 +27,7 @@ export class BookAppointmentPage implements OnInit {
   end_time;
   ending_time;
   today = new Date()
+  jobsApplied: Job[]
 
 
   constructor(private jobService: JobService, private toastCtrl: ToastController, private formbuilder: FormBuilder, private userService: UserService, private menuController: MenuController, private jobservice: JobService) {
@@ -44,6 +45,12 @@ export class BookAppointmentPage implements OnInit {
       //	User	is	logged	in
       if (user) {
         this.client = user.email;
+        this.jobService.getErrandsAppliedByClient(user.email)
+        .subscribe(data => {
+          this.jobsApplied = data;
+        })
+
+
       }
     })
   }
