@@ -438,7 +438,7 @@ export class JobService {
                 const endtime = jobdata.endtime.toDate()
                 let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
                 array.push(job);
-                //Read subcoollection '/JobsAccepted/<autoID>/Applicant'
+                //Read subcollection '/JobsAccepted/<autoID>/Applicant'
                 let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
                 dbApplicant.onSnapshot(applicantCollection => {
                   job.applicant = []; // Empty array
@@ -459,7 +459,7 @@ export class JobService {
 
   getCompletedJobsByClient(client: string): Observable<any> {
     return new Observable(observer => {
-      // Read collection '/JobsAccepted'
+      // Read collection '/JobsCompleted'
       firebase.firestore().collection('JobsCompleted').orderBy('date').onSnapshot(collection => {
         let array = [];
         collection.forEach(doc => {
@@ -472,7 +472,7 @@ export class JobService {
               const endtime = jobdata.endtime.toDate()
               let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
               array.push(job);
-              //Read subcoollection '/JobsAccepted/<autoID>/Applicant'
+              //Read subcollection '/JobsAccepted/<autoID>/Applicant'
               let dbApplicant = firebase.firestore().collection('JobsCompleted/' + doc.id + '/Applicant');
               dbApplicant.onSnapshot(applicantCollection => {
                 job.applicant = []; // Empty array
@@ -483,7 +483,6 @@ export class JobService {
               })
             } catch (error) { }
           }
-          // Add loan into array if there's no error
           observer.next(array)
         });
       });
@@ -505,7 +504,7 @@ export class JobService {
               const endtime = jobdata.endtime.toDate()
               let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
               array.push(job);
-              //Read subcoollection '/JobsAccepted/<autoID>/Applicant'
+              //Read subcollection '/JobsAccepted/<autoID>/Applicant'
               let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
               dbApplicant.onSnapshot(applicantCollection => {
                 job.applicant = []; // Empty array
@@ -516,7 +515,6 @@ export class JobService {
               });
             } catch (error) { }
           }
-          // Add loan into array if there's no error
           observer.next(array)
         });
       });
@@ -530,7 +528,7 @@ export class JobService {
     })
   }
 
-  changedateandtime(sjob: Job){
+  changedateandtime(sjob: Job) {
     const ref = firebase.firestore().collection('JobsAvailable').doc(sjob.id)
     return ref.update({
       date: sjob.date,
@@ -554,7 +552,7 @@ export class JobService {
               const endtime = jobdata.endtime.toDate()
               let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
               array.push(job);
-              //Read subcoollection '/JobsAccepted/<autoID>/Applicant'
+              //Read subcollection '/JobsAccepted/<autoID>/Applicant'
               let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
               dbApplicant.onSnapshot(applicantCollection => {
                 job.applicant = []; // Empty array
@@ -565,16 +563,15 @@ export class JobService {
               });
             } catch (error) { }
           }
-          // Add loan into array if there's no error
           observer.next(array)
         });
       });
     });
   }
 
-  getErrandsAppliedByClient(client: string): Observable<any>{
+  getErrandsAppliedByClient(client: string): Observable<any> {
     return new Observable(observer => {
-      // Read collection '/JobsAccepted'
+      // Read collection '/JobsAvailable'
       firebase.firestore().collection('JobsAvailable').orderBy('date').onSnapshot(collection => {
         let array = [];
         collection.forEach(doc => {
@@ -588,25 +585,37 @@ export class JobService {
                 const endtime = jobdata.endtime.toDate()
                 let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
 
-                //Read subcoollection '/JobsAccepted/<autoID>/Applicant'
+                //Read subcollection '/JobsAccepted/<autoID>/Applicant'
                 return firebase.firestore().collection('JobsAvailable').doc(doc.id).collection('Applicants').where('applicationstatus', '==', 'Pending').get().then(collection => {
                   job.applicant = [];
                   collection.forEach(doc => {
                     if (doc.id !== client) {
-                        array.push(job);
-                        let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus, doc.data().reason, doc.data().description)
-                        job.applicant.push(applicant)       
+                      array.push(job);
+                      let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus, doc.data().reason, doc.data().description)
+                      job.applicant.push(applicant)
                     }
                   })
                 });
               }
             } catch (error) { }
           }
-          // Add loan into array if there's no error
           observer.next(array)
         });
       });
     });
   }
+  notifyNonSelectedApplicants(applicant: string, errand: Job) {
+    const applicantref = firebase.firestore().collection('NotSelected').doc(errand.id)
+    applicantref.set({
+      errandname: errand.errandname,
+      erranddate: errand.date,
+      client: errand.client,
+      applicant: applicant,
+      applicationstatus: "Not Selected",
+      reason: "Errand taken up by someone else",
+      description: "The client has chosen someone else to take up the errand"
+    })
+  }
+
 }
 
