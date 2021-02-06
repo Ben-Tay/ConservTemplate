@@ -45,7 +45,13 @@ export class ClientjobsnotificationPage implements OnInit {
         this.job = data;
       }).then(() => {
         //Move document from JobsAvailable Collection to JobsAccepted Collection
+        for(let a of this.jobapplicants){
+          if(a.id !== applicant.id){
+            this.jobservice.notifyNonSelectedApplicants(a.id, this.job)
+          }
+        }
         this.jobservice.acceptapplicantrequest(this.job, applicant)
+    
         this.jobservice.deletefromJobsAvailable(this.job)
       })
     let toast = await this.toastCtrl.create({

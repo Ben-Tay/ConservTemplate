@@ -5,6 +5,7 @@ import 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { ErrandRunner } from '../models/ErrandRunner';
 import { toDate } from 'date-fns';
+import { NotSelected } from '../models/NotSelected';
 
 @Injectable({
   providedIn: 'root'
@@ -442,5 +443,27 @@ export class JobERService {
         observer.next(allData.length);
       });
     })
+  }
+
+  getNonSelectedDetails(errandrunner: string): Observable<any> {
+    return new Observable(observer => {
+      firebase.firestore().collection('NotSelected').onSnapshot(collection => {
+        let array = [];
+        collection.forEach(doc => {
+          // Add job into array if there's no error
+          if (doc.data().applicant === errandrunner) {
+            try {
+                let jobdata = doc.data()
+                const date = jobdata.erranddate.toDate()
+         
+                let unselected = new NotSelected(jobdata.errandname, date, jobdata.client, jobdata.applicant, jobdata.applicationstatus, jobdata.reason, jobdata.description)
+                array.push(unselected)
+            } catch (error) { }
+          }
+          // Add loan into array if there's no error
+          observer.next(array)
+        });
+      });
+    });
   }
 }

@@ -4,7 +4,7 @@
       <ion-menu-button menuId="first">
         <ion-icon class="menu-button" name="menu"></ion-icon>
         <ion-badge class="notifications-badge">
-          <ion-icon name="alert"></ion-icon>
+          {{jobsApplied?.length}}
         </ion-badge>
       </ion-menu-button>
     </ion-buttons>
@@ -16,7 +16,7 @@
     <ion-card-header>
       <ion-item lines="none">
           <ion-icon size="large" name="briefcase" class="center-right"></ion-icon>
-          <ion-label>
+          <ion-label color="primary" style="font-weight: bold;">
             Errand Name: {{errandsapplied.errandname}}
           </ion-label>
           <ion-col class="align-end">
@@ -28,7 +28,7 @@
     </ion-card-header>
     <ion-card class="applicant-detail-card">
       <ion-row>
-        <p>You have a new applicant for {{errandsapplied?.errandname}}</p>
+        <p>You have a new applicant for <strong>{{errandsapplied?.errandname}}</strong></p>
       </ion-row>
     </ion-card>
   </ion-card>

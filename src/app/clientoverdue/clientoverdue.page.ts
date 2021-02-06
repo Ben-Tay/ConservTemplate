@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonButton, MenuController } from '@ionic/angular';
 import { Job } from '../shared/models/Job';
+import { JobERService } from '../shared/services/job-er.service';
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
 
@@ -13,6 +14,7 @@ import { UserService } from '../shared/services/user.service';
 export class ClientoverduePage implements OnInit {
   job: Job[];
   jobsAccepted: Job[];
+  jobsApplied: JobERService[];
   jobsconfirmed: Job[];
   jobsexpired: Job[];
   client: string;
@@ -46,6 +48,11 @@ export class ClientoverduePage implements OnInit {
           .subscribe(data => {
             this.jobsexpired = data
           })
+        this.jobservice.getErrandsAppliedByClient(user.email)
+          .subscribe(data => {
+            this.jobsApplied = data;
+          })
+
         this.mySegment = 'ClientJobsOverdue'
 
       }
@@ -98,7 +105,7 @@ export class ClientoverduePage implements OnInit {
     this.router.navigate(['clientjobsnotification', id])
   }
 
-  toPayment(){
+  toPayment() {
     this.router.navigate(['payment-client'])
   }
 
