@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { Job } from '../shared/models/Job';
+import { NotSelected } from '../shared/models/NotSelected';
 import { JobERService } from '../shared/services/job-er.service';
 import { UserService } from '../shared/services/user.service';
 
@@ -16,6 +17,10 @@ export class ERoverduePage implements OnInit {
   jobsExpired: Job[];
   mySegment: string;
   useremail: string;
+  jobsRejectedCount: Job[];
+  jobsAcceptedCount: Job[];
+  unselected: NotSelected[];
+
 
   constructor(private jobService: JobERService, private userService: UserService, private router: Router, private menuController: MenuController) {
     this.userService.observeAuthState(user => {
@@ -33,6 +38,20 @@ export class ERoverduePage implements OnInit {
         this.jobService.getAllErrandsExpired(user.email)
           .subscribe(data => {
             this.jobsExpired = data
+          })
+          this.jobService.getRejectedJobsByApplicant(this.useremail)
+          .subscribe(data=>{
+            if(data){
+              this.jobsRejectedCount =  data
+            }
+          })
+          this.jobService.getAcceptedJobsByApplicant(user.email)
+          .subscribe(data => {
+            this.jobsAcceptedCount = data;
+          })
+          this.jobService.getNonSelectedDetails(user.email)
+          .subscribe(data => {
+            this.unselected = data;
           })
       }
     })

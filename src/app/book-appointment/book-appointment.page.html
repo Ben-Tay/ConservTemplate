@@ -4,7 +4,7 @@
       <ion-menu-button menuId="first">
         <ion-icon class="menu-button" name="menu"></ion-icon>
         <ion-badge class="notifications-badge">
-          <ion-icon name="alert"></ion-icon>
+          {{jobsApplied?.length}}
         </ion-badge> 
       </ion-menu-button>
     </ion-buttons>
@@ -103,8 +103,7 @@
         <ion-col size="6">
           <ion-item>
             <ion-label>Reporting Time:</ion-label>
-            <ion-datetime displayFormat="hh:mm A" formControlName="time" [pickerOptions]="pickerOpt" [min]="min_time"
-              [max]="max_time" (ngModelChange)="onReportTimeChange()"></ion-datetime>
+            <ion-datetime displayFormat="hh:mm A" formControlName="time" [pickerOptions]="pickerOpt"></ion-datetime>
             <ion-button>
               <ion-icon name="time"></ion-icon>
             </ion-button>
@@ -119,8 +118,7 @@
         <ion-col size="6">
           <ion-item>
             <ion-label> Ending Time:</ion-label>
-            <ion-datetime displayFormat="hh:mm A" formControlName="endtime" [pickerOptions]="pickerOpt" [min]="makerequestForm.value.time"
-              [max]="max_time" [(ngModel)]="ending_time"></ion-datetime>
+            <ion-datetime displayFormat="hh:mm A" formControlName="endtime" [pickerOptions]="pickerOpt"></ion-datetime>
             <ion-button>
               <ion-icon name="time"></ion-icon>
             </ion-button>
@@ -130,16 +128,10 @@
               *ngIf="makerequestForm.get('endtime').hasError(validation.type) && (makerequestForm.get('endtime').dirty || makerequestForm.get('endtime').touched)">
               <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
             </div>
-            <div class="error-message"
-              *ngIf="!makerequestForm.value.time">
-              <ion-icon name="information-circle-outline"></ion-icon> You have to select a reporting time first
-            </div>
           </ng-container>
-          
         </ion-col>
       </ion-row>
     </ion-card>
     <ion-button expand="block" color="tertiary" type="submit">Submit</ion-button>
   </form>
-
 </ion-content>

@@ -4,11 +4,19 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { ErrandRunner } from '../models/ErrandRunner';
+import { toDate } from 'date-fns';
+import { NotSelected } from '../models/NotSelected';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JobERService {
+
+  private today = new Date()
+  private month = this.today.getMonth()
+  private date = this.today.getDate()
+  private year = this.today.getFullYear()
+  private current_date = new Date(this.year, this.month, this.date)
 
   constructor() { }
 
@@ -22,7 +30,7 @@ export class JobERService {
 
           // Add jobs into array if there's no error
           try {
-            if (doc.data().date.toDate().getDate() >= new Date().getDate()) {
+            if (doc.data().time.toDate() > new Date()) {
               const docRef = ref.doc(doc.id)
               docRef.collection('Applicants').doc(id).get().then(sdoc => {
                 if (sdoc.exists) {
@@ -52,7 +60,7 @@ export class JobERService {
         collection.forEach(doc => {
           // Add jobs into array if there's no error
           try {
-            if (doc.data().date.toDate().getDate() >= new Date().getDate()) {
+            if (doc.data().time.toDate() > new Date()) {
               const docRef = ref.doc(doc.id)
               docRef.collection('Applicants').where('applicationstatus', '==', 'Pending').get().then(sdoc => {
                 let applied = null
@@ -124,9 +132,9 @@ export class JobERService {
         collection.forEach(doc => {
           // Add jobs into array if there's no error
           try {
-            if (doc.data().date.toDate() >= new Date()) {
+            if (doc.data().date.toDate() > new Date()) {
               const docRef = ref.doc(doc.id)
-              docRef.collection('Applicants').where('applicationstatus', '==', 'Rejected').get().then(sdoc => {
+              docRef.collection('Applicants').where('applicationstatus', '==', 'Not Selected').get().then(sdoc => {
                 let applied = null
                 sdoc.forEach(ssdoc => {
                   if (ssdoc.id === id) {
@@ -197,7 +205,7 @@ export class JobERService {
         collection.forEach(doc => {
           // Add jobs into array if there's no error
           try {
-            if (doc.data().date.toDate() >= new Date()) {
+            if (doc.data().time.toDate() > new Date()) {
               const docRef = ref.doc(doc.id)
               docRef.collection('Applicant').get().then(sdoc => {
                 sdoc.forEach(ssdoc => {
@@ -242,7 +250,7 @@ export class JobERService {
         collection.forEach(doc => {
           // Add jobs into array if there's no error
           try {
-            if (doc.data().date.toDate() <= new Date()) {
+            if (doc.data().time.toDate() <= new Date()) {
               const docRef = ref.doc(doc.id)
               docRef.collection('Applicant').get().then(sdoc => {
                 sdoc.forEach(ssdoc => {
@@ -339,7 +347,7 @@ export class JobERService {
   getRejectedJobsByApplicant(client: string): Observable<any> {
     return new Observable(observer => {
       // Read collection '/JobsAvailable'
-      firebase.firestore().collection('JobsAvailable').orderBy('date').onSnapshot(collection => {
+      firebase.firestore().collection('JobsAvailable').onSnapshot(collection => {
         let array = [];
         collection.forEach(doc => {
           // Add job into array if there's no error
@@ -349,19 +357,22 @@ export class JobERService {
               const date = jobdata.date.toDate()
               const reportime = jobdata.time.toDate()
               const endtime = jobdata.endtime.toDate()
-              const today = new Date().getDate()
+              const date_month = date.getMonth()
+              const date_year = date.getFullYear()
+              const date_date = date.getDate()
+              const errand_date = new Date(date_year, date_month, date_date)
+
               let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
-              return firebase.firestore().collection('JobsAvailable').doc(doc.id).collection('Applicants').where('applicationstatus', '==', 'Rejected').get().then(collection => {
+              return firebase.firestore().collection('JobsAvailable').doc(doc.id).collection('Applicants').orderBy('notification_time', 'desc').get().then(collection => {
                 job.applicant = [];
                 collection.forEach(doc => {
-                  if (doc.id === client) {
-                    // const date_difference = today - date.getDate()
-                    // if (date.getDate() === today || date_difference === 1) {
+                  if (doc.id === client && doc.data().applicationstatus === 'Not Selected') {
+                    if (errand_date >= this.current_date && date_year === this.year) {
                       array.push(job);
 
                       let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus, doc.data().reason, doc.data().description)
                       job.applicant.push(applicant)
-                    // }
+                    }
                   }
                 })
               });
@@ -378,36 +389,39 @@ export class JobERService {
   getAcceptedJobsByApplicant(client: string): Observable<any> {
     return new Observable(observer => {
       // Read collection '/JobsAccepted'
-      firebase.firestore().collection('JobsAccepted').orderBy('date').onSnapshot(collection => {
+      firebase.firestore().collection('JobsAccepted').orderBy('notification_time', 'desc').onSnapshot(collection => {
         let array = [];
         collection.forEach(doc => {
           // Add job into array if there's no error
           if (doc.data().client !== client) {
             try {
-                let jobdata = doc.data()
-                const date = jobdata.date.toDate()
-                const reportime = jobdata.time.toDate()
-                const endtime = jobdata.endtime.toDate()
-                const today = new Date().getDate()
+              let jobdata = doc.data()
+              const date = jobdata.date.toDate()
+              const reportime = jobdata.time.toDate()
+              const endtime = jobdata.endtime.toDate()
+              const date_month = date.getMonth()
+              const date_year = date.getFullYear()
+              const date_date = date.getDate()
+              const errand_date = new Date(date_year, date_month, date_date)
 
-                let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
-                //Read subcoollection '/JobsAccepted/<autoID>/Applicant'
-                let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
-                dbApplicant.onSnapshot(applicantCollection => {
-                  job.applicant = []; // Empty array
-                  applicantCollection.forEach(doc => {
-                    if (doc.id === client && doc.data().applicationstatus === 'Accepted') {
-                      const date_difference = today - date.getDate()
-                      if (date.getDate() === today || date_difference === 1) {
-                        array.push(job);
-  
-                        let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus)
-                        job.applicant.push(applicant)
-                      }
+              let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+              //Read subcoollection '/JobsAccepted/<autoID>/Applicant'
+              let dbApplicant = firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant');
+              dbApplicant.onSnapshot(applicantCollection => {
+                job.applicant = []; // Empty array
+
+                applicantCollection.forEach(doc => {
+                  if (doc.id === client && doc.data().applicationstatus === 'Accepted') {
+                    if (errand_date >= this.current_date && date_year === this.year) {
+                      array.push(job);
+
+                      let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus)
+                      job.applicant.push(applicant)
                     }
-                  })
-                });
-              
+                  }
+                })
+              });
+
             } catch (error) { }
           }
           // Add loan into array if there's no error
@@ -416,5 +430,40 @@ export class JobERService {
       });
     });
   }
- 
+
+  getCompletedJobs(client: string, runner: string){
+    return new Observable(observer => {
+      firebase.firestore().collection('JobsCompleted').orderBy('client').onSnapshot(collection => {
+        let allData = [];
+        collection.forEach(doc => {
+          if(doc.data().client == client && doc.data().runner == runner || doc.data().client == runner && doc.data().runner == client){
+            allData.push(doc.data());
+          }
+        });
+        observer.next(allData.length);
+      });
+    })
+  }
+
+  getNonSelectedDetails(errandrunner: string): Observable<any> {
+    return new Observable(observer => {
+      firebase.firestore().collection('NotSelected').orderBy('notification_time', 'desc').onSnapshot(collection => {
+        let array = [];
+        collection.forEach(doc => {
+          // Add job into array if there's no error
+          if (doc.data().applicant === errandrunner) {
+            try {
+                let jobdata = doc.data()
+                const date = jobdata.erranddate.toDate()
+         
+                let unselected = new NotSelected(jobdata.errandname, date, jobdata.client, jobdata.applicant, jobdata.applicationstatus, jobdata.reason, jobdata.description)
+                array.push(unselected)
+            } catch (error) { }
+          }
+          // Add loan into array if there's no error
+          observer.next(array)
+        });
+      });
+    });
+  }
 }

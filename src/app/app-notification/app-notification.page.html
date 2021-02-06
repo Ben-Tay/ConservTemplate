@@ -4,7 +4,7 @@
       <ion-menu-button menuId="first">
         <ion-icon class="menu-button" name="menu"></ion-icon>
         <ion-badge class="notifications-badge">
-          <ion-icon name="alert"></ion-icon>
+          {{jobsApplied?.length}}
         </ion-badge>
       </ion-menu-button>
     </ion-buttons>
@@ -13,28 +13,24 @@
 </ion-header>
 <ion-content class="C">
   <ion-card class="available-job-card" *ngFor="let errandsapplied of jobsApplied">
-    <div *ngFor="let details of errandsapplied.applicant">
-      <ion-card-header>
-        <ion-row>
-          <ion-icon size="large" name="person" class="center-right"></ion-icon>
-          <ion-card-title>{{details.id}}</ion-card-title>
+    <ion-card-header>
+      <ion-item lines="none">
+          <ion-icon size="large" name="briefcase" class="center-right"></ion-icon>
+          <ion-label color="primary" style="font-weight: bold;">
+            Errand Name: {{errandsapplied.errandname}}
+          </ion-label>
           <ion-col class="align-end">
             <ion-button (click)="toApplicant(errandsapplied?.id)">Applicant
               <ion-icon slot="start" name="notifications"></ion-icon>
             </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-card-header>
-      <ion-card-content>
-        <div *ngIf="details.applicationstatus==='Pending'">
-          <ion-card class="errand-detail-card">
-            <ion-card-content>
-              <p><strong>{{details.id}}</strong> has applied for your Errand:<strong>{{errandsapplied?.errandname}}</strong></p>
-            </ion-card-content>
-          </ion-card>
-        </div>
-      </ion-card-content>
-    </div>
+          </ion-col>      
+      </ion-item>
+    </ion-card-header>
+    <ion-card class="applicant-detail-card">
+      <ion-row>
+        <p>You have a new applicant for <strong>{{errandsapplied?.errandname}}</strong></p>
+      </ion-row>
+    </ion-card>
   </ion-card>
   <div class="center" *ngIf="jobsApplied?.length ===0">
     <ion-label color="danger">You have no applicants today</ion-label>

@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Overdue Errands</ion-title>
+    <ion-title>Pending, Completed & Expired Errands</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button menuId="first">
         <ion-icon class="menu-button" name="menu"></ion-icon>
         <ion-badge class="notifications-badge">
-          <ion-icon name="alert"></ion-icon>
+          {{jobsApplied?.length}}
           </ion-badge>
       </ion-menu-button>
       </ion-buttons>
@@ -19,7 +19,7 @@
       <ion-grid *ngSwitchCase="'ClientJobsOverdue'">
         <ion-item-divider *ngIf="job?.length != 0">
           <h5 style="color: black;">
-            Overdue Available Jobs
+            Pending Available Jobs
           </h5>
         </ion-item-divider>
         <ion-item-group>
@@ -69,7 +69,7 @@
 
         <ion-item-divider *ngIf="jobsAccepted?.length != 0">
           <h5 style="color: black;">
-            Overdue Jobs
+            Pending Errands
           </h5>
         </ion-item-divider>
         <ion-item-group>
@@ -126,7 +126,7 @@
           </ion-item>
         </ion-item-group>
         <div *ngIf="job?.length === 0 && jobsAccepted?.length === 0" class="center">
-          <h5 class="center-content"> You have no errand requests currently</h5>
+          <h5 class="center-content"> You have no pending errand requests currently</h5>
         </div>
       </ion-grid>
 
@@ -221,6 +221,9 @@
             </ion-card-content>
           </ion-card>
         </ion-item>
+        <div *ngIf="jobsexpired?.length === 0" class="center">
+          <h5 class="center-content"> You have no expired errands </h5>
+        </div>
       </ion-grid>
 
     </ion-list>
@@ -230,7 +233,7 @@
 <ion-footer class="segment-footer">
   <ion-segment style="--color-checked: #60b5ff;" [(ngModel)]="mySegment" (ionChange)="segmentChanged(mySegment)">
     <ion-segment-button value="ClientJobsOverdue">
-      <ion-label>Errands<br />Overdue</ion-label>
+      <ion-label>Errands<br />Pending</ion-label>
     </ion-segment-button>
     <ion-segment-button value="JobsCompleted">
       <ion-label>Errands<br />Completed</ion-label>

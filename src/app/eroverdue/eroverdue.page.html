@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Overdue Errands</ion-title>
+    <ion-title>Pending, Completed & Expired Errands</ion-title>
     <ion-buttons slot="end">
       <ion-menu-button menuId="second">
         <ion-icon class="menu-button" name="menu"></ion-icon>
         <ion-badge class="notifications-badge">
-          <ion-icon name="alert"></ion-icon>
+          {{jobsRejectedCount?.length + jobsAcceptedCount?.length + unselected?.length}}
         </ion-badge> 
       </ion-menu-button>
       </ion-buttons>
@@ -17,7 +17,7 @@
 
     <ion-grid *ngSwitchCase="'ERJobsO'">
       <div *ngIf="jobs?.length === 0" class="center">
-        <h5 class="center-content"> You do not have any overdue errands</h5>
+        <h5 class="center-content"> You do not have any pending errands</h5>
       </div>
       <ion-card *ngFor="let item of jobs">
         <ion-card-header>
@@ -164,7 +164,7 @@
 <ion-footer class="segment-footer">
   <ion-segment style="--color-checked: #60b5ff;" [(ngModel)]="mySegment" (ionChange)="segmentChanged(mySegment)">
     <ion-segment-button value="ERJobsO">
-      <ion-label class="ion-text-wrap">Overdue<br/>Errands</ion-label>
+      <ion-label class="ion-text-wrap">Pending<br/>Errands</ion-label>
     </ion-segment-button>
     <ion-segment-button value="ERCompleted">
       <ion-label class="ion-text-wrap">Completed<br/>Errands</ion-label>

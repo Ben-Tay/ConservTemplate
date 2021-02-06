@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { IonSearchbar, MenuController } from '@ionic/angular';
 import { months } from 'moment';
 import { Job } from '../shared/models/Job';
+import { NotSelected } from '../shared/models/NotSelected';
 import { JobERService } from '../shared/services/job-er.service';
 import { UserService } from '../shared/services/user.service';
 
@@ -20,6 +21,9 @@ export class AllErrandRequestsPage implements OnInit {
 
   categories: string[];
   months;
+  jobsRejectedCount: Job[];
+  jobsAcceptedCount: Job[];
+  unselected: NotSelected[];
 
   constructor(private jobService: JobERService, private userService: UserService, private menuController: MenuController) {
     this.categories = ['All', 'Grocery', 'ElderCare', 'Babysit', 'DogWalking', 'Delivery']
@@ -35,6 +39,20 @@ export class AllErrandRequestsPage implements OnInit {
       .subscribe(async data => {
         this.jobs = await data;
         this.allJobs = await data;
+      })
+      this.jobService.getRejectedJobsByApplicant(await user.email)
+      .subscribe(data=>{
+        if(data){
+          this.jobsRejectedCount =  data
+        }
+      })
+      this.jobService.getAcceptedJobsByApplicant(await user.email)
+      .subscribe(data => {
+        this.jobsAcceptedCount = data;
+      })
+      this.jobService.getNonSelectedDetails(await user.email)
+      .subscribe(data => {
+        this.unselected = data;
       })
     })
     this.ionViewWillEnter()

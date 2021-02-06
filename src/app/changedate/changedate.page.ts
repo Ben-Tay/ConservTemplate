@@ -16,16 +16,24 @@ export class ChangedatePage implements OnInit {
   submitted: boolean = false;
   jobid: string;
   job: Job;
-  ending_time;
+  start_time;
+  end_time;
+  today = new Date()
+  date = new Date()
+  formdate;
 
-  constructor(public userservice: UserService, private jobservice: JobService,  public navParams: NavParams, private modalCtrl: ModalController) {
+
+  constructor(public userservice: UserService, private jobservice: JobService, public navParams: NavParams, private modalCtrl: ModalController, private toastCtrl: ToastController) {
     this.jobid = navParams.get("getjobid")
     this.jobservice.getSpecificJobsById(this.jobid)
       .then(data => {
         this.userservice.showLoading();
         this.job = data;
+        this.formdate = new Date(data.date).toISOString()
+        this.start_time = new Date(data.time).toISOString()
+        this.end_time = new Date(data.endtime).toISOString()
       })
-      
+
     this.changedateForm = new FormGroup({
       date: new FormControl('', [Validators.required]),
       time: new FormControl('', [Validators.required]),
@@ -33,19 +41,64 @@ export class ChangedatePage implements OnInit {
     })
   }
 
-  editanddimiss(sjob: Job) {
-    let newjob = new Job(sjob.errandname, sjob.category, sjob.status, sjob.client, new Date(this.changedateForm.value.date), sjob.description, new Date(this.changedateForm.value.time), new Date(this.changedateForm.value.endtime), sjob.id, sjob.price)
+  async editanddimiss(sjob: Job) {
+    const form = this.changedateForm
+    const formvalue = this.changedateForm.value;
+    const reportime = new Date(formvalue.time)
+    const endtime = new Date(formvalue.endtime)
+    const formdate = new Date(formvalue.date);
+    const realreporttime = new Date(formdate.getFullYear(), formdate.getMonth(), formdate.getDate(), reportime.getHours(), reportime.getMinutes(), reportime.getSeconds(), reportime.getMilliseconds())
+    const realendtime = new Date(formdate.getFullYear(), formdate.getMonth(), formdate.getDate(), endtime.getHours(), endtime.getMinutes(), endtime.getSeconds(), endtime.getMilliseconds())
 
-    this.jobservice.changedateandtime(newjob).then(data=>{
-      this.modalCtrl.dismiss();
-    })
+    let newjob = new Job(sjob.errandname, sjob.category, sjob.status, sjob.client, new Date(this.changedateForm.value.date), sjob.description, realreporttime, realendtime, sjob.id, sjob.price)
+
+    if (formdate.getDate() === this.today.getDate()) {
+      if (realendtime.getTime() > realreporttime.getTime()) {
+        if (realreporttime.getTime() >= this.today.getTime()) {
+          if (form.valid) {
+            this.jobservice.changedateandtime(newjob).then(data => {
+              this.modalCtrl.dismiss();
+            })
+          }
+        } else {
+          let toast = await this.toastCtrl.create({
+            message: "You cannot select a reporting time that is in the past",
+            position: 'top',
+            duration: 2000,
+            color: 'danger'
+          })
+          toast.present()
+        }
+      } else {
+        let toast = await this.toastCtrl.create({
+          message: "Your end time cannot be equal to or earlier than your reporting time",
+          position: 'top',
+          duration: 2000,
+          color: 'danger'
+        })
+        toast.present()
+      }
+    } else {
+      if (realendtime.getTime() > realreporttime.getTime()) {
+        if (form.valid) {
+          this.jobservice.changedateandtime(newjob).then(data => {
+            this.modalCtrl.dismiss();
+          })
+        }
+      } else {
+        let toast = await this.toastCtrl.create({
+          message: "Your end time cannot be equal to or earlier than your reporting time",
+          position: 'top',
+          duration: 2000,
+          color: 'danger'
+        })
+        toast.present()
+      }
+    }
+
   }
 
   ngOnInit() {
-  }
-
-  onReportTimeChange(){
-    this.ending_time = this.changedateForm.value.time;
   }
 
   validation_messages = {

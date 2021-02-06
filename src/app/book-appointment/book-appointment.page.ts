@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
 import { ErrandCategory } from '../shared/models/ErrandCategory';
-import { ThrowStmt } from '@angular/compiler';
+import { Job } from '../shared/models/Job';
 
 @Component({
   selector: 'app-book-appointment',
@@ -21,14 +21,13 @@ export class BookAppointmentPage implements OnInit {
   categories: string[];
   date = new Date().toISOString();
   correct_date: Date;
-  min_time = "06:30";
-  max_time = "11:59";
+  errandprice: ErrandCategory[];
+  price: number;
   time;
   end_time;
   ending_time;
-  errandprice: ErrandCategory[];
-  price: number;
-
+  today = new Date()
+  jobsApplied: Job[]
 
 
   constructor(private jobService: JobService, private toastCtrl: ToastController, private formbuilder: FormBuilder, private userService: UserService, private menuController: MenuController, private jobservice: JobService) {
@@ -41,10 +40,17 @@ export class BookAppointmentPage implements OnInit {
       time: new FormControl('', [Validators.required]),
       endtime: new FormControl('', [Validators.required])
     })
+
     this.userService.observeAuthState(user => {
       //	User	is	logged	in
       if (user) {
         this.client = user.email;
+        this.jobService.getErrandsAppliedByClient(user.email)
+        .subscribe(data => {
+          this.jobsApplied = data;
+        })
+
+
       }
     })
   }
@@ -65,27 +71,80 @@ export class BookAppointmentPage implements OnInit {
     const endtime = new Date(formvalue.endtime)
     const realreporttime = new Date(formdate.getFullYear(), formdate.getMonth(), formdate.getDate(), reportime.getHours(), reportime.getMinutes(), reportime.getSeconds(), reportime.getMilliseconds())
     const realendtime = new Date(formdate.getFullYear(), formdate.getMonth(), formdate.getDate(), endtime.getHours(), endtime.getMinutes(), endtime.getSeconds(), endtime.getMilliseconds())
+    if (formdate.getDate() === this.today.getDate()) {
+      if (realendtime.getTime() > realreporttime.getTime()) {
+        if (realreporttime.getTime() >= this.today.getTime()) {
+          if (form.valid) {
+            this.jobservice.getErrandPricesByCategory(formvalue.category)
+              .subscribe(data => {
+                this.errandprice = data;
+                for (let i of this.errandprice) {
+                  this.price = i.price
+                }
+                this.jobService.createnewjobrequest(formvalue.errandname, formvalue.category,
+                  this.client, formdate, formvalue.description, realreporttime, realendtime, this.price)
+              })
 
-    if (form.valid) {
-      this.jobservice.getErrandPricesByCategory(formvalue.category)
-        .subscribe(data => {
-          this.errandprice = data;
-          for(let i of this.errandprice){
-            this.price = i.price
+            let toast = await this.toastCtrl.create({
+              message: "Your request has been created",
+              position: 'top',
+              duration: 2000,
+              color: 'success'
+            })
+            toast.present()
+            this.makerequestForm.reset()
           }
-          this.jobService.createnewjobrequest(formvalue.errandname, formvalue.category,
-            this.client, formdate, formvalue.description, realreporttime, realendtime, this.price)
+        } else {
+          let toast = await this.toastCtrl.create({
+            message: "You cannot select a reporting time that is in the past",
+            position: 'top',
+            duration: 2000,
+            color: 'danger'
+          })
+          toast.present()
+        }
+      } else {
+        let toast = await this.toastCtrl.create({
+          message: "Your end time cannot be equal to or earlier than your reporting time",
+          position: 'top',
+          duration: 2000,
+          color: 'danger'
         })
+        toast.present()
+      }
+    } else {
+      if (realendtime.getTime() > realreporttime.getTime()) {
+        if (form.valid) {
+          this.jobservice.getErrandPricesByCategory(formvalue.category)
+            .subscribe(data => {
+              this.errandprice = data;
+              for (let i of this.errandprice) {
+                this.price = i.price
+              }
+              this.jobService.createnewjobrequest(formvalue.errandname, formvalue.category,
+                this.client, formdate, formvalue.description, realreporttime, realendtime, this.price)
+            })
 
-
-      let toast = await this.toastCtrl.create({
-        message: "Your request has been created",
-        position: 'top',
-        duration: 2000
-      })
-      toast.present()
+          let toast = await this.toastCtrl.create({
+            message: "Your request has been created",
+            position: 'top',
+            duration: 2000,
+            color: 'success'
+          })
+          toast.present()
+          this.makerequestForm.reset()
+        }
+      } else {
+        let toast = await this.toastCtrl.create({
+          message: "Your end time cannot be equal to or earlier than your reporting time",
+          position: 'top',
+          duration: 2000,
+          color: 'danger'
+        })
+        toast.present()
+      }
     }
-    this.makerequestForm.reset()
+
   }
 
   onChangeCategory(value) {
@@ -95,10 +154,7 @@ export class BookAppointmentPage implements OnInit {
       })
   }
 
-  onReportTimeChange(){
-    this.ending_time = this.makerequestForm.value.time;
-  }
- 
+
   validation_messages = {
     'errandname': [
       { type: 'required', message: 'Errand Name is required.' }

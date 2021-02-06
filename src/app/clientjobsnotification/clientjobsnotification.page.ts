@@ -17,6 +17,7 @@ export class ClientjobsnotificationPage implements OnInit {
   jobid: string;
   job: Job;
   jobapplicants: ErrandRunner[]
+  appear: Boolean = false;
 
   constructor(private route: ActivatedRoute, private jobservice: JobService, private userservice: UserService, private router: Router, private toastCtrl: ToastController, private modalCtrl: ModalController) {
     this.jobid = this.route.snapshot.params.id;
@@ -28,6 +29,9 @@ export class ClientjobsnotificationPage implements OnInit {
         this.userservice.showLoading();
         this.job = data;
         this.jobapplicants = data.applicant;
+        if (data.time <= new Date()) {
+          this.appear = true
+        }
       })
   }
 
@@ -41,7 +45,15 @@ export class ClientjobsnotificationPage implements OnInit {
         this.job = data;
       }).then(() => {
         //Move document from JobsAvailable Collection to JobsAccepted Collection
+        for (let a of this.jobapplicants) {
+          const reason = "Errand taken up by someone else"
+          const description = "The client has chosen someone else to take up the errand"
+          if (a.id !== applicant.id) {
+            this.jobservice.notifyNonSelectedApplicants(a.id, this.job, reason, description)
+          }
+        }
         this.jobservice.acceptapplicantrequest(this.job, applicant)
+
         this.jobservice.deletefromJobsAvailable(this.job)
       })
     let toast = await this.toastCtrl.create({
@@ -64,7 +76,7 @@ export class ClientjobsnotificationPage implements OnInit {
         getapplicant: applicant,
         getjobid: this.jobid,
       },
-      cssClass: 'modal-wrapper' 
+      cssClass: 'modal-wrapper'
 
     });
     //Present modal 
@@ -81,7 +93,7 @@ export class ClientjobsnotificationPage implements OnInit {
       componentProps: {
         getjobid: this.jobid
       },
-      cssClass: 'modal-wrapper' 
+      cssClass: 'modal-wrapper'
 
     });
     //Present modal
@@ -93,8 +105,18 @@ export class ClientjobsnotificationPage implements OnInit {
 
 
   async DeleteErrand(job: Job) {
-    this.jobservice.deletefromJobsAvailable(this.job)
-
+    this.jobservice.getSpecificJobsById(this.jobid)
+      .then(data => {
+        this.job = data;
+      }).then(() => {
+        for (let a of this.jobapplicants) {
+          const delete_reason = "Errand deleted"
+          const delete_description = "The client has deleted the errand"
+          this.jobservice.notifyNonSelectedApplicants(a.id, this.job, delete_reason, delete_description)
+        }
+      }).then(() => {
+        this.jobservice.deletefromJobsAvailable(this.job)
+      })
     let toast = await this.toastCtrl.create({
       message: "You have deleted the errand with the ID: " + job.id,
       position: 'top',
