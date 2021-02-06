@@ -347,7 +347,7 @@ export class JobERService {
   getRejectedJobsByApplicant(client: string): Observable<any> {
     return new Observable(observer => {
       // Read collection '/JobsAvailable'
-      firebase.firestore().collection('JobsAvailable').orderBy('date').onSnapshot(collection => {
+      firebase.firestore().collection('JobsAvailable').onSnapshot(collection => {
         let array = [];
         collection.forEach(doc => {
           // Add job into array if there's no error
@@ -363,10 +363,10 @@ export class JobERService {
               const errand_date = new Date(date_year, date_month, date_date)
 
               let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
-              return firebase.firestore().collection('JobsAvailable').doc(doc.id).collection('Applicants').where('applicationstatus', '==', 'Not Selected').get().then(collection => {
+              return firebase.firestore().collection('JobsAvailable').doc(doc.id).collection('Applicants').orderBy('notification_time', 'desc').get().then(collection => {
                 job.applicant = [];
                 collection.forEach(doc => {
-                  if (doc.id === client) {
+                  if (doc.id === client && doc.data().applicationstatus === 'Not Selected') {
                     if (errand_date >= this.current_date && date_year === this.year) {
                       array.push(job);
 
@@ -389,7 +389,7 @@ export class JobERService {
   getAcceptedJobsByApplicant(client: string): Observable<any> {
     return new Observable(observer => {
       // Read collection '/JobsAccepted'
-      firebase.firestore().collection('JobsAccepted').orderBy('date').onSnapshot(collection => {
+      firebase.firestore().collection('JobsAccepted').orderBy('notification_time', 'desc').onSnapshot(collection => {
         let array = [];
         collection.forEach(doc => {
           // Add job into array if there's no error
@@ -447,7 +447,7 @@ export class JobERService {
 
   getNonSelectedDetails(errandrunner: string): Observable<any> {
     return new Observable(observer => {
-      firebase.firestore().collection('NotSelected').onSnapshot(collection => {
+      firebase.firestore().collection('NotSelected').orderBy('notification_time', 'desc').onSnapshot(collection => {
         let array = [];
         collection.forEach(doc => {
           // Add job into array if there's no error
