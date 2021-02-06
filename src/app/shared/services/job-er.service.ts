@@ -435,7 +435,7 @@ export class JobERService {
       firebase.firestore().collection('JobsCompleted').orderBy('client').onSnapshot(collection => {
         let allData = [];
         collection.forEach(doc => {
-          if(doc.data().client == client && doc.data().runner == runner){
+          if(doc.data().client == client && doc.data().runner == runner || doc.data().client == runner && doc.data().runner == client){
             allData.push(doc.data());
           }
         });
