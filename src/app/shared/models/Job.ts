@@ -13,7 +13,8 @@ export class Job {
         public time: Date,
         public endtime: Date,
         public id?: string,
-        public price?: number
+        public price?: number,
+        public notification_time?: Date
     ) { }
 
 }
