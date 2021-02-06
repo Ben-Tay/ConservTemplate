@@ -291,6 +291,8 @@ export class JobService {
   acceptapplicantrequest(sjob: Job, applicant: ErrandRunner) {
     let job = new Job(sjob.errandname, sjob.category, "Accepted", sjob.client, sjob.date, sjob.description, sjob.time, sjob.endtime, sjob.id, sjob.price)
 
+    let today= new Date()
+    let notification_timing = new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds(), today.getMilliseconds())
     return firebase.firestore().collection('JobsAccepted').add({
       errandname: job.errandname,
       category: job.category,
@@ -300,7 +302,8 @@ export class JobService {
       description: job.description,
       time: job.time,
       endtime: job.endtime,
-      price: job.price
+      price: job.price,
+      notification_time: notification_timing
     }).then(doc => {
       job.id = doc.id;
       firebase.firestore().collection('JobsAccepted/' + doc.id + '/Applicant/').doc(applicant.id).set({
@@ -313,11 +316,14 @@ export class JobService {
 
   rejectapplicantbyspecificjob(jobid: string, applicant: ErrandRunner, reason: string, description: string) {
     const ref = firebase.firestore().collection('JobsAvailable/' + jobid + '/Applicants/').doc(applicant.id)
+    let today= new Date()
+    let notification_timing = new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds(), today.getMilliseconds())
     ref.set({
       date: applicant.date,
       applicationstatus: "Not Selected",
       reason: reason,
-      description: description
+      description: description,
+      notification_time: notification_timing
     })
   }
 
@@ -604,18 +610,20 @@ export class JobService {
       });
     });
   }
-  notifyNonSelectedApplicants(applicant: string, errand: Job) {
+  notifyNonSelectedApplicants(applicant: string, errand: Job, reason: string, description: string) {
     const applicantref = firebase.firestore().collection('NotSelected').doc(errand.id)
+    let today= new Date()
+    let notification_timing = new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds(), today.getMilliseconds())
     applicantref.set({
       errandname: errand.errandname,
       erranddate: errand.date,
       client: errand.client,
       applicant: applicant,
       applicationstatus: "Not Selected",
-      reason: "Errand taken up by someone else",
-      description: "The client has chosen someone else to take up the errand"
+      reason: reason,
+      description: description,
+      notification_time: notification_timing
     })
   }
-
 }
 

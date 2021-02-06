@@ -7,6 +7,8 @@ export class NotSelected{
       public applicant: string,
       public applicationstatus?: string,
       public reason?: string,
-      public description?: string) { }
-  
+      public description?: string,
+      public notification_time?: Date
+      ) { }
+        
   }
