@@ -8,26 +8,38 @@
 </ion-header>
 
 <ion-content class="homepage">
-  <h1 style="text-align: center;">Reviews of {{ targetEmail }}</h1>
+  <h1 style="text-align: center;">Average Rating: 
+    <ion-icon *ngFor="let i of [].constructor(this.average)" name="star" size="large" style="color: #FFDF00;"></ion-icon>
+    <ion-icon *ngFor="let i of [].constructor(5 - this.average)" name="star-outline" size="large"></ion-icon>
+
+  </h1>
   <ion-list class="transparent-stylebackground">
     <ion-item *ngFor="let review of allReviews">
       <ion-grid>
-          <ion-row>
-            <ion-col>
-              From :
-            </ion-col>
-            <ion-col>
-              {{ review.from }}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              Review of User :
-            </ion-col>
-            <ion-col>
-              {{ review.comment }}
-            </ion-col>
-          </ion-row>
+        <ion-row>
+          <ion-col>Rating:</ion-col>
+          <ion-col>
+            <ion-icon *ngFor="let i of [].constructor(review.starReview)" name="star" style="color: #FFDF00;">
+            </ion-icon>
+            <ion-icon *ngFor="let i of [].constructor(5-review.starReview)" name="star-outline"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            From :
+          </ion-col>
+          <ion-col>
+            {{ review.from }}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            Review of User :
+          </ion-col>
+          <ion-col>
+            {{ review.comment }}
+          </ion-col>
+        </ion-row>
       </ion-grid>
     </ion-item>
   </ion-list>

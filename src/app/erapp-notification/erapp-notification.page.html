@@ -17,7 +17,7 @@
     <ion-list>
       <ion-item *ngFor="let item of jobsRejected">
         <ion-row>
-          <ion-col size="12">
+          <ion-col size-md="12" size-sm>
             <ion-card-header>
               <ion-row>
                 <ion-thumbnail text-wrap>
@@ -71,7 +71,7 @@
                 </ion-row>
                   <p>Application Status: {{details.applicationstatus}} </p>
                 <ion-row>
-                  <p>Reporting Time:{{item?.time | date:'shortTime'}}</p>
+                  <p>Reporting Time: {{item?.time | date:'shortTime'}}</p>
                 </ion-row>
                 <ion-row>
                   <p>Reporting Date: {{item?.date | date: 'd MMM yyyy'}}</p>

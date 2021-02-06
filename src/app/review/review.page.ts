@@ -16,8 +16,11 @@ export class ReviewPage implements OnInit {
   user: any;
   userEmail: any;
   targetEmail: any;
-  constructor(private reviewService: ReviewService, private userService: UserService, private router: Router, private route: ActivatedRoute) {
+  allratings: number = 0;
+  noreview: number = 0;
+  average: number = 0;
 
+  constructor(private reviewService: ReviewService, private userService: UserService, private router: Router, private route: ActivatedRoute) {
     this.reviews=[];
     this.allReviews=[];
   }
@@ -33,12 +36,16 @@ export class ReviewPage implements OnInit {
           this.reviews = doc;
           for(var review of this.reviews){
             console.log(review);
+            this.allratings = this.allratings + parseInt(review.starReview)
+            this.noreview = this.noreview + 1
             let newData = {
               'comment' : review.comment,
+              'starReview' : parseInt(review.starReview),
               'from' : review.from
             }
             this.allReviews.push(newData);
           }
+          this.average = Math.round((this.allratings/this.noreview))
         });
       }
       else 
