@@ -5,6 +5,7 @@ import { UserService } from '../shared/services/user.service';
 import { JobService } from '../shared/services/job.service';
 import { ReviewService } from '../shared/services/review.service';
 import { ActivatedRoute } from '@angular/router';
+import { JobERService } from '../shared/services/job-er.service';
 
 @Component({
   selector: 'app-users',
@@ -18,7 +19,7 @@ export class UsersPage implements OnInit {
   count: any;
   targetEmail: string;
   reviewCount: any;
-  constructor(private userService: UserService, private reviewService: ReviewService, private jobService: JobService, private router: Router, private route: ActivatedRoute) {
+  constructor(private userService: UserService, private reviewService: ReviewService, private jobService: JobERService, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit() {

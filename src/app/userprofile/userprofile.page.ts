@@ -4,6 +4,7 @@ import { User } from '../shared/models/User';
 import { UserService } from '../shared/services/user.service';
 import { JobService } from '../shared/services/job.service';
 import { ReviewService } from '../shared/services/review.service';
+import { JobERService } from '../shared/services/job-er.service';
 @Component({
   selector: 'app-userprofile',
   templateUrl: './userprofile.page.html',
@@ -19,7 +20,7 @@ export class UserprofilePage implements OnInit {
   reviewCount: any;
   userEmail: any;
   users: User;
-  constructor(private route: ActivatedRoute, private userService: UserService, private reviewService: ReviewService, private jobService: JobService) {
+  constructor(private route: ActivatedRoute, private userService: UserService, private reviewService: ReviewService, private jobService: JobERService) {
     this.errandId = this.route.snapshot.params.id;
     this.targetEmail = this.route.snapshot.params.id;
   }

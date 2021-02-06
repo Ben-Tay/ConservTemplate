@@ -8,19 +8,31 @@
 </ion-header>
 
 <ion-content class="homepage">
-  <h1 style="background-color: transparent; --ion-background-color: transparent; text-align: center;">Leave a review for {{ targetEmail }}</h1>
-      <ion-textarea style=" margin: auto; width:97%; color: black; border: 1px solid black; background-color: white; border-radius: 10px;" [(ngModel)]="data.comment"></ion-textarea>
-      <h2 style="background-color: transparent; --ion-background-color: transparent; text-align: center;">
-      <ion-label>Star Ratings</ion-label>
-      </h2>
+  <h1 class="transparent-stylebackground" style="text-align: center;">Leave a review for {{ targetEmail }}</h1>
+  <h5 class="transparent-stylebackground">
+    <ion-label style="padding-left: 10px;">Ratings:</ion-label>
+  </h5>
 
-      <ion-select style="padding-top: 10px; margin: auto; width:90%; color: black; border: 1px solid black; background-color: white; border-radius: 10px;" [(ngModel)]="data.starReview">
-        <ion-select-option default>0</ion-select-option>
-        <ion-select-option>1</ion-select-option>
-        <ion-select-option>2</ion-select-option>
-        <ion-select-option>3</ion-select-option>
-        <ion-select-option>4</ion-select-option>
-        <ion-select-option>5</ion-select-option>
-      </ion-select>
-  <ion-button style="margin: 1.2pc; font-size: 1.1pc;" size="large" expand="block" (click)="postReview()">Post</ion-button>
+  <ion-select
+    style="margin-left: 4%; width:40%; color: black; border: 1px solid black; background-color: white; border-radius: 10px;"
+    [(ngModel)]="data.starReview">
+    <ion-select-option default>0</ion-select-option>
+    <ion-select-option>1</ion-select-option>
+    <ion-select-option>2</ion-select-option>
+    <ion-select-option>3</ion-select-option>
+    <ion-select-option>4</ion-select-option>
+    <ion-select-option>5</ion-select-option>
+  </ion-select>
+  <br />
+
+  <h5 class="transparent-stylebackground">
+    <ion-label style="padding-left: 10px;">Comments:</ion-label>
+  </h5>
+  <ion-textarea
+    style=" margin-left: 4%; width:92%; color: black; border: 1px solid black; background-color: white; border-radius: 10px;"
+    [(ngModel)]="data.comment"></ion-textarea>
+  <br />
+  
+  <ion-button style="margin: 1.2pc; font-size: 1.1pc;" size="large" expand="block" (click)="postReview()">Post
+  </ion-button>
 </ion-content>
