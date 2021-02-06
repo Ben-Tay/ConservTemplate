@@ -45,7 +45,7 @@ export class ReviewPage implements OnInit {
             }
             this.allReviews.push(newData);
           }
-          this.average = parseInt((this.allratings/this.noreview).toString())
+          this.average = parseInt((this.allratings/this.noreview).toFixed(0))
         });
       }
       else 
