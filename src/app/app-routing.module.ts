@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'userprofile/:id', loadChildren: './userprofile/userprofile.module#UserprofilePageModule' },
   { path: 'erjobs', loadChildren: './erjobs/erjobs.module#ERJobsPageModule' },
   { path: 'rejectreason', loadChildren: './rejectreason/rejectreason.module#RejectreasonPageModule' },
-  { path: 'payment-client', loadChildren: './payment-client/payment-client.module#PaymentClientPageModule' },
+  { path: 'payment-client/:id', loadChildren: './payment-client/payment-client.module#PaymentClientPageModule' },
   { path: 'payment-errandrunner', loadChildren: './payment-errandrunner/payment-errandrunner.module#PaymentErrandrunnerPageModule' },
   { path: 'confirm-payment', loadChildren: './confirm-payment/confirm-payment.module#ConfirmPaymentPageModule' },
   { path: 'confirm-receivepayment', loadChildren: './confirm-receivepayment/confirm-receivepayment.module#ConfirmReceivepaymentPageModule' },
