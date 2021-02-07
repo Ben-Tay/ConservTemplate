@@ -17,7 +17,7 @@
     <ion-list style="background-color: transparent; --ion-background-color: transparent">
       <form [formGroup]="filterform">
         <ion-row>
-          <ion-card class="filtercard">
+          <ion-card class="filtercard"> 
             <ion-card-header>
               <ion-card-title>Filter By:</ion-card-title>
             </ion-card-header>
@@ -119,6 +119,9 @@
                 <ion-col class="align-end" *ngFor="let d of c.applicant">
                   <ion-button (click)="toERProfile(d.id)">Errand Runner
                     <ion-icon slot="start" name="person"></ion-icon>
+                  </ion-button>
+                    <ion-button (click)="toPayment(d.id)">Payment
+                      <ion-icon slot="start" name="wallet"></ion-icon>
                   </ion-button>
                 </ion-col>
               </ion-row>
