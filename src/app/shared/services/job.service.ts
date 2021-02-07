@@ -666,11 +666,11 @@ export class JobService {
   }
 
   changeJobsAcceptedtoJobsCompleted (sjob: Job, applicant: ErrandRunner) {
-    let job = new Job(sjob.errandname, sjob.category, "Completed", sjob.client, sjob.date, sjob.description, sjob.time, sjob.endtime, sjob.id, sjob.price)
+    let job = new Job(sjob.errandname, sjob.category, "Paid", sjob.client, sjob.date, sjob.description, sjob.time, sjob.endtime, sjob.id, sjob.price)
 
     let today= new Date()
     let notification_timing = new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds(), today.getMilliseconds())
-    return firebase.firestore().collection('JobsCompleted').add({
+    return firebase.firestore().collection('JobsCompleted').doc(job.id).set({
       errandname: job.errandname,
       category: job.category,
       status: job.status,
@@ -682,8 +682,7 @@ export class JobService {
       price: job.price,
       notification_time: notification_timing
     }).then(doc => {
-      job.id = doc.id;
-      firebase.firestore().collection('JobsCompleted/' + doc.id + '/Applicant/').doc(applicant.id).set({
+      firebase.firestore().collection('JobsCompleted/' + job.id + '/Applicant/').doc(applicant.id).set({
         date: applicant.date,
         applicationstatus: "Completed"
       })
