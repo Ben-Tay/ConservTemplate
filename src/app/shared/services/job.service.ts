@@ -5,6 +5,7 @@ import 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { ErrandRunner } from '../models/ErrandRunner';
 import { ErrandCategory } from '../models/ErrandCategory';
+import { Payment } from '../models/Payment';
 
 @Injectable({
   providedIn: 'root'
@@ -623,6 +624,95 @@ export class JobService {
       reason: reason,
       description: description,
       notification_time: notification_timing
+    })
+  }
+
+  getAcceptedJobsById(id: string) {
+    //read document '/JobsAvailable/<id>'
+    return firebase.firestore().collection('JobsAccepted').doc(id).get().then(doc => {
+      let jobdata = doc.data()
+      const date = jobdata.date.toDate()
+      const reportime = jobdata.time.toDate()
+      const endtime = jobdata.endtime.toDate()
+      let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+
+      //Read subcollection '/JobsAvailable/<id>/Applicants'
+      return firebase.firestore().collection('JobsAccepted').doc(id).collection('Applicant').get().then(collection => {
+        job.applicant = [];
+        collection.forEach(doc => {
+          let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus)
+          job.applicant.push(applicant)
+        })
+
+        return job;
+      })
+
+    })
+  }
+
+  createnewbill(bill: Payment) {
+
+    return firebase.firestore().collection('Bills').add({
+      errandId: bill.errandid,
+      errandamount: bill.billamt,
+      commissionpaid: bill.commission,
+      fullamount: bill.fullamt,
+      paymenttype: bill.paymenttype,
+      payment_status: bill.payment_status
+    }).then(() => {
+      return bill;
+    })
+
+  }
+
+  changeJobsAcceptedtoJobsCompleted (sjob: Job, applicant: ErrandRunner) {
+    let job = new Job(sjob.errandname, sjob.category, "Completed", sjob.client, sjob.date, sjob.description, sjob.time, sjob.endtime, sjob.id, sjob.price)
+
+    let today= new Date()
+    let notification_timing = new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds(), today.getMilliseconds())
+    return firebase.firestore().collection('JobsCompleted').add({
+      errandname: job.errandname,
+      category: job.category,
+      status: job.status,
+      client: job.client,
+      date: job.date,
+      description: job.description,
+      time: job.time,
+      endtime: job.endtime,
+      price: job.price,
+      notification_time: notification_timing
+    }).then(doc => {
+      job.id = doc.id;
+      firebase.firestore().collection('JobsCompleted/' + doc.id + '/Applicant/').doc(applicant.id).set({
+        date: applicant.date,
+        applicationstatus: "Completed"
+      })
+      return job;
+    })
+  }
+
+  deletefromJobsAccepted(sJob: Job) {
+    const jobref = firebase.firestore().collection("JobsAccepted").doc(sJob.id);
+    const jobapplicantref = firebase.firestore().collection("JobsAccepted/" + sJob.id + "/Applicant")
+
+    //delete applicant subcollection of particular job document
+    jobapplicantref.get().then(snapshot => {
+      if (snapshot.empty) {
+      } else {
+        snapshot.forEach(doc => {
+          const applicantrefid = jobapplicantref.doc(doc.id)
+          applicantrefid.get().then(doc => {
+            if (doc.exists)
+              applicantrefid.delete()
+          })
+        })
+      }
+    })
+    //delete particular jobdocument
+    jobref.get().then(doc => {
+      if (doc.exists) {
+        jobref.delete();
+      }
     })
   }
 }

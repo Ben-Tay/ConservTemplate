@@ -19,7 +19,7 @@
       <ion-grid *ngSwitchCase="'ClientJobsOverdue'">
         <ion-item-divider *ngIf="job?.length != 0">
           <h5 style="color: black;">
-            Pending Available Jobs
+            Pending Available Errands
           </h5>
         </ion-item-divider>
         <ion-item-group>
@@ -118,7 +118,7 @@
                     </ion-button>
                   </ion-col>
                   <ion-col>
-                    <ion-button size="default" color="success" expand="block" (click)="toPayment()">Completed</ion-button>
+                    <ion-button size="default" color="success" expand="block" (click)="toPayment(job.id)">Completed</ion-button>
                   </ion-col>
                 </ion-row>
               </ion-card-content>
