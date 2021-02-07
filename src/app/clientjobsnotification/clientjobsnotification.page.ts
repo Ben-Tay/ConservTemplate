@@ -18,6 +18,9 @@ export class ClientjobsnotificationPage implements OnInit {
   job: Job;
   jobapplicants: ErrandRunner[]
   appear: Boolean = false;
+  rejectedapplicants: ErrandRunner[]
+  reason = "Errand taken up by someone else"
+  description = "The client has chosen someone else to take up the errand"
 
   constructor(private route: ActivatedRoute, private jobservice: JobService, private userservice: UserService, private router: Router, private toastCtrl: ToastController, private modalCtrl: ModalController) {
     this.jobid = this.route.snapshot.params.id;
@@ -46,25 +49,34 @@ export class ClientjobsnotificationPage implements OnInit {
       }).then(() => {
         //Move document from JobsAvailable Collection to JobsAccepted Collection
         for (let a of this.jobapplicants) {
-          const reason = "Errand taken up by someone else"
-          const description = "The client has chosen someone else to take up the errand"
           if (a.id !== applicant.id) {
-            this.jobservice.notifyNonSelectedApplicants(a.id, this.job, reason, description)
+            this.jobservice.notifyNonSelectedApplicants(a.id, this.job, this.reason, this.description)
           }
         }
+      }).then(() => {
+        this.jobservice.getRejectedApplicantsById(this.jobid)
+          .then(data => {
+            this.rejectedapplicants = data.applicant
+            for (let r of this.rejectedapplicants) {
+              this.jobservice.notifyNonSelectedApplicants(r.id, this.job, this.reason, this.description)
+            }
+
+          })
+      }).then(() => {
         this.jobservice.acceptapplicantrequest(this.job, applicant)
 
         this.jobservice.deletefromJobsAvailable(this.job)
       })
-    let toast = await this.toastCtrl.create({
-      message: "You have accepted this errand request",
-      position: 'top',
-      duration: 2000,
-      color: 'success'
-    })
-    toast.present()
-
-    this.router.navigate(['clientjobs'])
+        let toast = await this.toastCtrl.create({
+          message: "You have accepted this errand request",
+          position: 'top',
+          duration: 2000,
+          color: 'success'
+        })
+        toast.present()
+    
+        this.router.navigate(['clientjobs'])
+   
   }
 
   async RejectApplicant(applicant: ErrandRunner) {

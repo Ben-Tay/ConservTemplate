@@ -592,10 +592,10 @@ export class JobService {
                 let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
 
                 //Read subcollection '/JobsAccepted/<autoID>/Applicant'
-                return firebase.firestore().collection('JobsAvailable').doc(doc.id).collection('Applicants').where('applicationstatus', '==', 'Pending').get().then(collection => {
+                return firebase.firestore().collection('JobsAvailable').doc(doc.id).collection('Applicants').get().then(collection => {
                   job.applicant = [];
                   collection.forEach(doc => {
-                    if (doc.id !== client) {
+                    if (doc.id !== client && doc.data().applicationstatus === 'Pending') {
                       array.push(job);
                       let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus, doc.data().reason, doc.data().description)
                       job.applicant.push(applicant)
