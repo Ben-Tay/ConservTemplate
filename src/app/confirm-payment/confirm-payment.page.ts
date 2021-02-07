@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController, NavParams } from '@ionic/angular';
 import { CarddetailsPage } from '../carddetails/carddetails.page';
 import { PaynowPage } from '../paynow/paynow.page';
+import { ErrandRunner } from '../shared/models/ErrandRunner';
 import { Job } from '../shared/models/Job';
 import { Payment } from '../shared/models/Payment';
 
@@ -15,10 +16,12 @@ export class ConfirmPaymentPage implements OnInit {
   job: Job;
   bill: Payment;
   newbill: Payment;
+  applicant: ErrandRunner;
 
   constructor(private modalController: ModalController, private router: Router, public navParams: NavParams) {
     this.bill = navParams.get("fullamt")
     this.job = navParams.get('sJob')
+    this.applicant = navParams.get('sApp')
   }
 
   ngOnInit() {
@@ -31,7 +34,8 @@ export class ConfirmPaymentPage implements OnInit {
       component: PaynowPage,
       componentProps: {
         fullamt: this.newbill = new Payment(this.bill.errandid, this.bill.billamt, this.bill.commission, this.bill.fullamt, 'PayNow', this.bill.payment_status),
-        sJob: this.job
+        sJob: this.job,
+        sApp: this.applicant
       },
       cssClass: 'modal-wrapper'
     });
@@ -45,7 +49,8 @@ export class ConfirmPaymentPage implements OnInit {
       component: CarddetailsPage,
       componentProps: {
         fullamt: this.newbill = new Payment(this.bill.errandid, this.bill.billamt, this.bill.commission, this.bill.fullamt, 'Card', this.bill.payment_status),
-        sJob: this.job
+        sJob: this.job,
+        sApp: this.applicant
       },
       cssClass: 'modal-wrapper'
     });
