@@ -220,5 +220,9 @@ export class ClientjobsPage implements OnInit {
     this.router.navigate(['/userprofile', id])
   }
 
+  toPayment(id: string) {
+    this.router.navigate(['/payment-client', id])
+  }
+
 }
        
