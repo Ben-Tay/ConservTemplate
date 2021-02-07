@@ -122,7 +122,7 @@
             </ion-row>
           </ion-item>
           <div class="center" *ngIf="unselected?.length ===0">
-            <ion-label color="danger">You have no errands gone</ion-label>
+            <ion-label color="danger">No errands you applied for were deleted/cancelled</ion-label>
           </div>
         </ion-grid>
       </ion-list>
@@ -135,10 +135,10 @@
       <ion-label>Upcoming<br />Errands</ion-label>
     </ion-segment-button>
     <ion-segment-button value="Errands Cancelled">
-      <ion-label>Errands<br />Cancelled</ion-label>
+      <ion-label>Errands<br /> Cancelled</ion-label>
     </ion-segment-button>
     <ion-segment-button value="Errands Gone">
-      <ion-label>Errands<br />Gone</ion-label>
+      <ion-label>Errands<br />(Special Case)</ion-label>
     </ion-segment-button>
   </ion-segment>
 </ion-footer>
