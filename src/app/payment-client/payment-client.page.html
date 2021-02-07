@@ -75,7 +75,7 @@
           Commission to Conserv:
         </ion-col>
         <ion-col class="large" style="margin-right: 1pc;">
-          $1.50
+          {{ job?.price * 0.1 }}
         </ion-col>
       </ion-row>
 
@@ -84,7 +84,7 @@
           TOTAL
         </ion-col>
         <ion-col class="largetotal" style="margin-right: 1pc;">
-          $13.50
+          {{ job?.price + commissionRate }}
         </ion-col>
       </ion-row>
   </ion-grid>

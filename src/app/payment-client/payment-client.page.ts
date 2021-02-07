@@ -22,7 +22,7 @@ export class PaymentClientPage implements OnInit {
   acceptedarray: Job[] = [];
 
   constructor(private jobService: JobService, private jobERService: JobERService, private route: ActivatedRoute,
-    private userService: UserService, private router: Router, private toastController: ToastController, private modalController: ModalController) { 
+    private userService: UserService, private modalController: ModalController) { 
       this.errandId = this.route.snapshot.params.id;
 
       this.jobService.getSpecificJobsById(this.errandId)
@@ -54,6 +54,10 @@ export class PaymentClientPage implements OnInit {
       component: ConfirmPaymentPage
     });
     return await modal.present();
+  }
+
+  toCalculate() {
+    
   }
 
 }
