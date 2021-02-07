@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
 import { CarddetailsPage } from '../carddetails/carddetails.page';
 import { PaynowPage } from '../paynow/paynow.page';
+import { ErrandRunner } from '../shared/models/ErrandRunner';
+import { Job } from '../shared/models/Job';
+import { Payment } from '../shared/models/Payment';
 
 @Component({
   selector: 'app-confirm-payment',
@@ -10,8 +13,16 @@ import { PaynowPage } from '../paynow/paynow.page';
   styleUrls: ['./confirm-payment.page.scss'],
 })
 export class ConfirmPaymentPage implements OnInit {
+  job: Job;
+  bill: Payment;
+  newbill: Payment;
+  applicant: ErrandRunner;
 
-  constructor(private modalController: ModalController, private router: Router) { }
+  constructor(private modalController: ModalController, private router: Router, public navParams: NavParams) {
+    this.bill = navParams.get("fullamt")
+    this.job = navParams.get('sJob')
+    this.applicant = navParams.get('sApp')
+  }
 
   ngOnInit() {
   }
@@ -20,7 +31,13 @@ export class ConfirmPaymentPage implements OnInit {
     this.modalController.dismiss();
 
     const modal = await this.modalController.create({
-      component: PaynowPage
+      component: PaynowPage,
+      componentProps: {
+        fullamt: this.newbill = new Payment(this.bill.errandid, this.bill.billamt, this.bill.commission, this.bill.fullamt, 'PayNow', this.bill.payment_status),
+        sJob: this.job,
+        sApp: this.applicant
+      },
+      cssClass: 'modal-wrapper'
     });
     return await modal.present();
   }
@@ -29,7 +46,13 @@ export class ConfirmPaymentPage implements OnInit {
     this.modalController.dismiss();
 
     const modal = await this.modalController.create({
-      component: CarddetailsPage
+      component: CarddetailsPage,
+      componentProps: {
+        fullamt: this.newbill = new Payment(this.bill.errandid, this.bill.billamt, this.bill.commission, this.bill.fullamt, 'Card', this.bill.payment_status),
+        sJob: this.job,
+        sApp: this.applicant
+      },
+      cssClass: 'modal-wrapper'
     });
     return await modal.present();
   }
