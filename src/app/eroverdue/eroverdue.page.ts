@@ -14,6 +14,7 @@ import { UserService } from '../shared/services/user.service';
 export class ERoverduePage implements OnInit {
   jobs: Job[];
   jobsCompleted: Job[];
+  jobsCompletedNP: Job[];
   jobsExpired: Job[];
   mySegment: string;
   useremail: string;
@@ -31,25 +32,29 @@ export class ERoverduePage implements OnInit {
           .subscribe(data => {
             this.jobs = data
           })
-        this.jobService.getAllErrandsCompleted(user.email)
+        this.jobService.getAllErrandsCompletedPaid(user.email)
           .subscribe(data => {
             this.jobsCompleted = data
+          })
+        this.jobService.getAllErrandsCompletedReceived(user.email)
+          .subscribe(data => {
+            this.jobsCompletedNP = data
           })
         this.jobService.getAllErrandsExpired(user.email)
           .subscribe(data => {
             this.jobsExpired = data
           })
-          this.jobService.getRejectedJobsByApplicant(this.useremail)
-          .subscribe(data=>{
-            if(data){
-              this.jobsRejectedCount =  data
+        this.jobService.getRejectedJobsByApplicant(this.useremail)
+          .subscribe(data => {
+            if (data) {
+              this.jobsRejectedCount = data
             }
           })
-          this.jobService.getAcceptedJobsByApplicant(user.email)
+        this.jobService.getAcceptedJobsByApplicant(user.email)
           .subscribe(data => {
             this.jobsAcceptedCount = data;
           })
-          this.jobService.getNonSelectedDetails(user.email)
+        this.jobService.getNonSelectedDetails(user.email)
           .subscribe(data => {
             this.unselected = data;
           })
@@ -74,9 +79,13 @@ export class ERoverduePage implements OnInit {
       .subscribe(async data => {
         this.jobs = await data
       })
-    this.jobService.getAllErrandsCompleted(this.useremail)
+    this.jobService.getAllErrandsCompletedPaid(this.useremail)
       .subscribe(async data => {
         this.jobsCompleted = await data
+      })
+    this.jobService.getAllErrandsCompletedReceived(this.useremail)
+      .subscribe(data => {
+        this.jobsCompletedNP = data
       })
     this.jobService.getAllErrandsExpired(this.useremail)
       .subscribe(async data => {
@@ -84,7 +93,7 @@ export class ERoverduePage implements OnInit {
       })
   }
 
-  toReceive(){
+  toReceive() {
     this.router.navigate(['payment-errandrunner'])
   }
 
