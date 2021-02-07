@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import { Job } from '../shared/models/Job';
 import { NotSelected } from '../shared/models/NotSelected';
 import { JobERService } from '../shared/services/job-er.service';
-import { JobService } from '../shared/services/job.service';
 import { UserService } from '../shared/services/user.service';
 
 
