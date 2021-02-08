@@ -35,7 +35,7 @@ export class CarddetailsPage implements OnInit {
     this.job = navParams.get('sJob')
     this.applicant = navParams.get('sApp')
 
-    this.
+    
 
     let securityCode = new FormControl('', Validators.compose([
       Validators.minLength(3),
