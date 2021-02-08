@@ -23,24 +23,29 @@ export class PaymentErrandrunnerPage implements OnInit {
   useremail: string;
   name: string;
   Bill: Payment;
+  paidbill: Payment[];
 
   constructor(private jobService: JobService, private jobERService: JobERService, private route: ActivatedRoute,
     private userService: UserService, private modalController: ModalController) {
-      this.errandId = this.route.snapshot.params.id;
+    this.errandId = this.route.snapshot.params.id;
 
-    this.jobService.getAcceptedJobsById(this.errandId)
-    .then(data => {
+    this.jobERService.getCompletedJobsById(this.errandId)
+      .then(data => {
         this.job = data;
         this.userService.getUserInfoNoImage(this.job.applicant[0].id)
-        .subscribe(data=>{
-          this.name = data.name
-        });
+          .subscribe(data => {
+            this.name = data.name
+          });
+        this.jobERService.getBillsById(this.job.id)
+          .then(data => {
+            this.paidbill = data
+          })
         this.newJob = new Job(this.job.errandname, this.job.category, this.job.status, this.job.client, this.job.date, this.job.description, this.job.time, this.job.endtime, this.job.id, this.job.price, this.job.notification_time)
         this.applicant = new ErrandRunner(this.job.applicant[0].date, this.job.applicant[0].id, this.job.applicant[0].applicationstatus)
-        this.Bill = new Payment(this.errandId, this.job.price, parseFloat((this.job.price * 0.107).toFixed(2)), this.job.price + parseFloat((this.job.price * 0.107).toFixed(2)), '', 'Paid')
+        this.Bill = new Payment(this.errandId, this.job.price, parseFloat((this.job.price * 0.07).toFixed(2)), this.job.price - parseFloat((this.job.price * 0.07).toFixed(2)), '', 'Received')
       })
 
-    this.userService.observeAuthState(data=>{
+    this.userService.observeAuthState(data => {
       this.useremail = data
     })
   }

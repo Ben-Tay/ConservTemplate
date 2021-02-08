@@ -1,7 +1,7 @@
 export class Payment{
 
     constructor(
-      public errandid: string,
+      public errandId: string,
       public billamt: number,
       public commission: number,
       public fullamt: number,
