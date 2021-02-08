@@ -6,31 +6,34 @@
 
 <ion-content>
   <ion-grid>
-    <form [formGroup]="CardNoForm"> 
+    <form [formGroup]="CardNoForm">
       <ion-row>
         <ion-col>
           <ion-item lines="none" style="overflow: visible;">
             <ion-label class="google-label" position="floating">
               Card Type
             </ion-label>
-            <select class="form-control">
-              <option formControlName="cardType" [value]="cardType" *ngFor="let cardType of creditCardTypes">
-                {{cardType}}
-              </option>
-            </select>
+            <ion-input class="google-input">
+              <ion-select class="form-control">
+                <ion-select-option formControlName="cardType" [value]="cardTypes"
+                  *ngFor="let cardTypes of creditCardTypes">
+                  {{cardTypes}}
+                </ion-select-option>
+              </ion-select>
+            </ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
     </form>
 
-    <form>
+    <form [formGroup]="CardDetailsForm">
       <ion-row>
         <ion-col>
           <ion-item lines="none" style="overflow: visible;">
             <ion-label class="google-label" position="floating">
               Card No
             </ion-label>
-            <ion-input formControlName= "cardNo" class="google-input" type="text"></ion-input>
+            <ion-input formControlName="cardNo" class="google-input" type="text"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -38,37 +41,37 @@
       <ion-row>
         <ion-col>
           <ion-item lines="none" style="overflow: visible;">
-            <ion-label class="google-label" position="floating"> Valid thru (MM/YY) </ion-label>
+            <ion-label> Valid thru (MM/YY) </ion-label>
             <select formControlName="expiryDate" id="expiryMonth">
-                <option selected> MM </option>
-                <option>01</option>
-                <option>02</option>
-                <option>03</option>
-                <option>04</option>
-                <option>05</option>
-                <option>06</option>
-                <option>07</option>
-                <option>08</option>
-                <option>09</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
+              <option selected> MM </option>
+              <option>01</option>
+              <option>02</option>
+              <option>03</option>
+              <option>04</option>
+              <option>05</option>
+              <option>06</option>
+              <option>07</option>
+              <option>08</option>
+              <option>09</option>
+              <option>10</option>
+              <option>11</option>
+              <option>12</option>
             </select>
             <select id="expiryYear">
-                <option selected>YY</option>
-                <option>2018</option>
-                <option>2019</option>
-                <option>2020</option>
-                <option>2021</option>
-                <option>2022</option>
-                <option>2023</option>
-                <option>2024</option>
-                <option>2025</option>
-                <option>2026</option>
-                <option>2027</option>
-                <option>2028</option>
-                <option>2029</option>
-                <option>2030</option>
+              <option selected>YY</option>
+              <option>2018</option>
+              <option>2019</option>
+              <option>2020</option>
+              <option>2021</option>
+              <option>2022</option>
+              <option>2023</option>
+              <option>2024</option>
+              <option>2025</option>
+              <option>2026</option>
+              <option>2027</option>
+              <option>2028</option>
+              <option>2029</option>
+              <option>2030</option>
             </select>
             <span id="expiryMonthError"> </span>
             <span id="expiryYearError"> </span>
@@ -77,16 +80,15 @@
 
         <ion-col>
           <ion-item lines="none" style="overflow: visible;">
-              <ion-label class="google-label" position="floating">
-                Security Code
-              </ion-label>
-              <ion-input formControlName= "securityCode" class="google-input" type="password"></ion-input>
+            <ion-label class="google-label" position="floating">
+              Security Code
+            </ion-label>
+            <ion-input formControlName="securityCode" class="google-input" type="password"></ion-input>
           </ion-item>
         </ion-col>
-       </ion-row>
+      </ion-row>
     </form>
   </ion-grid>
-
 
   <ion-button expand="block" size="medium" style="margin:1pc;" (click)="confirm()">Confirm</ion-button>
 
