@@ -42,7 +42,7 @@ export class ConfirmPaymentPage implements OnInit {
     const modal = await this.modalController.create({
       component: PaynowPage,
       componentProps: {
-        fullamt: this.newbill = new Payment(this.bill.errandid, this.bill.billamt, this.bill.commission, this.bill.fullamt, 'PayNow', this.bill.payment_status),
+        fullamt: this.newbill = new Payment(this.bill.errandId, this.bill.billamt, this.bill.commission, this.bill.fullamt, 'PayNow', this.bill.payment_status),
         sJob: this.job,
         sApp: this.applicant
       },
@@ -57,7 +57,7 @@ export class ConfirmPaymentPage implements OnInit {
     const modal = await this.modalController.create({
       component: CarddetailsPage,
       componentProps: {
-        fullamt: this.newbill = new Payment(this.bill.errandid, this.bill.billamt, this.bill.commission, this.bill.fullamt, 'Card', this.bill.payment_status),
+        fullamt: this.newbill = new Payment(this.bill.errandId, this.bill.billamt, this.bill.commission, this.bill.fullamt, 'Card', this.bill.payment_status),
         sJob: this.job,
         sApp: this.applicant
       },
