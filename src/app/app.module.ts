@@ -15,6 +15,7 @@ import { ConfirmPaymentPageModule } from './confirm-payment/confirm-payment.modu
 import { PaymentcompletePageModule } from './paymentcomplete/paymentcomplete.module';
 import { PaynowPageModule } from './paynow/paynow.module';
 import { ReceivepaymentPageModule } from './receivepayment/receivepayment.module';
+import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
 
 
 
@@ -31,7 +32,8 @@ import { ReceivepaymentPageModule } from './receivepayment/receivepayment.module
     CarddetailsPageModule,
     PaymentcompletePageModule,
     ReceivepaymentPageModule,
-    ChangedatePageModule
+    ChangedatePageModule,
+    RxReactiveFormsModule,
   ],
   providers: [
     StatusBar,

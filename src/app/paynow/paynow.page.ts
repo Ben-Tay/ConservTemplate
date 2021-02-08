@@ -20,7 +20,6 @@ export class PaynowPage implements OnInit {
     this.bill = navParams.get("fullamt")
     this.job = navParams.get('sJob')
     this.applicant = navParams.get('sApp')
-
   }
 
   ngOnInit() {
