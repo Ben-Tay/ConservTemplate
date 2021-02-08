@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-grid>
-    <form> 
+    <form [formGroup]="CardNoForm"> 
       <ion-row>
         <ion-col>
           <ion-item lines="none" style="overflow: visible;">
@@ -14,21 +14,23 @@
               Card Type
             </ion-label>
             <select class="form-control">
-              <option [value]="cardType" *ngFor="let cardType of creditCardTypes">
+              <option formControlName="cardType" [value]="cardType" *ngFor="let cardType of creditCardTypes">
                 {{cardType}}
               </option>
             </select>
           </ion-item>
         </ion-col>
       </ion-row>
+    </form>
 
+    <form>
       <ion-row>
         <ion-col>
           <ion-item lines="none" style="overflow: visible;">
             <ion-label class="google-label" position="floating">
               Card No
             </ion-label>
-            <ion-input class="google-input" type="text"></ion-input>
+            <ion-input formControlName= "cardNo" class="google-input" type="text"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -36,9 +38,9 @@
       <ion-row>
         <ion-col>
           <ion-item lines="none" style="overflow: visible;">
-            <ion-label> Valid thru (MM/YY) </ion-label>
-            <select id="expiryMonth">
-                <option selected> Month </option>
+            <ion-label class="google-label" position="floating"> Valid thru (MM/YY) </ion-label>
+            <select formControlName="expiryDate" id="expiryMonth">
+                <option selected> MM </option>
                 <option>01</option>
                 <option>02</option>
                 <option>03</option>
@@ -53,7 +55,7 @@
                 <option>12</option>
             </select>
             <select id="expiryYear">
-                <option selected>Year</option>
+                <option selected>YY</option>
                 <option>2018</option>
                 <option>2019</option>
                 <option>2020</option>
@@ -78,12 +80,13 @@
               <ion-label class="google-label" position="floating">
                 Security Code
               </ion-label>
-              <ion-input class="google-input" type="password"></ion-input>
+              <ion-input formControlName= "securityCode" class="google-input" type="password"></ion-input>
           </ion-item>
         </ion-col>
        </ion-row>
     </form>
   </ion-grid>
+
 
   <ion-button expand="block" size="medium" style="margin:1pc;" (click)="confirm()">Confirm</ion-button>
 
