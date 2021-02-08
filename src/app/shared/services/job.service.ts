@@ -653,7 +653,7 @@ export class JobService {
   createnewbill(bill: Payment) {
 
     return firebase.firestore().collection('Bills').add({
-      errandId: bill.errandid,
+      errandId: bill.errandId,
       errandamount: bill.billamt,
       commissionpaid: bill.commission,
       fullamount: bill.fullamt,

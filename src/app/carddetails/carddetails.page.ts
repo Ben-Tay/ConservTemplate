@@ -37,17 +37,19 @@ export class CarddetailsPage implements OnInit {
 
     
 
-    let securityCode = new FormControl('', Validators.compose([
-      Validators.minLength(3),
-      Validators.required,
-    ]))
+    this.CardNoForm = new FormGroup({
+      cardType: new FormControl('Visa'),
+      creditCard: new FormControl('',RxwebValidators.creditCard ({fieldName:'cardType'})),
+      securitycode: new FormControl('', Validators.compose([
+        Validators.minLength(3),
+        Validators.required,
+      ]))
+    })
+
+    
   }
 
   ngOnInit() {
-    this.CardNoForm = this.formBuilder.group({
-      cardType:['Visa'],
-      creditCard:['',RxwebValidators.creditCard ({fieldName:'cardType'})]
-    })
   }
 
   async confirm() {
