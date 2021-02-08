@@ -17,43 +17,43 @@
         <ion-row>
           <ion-col size="3">
             <ion-label>
-              Client: Ben
+              Client: {{name}}
             </ion-label>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="3">
             <ion-label>
-              Errand Name: <p>Babysitting duties</p>
+              Errand Name: <p>{{ job?.errandname }}</p>
             </ion-label>
           </ion-col>
           <ion-col>
             <ion-label>
-              Errand Date: <p>3 Feb 2021</p>
+              Errand Date: <p>{{ job?.date | date:'d MMM yyyy' }}</p>
             </ion-label>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="3">
             <ion-label>
-              Errand Category: <p>Babysit</p>
+              Errand Category: <p>{{ job?.category }}</p>
             </ion-label>
           </ion-col>
           <ion-col>
             <ion-label>
-              Errand Description: <p>Hiring for babysitting duties</p>
+              Errand Description: <p>{{ job?.description }}</p>
             </ion-label>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="3">
             <ion-label>
-              Reporting Time: <p>10:08 AM</p>
+              Reporting Time: <p>{{ job?.time | date: 'shortTime' }}</p>
             </ion-label>
           </ion-col>
           <ion-col>
             <ion-label>
-              End Time: <p>1:37 PM</p>
+              End Time: <p>{{ job?.endtime | date: 'shortTime' }}</p>
             </ion-label>
           </ion-col>
         </ion-row>
@@ -66,7 +66,7 @@
           Pricing:
         </ion-col>
         <ion-col class="large" style="margin-right: 1pc;">
-          $15.00
+          {{ job?.price | currency }}
         </ion-col>
       </ion-row>
 
@@ -75,7 +75,7 @@
           Commission to Conserv:
         </ion-col>
         <ion-col class="large" style="margin-right: 1pc;">
-          $1.05
+          {{ job?.price * 0.07 | currency }}
         </ion-col>
       </ion-row>
 
@@ -84,7 +84,7 @@
           TOTAL
         </ion-col>
         <ion-col class="largetotal" style="margin-right: 1pc;">
-          $13.95
+          {{ job?.price - job?.price * 0.07 | currency }}
         </ion-col>
       </ion-row>
   </ion-grid>

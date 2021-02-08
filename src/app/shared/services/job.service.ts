@@ -653,7 +653,7 @@ export class JobService {
   createnewbill(bill: Payment) {
 
     return firebase.firestore().collection('Bills').add({
-      errandId: bill.errandid,
+      errandId: bill.errandId,
       errandamount: bill.billamt,
       commissionpaid: bill.commission,
       fullamount: bill.fullamt,
@@ -680,7 +680,8 @@ export class JobService {
       time: job.time,
       endtime: job.endtime,
       price: job.price,
-      notification_time: notification_timing
+      notification_time: notification_timing,
+      runner: applicant.id
     }).then(doc => {
       firebase.firestore().collection('JobsCompleted/' + job.id + '/Applicant/').doc(applicant.id).set({
         date: applicant.date,
