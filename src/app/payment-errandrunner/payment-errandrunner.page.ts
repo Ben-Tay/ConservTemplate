@@ -42,7 +42,7 @@ export class PaymentErrandrunnerPage implements OnInit {
           })
         this.newJob = new Job(this.job.errandname, this.job.category, this.job.status, this.job.client, this.job.date, this.job.description, this.job.time, this.job.endtime, this.job.id, this.job.price, this.job.notification_time)
         this.applicant = new ErrandRunner(this.job.applicant[0].date, this.job.applicant[0].id, this.job.applicant[0].applicationstatus)
-        this.Bill = new Payment(this.errandId, this.job.price, parseFloat((this.job.price * 0.1).toFixed(2)), this.job.price - parseFloat((this.job.price * 0.1).toFixed(2)), '', 'Received')
+        this.Bill = new Payment(this.errandId, this.job.price, parseFloat((this.job.price * 0.07).toFixed(2)), this.job.price - parseFloat((this.job.price * 0.07).toFixed(2)), '', 'Received')
       })
 
     this.userService.observeAuthState(data => {
@@ -51,6 +51,7 @@ export class PaymentErrandrunnerPage implements OnInit {
   }
 
   ngOnInit() {
+    this.userService.showLoading();
   }
 
   async receive() {
@@ -65,5 +66,4 @@ export class PaymentErrandrunnerPage implements OnInit {
     });
     return await modal.present();
   }
-
 }
