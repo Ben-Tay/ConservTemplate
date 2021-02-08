@@ -41,14 +41,13 @@ export class CarddetailsPage implements OnInit {
       creditCard: new FormControl('', RxwebValidators.creditCard ({fieldName:'cardType'})),
     })
 
-    this.CardNoForm = new FormGroup({
+    this.CardDetailsForm = new FormGroup({
       expiryDate: new FormControl('', [Validators.required]),
       securitycode: new FormControl('', Validators.compose([
         Validators.maxLength(3),
         Validators.required,
       ]))
     })
-
 
   }
 
