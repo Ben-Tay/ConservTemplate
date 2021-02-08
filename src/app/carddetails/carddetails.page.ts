@@ -28,6 +28,7 @@ export class CarddetailsPage implements OnInit {
     "AmericanExpress",
     "MasterCard"
   ]
+  carderror: string;
 
 
   constructor(private modalController: ModalController, public navParams: NavParams, public jobService: JobService, private userService: UserService, private formBuilder: FormBuilder) {
@@ -35,32 +36,47 @@ export class CarddetailsPage implements OnInit {
     this.job = navParams.get('sJob')
     this.applicant = navParams.get('sApp')
 
-    
-
     this.CardNoForm = new FormGroup({
       cardType: new FormControl('Visa'),
-      creditCard: new FormControl('',RxwebValidators.creditCard ({fieldName:'cardType'})),
+      creditCard: new FormControl('', RxwebValidators.creditCard ({fieldName:'cardType'})),
+    })
+
+    this.CardNoForm = new FormGroup({
+      expiryDate: new FormControl('', [Validators.required]),
       securitycode: new FormControl('', Validators.compose([
-        Validators.minLength(3),
+        Validators.maxLength(3),
         Validators.required,
       ]))
     })
-
-    
   }
 
   ngOnInit() {
   }
 
   async confirm() {
-    this.jobService.createnewbill(this.bill)
-    this.jobService.changeJobsAcceptedtoJobsCompleted(this.job, this.applicant)
-    this.jobService.deletefromJobsAccepted(this.job)
-    this.modalController.dismiss();
+    if(this.CardNoForm.valid){
+      this.jobService.createnewbill(this.bill)
+      this.jobService.changeJobsAcceptedtoJobsCompleted(this.job, this.applicant)
+      this.jobService.deletefromJobsAccepted(this.job)
+      this.modalController.dismiss().then(user=>{
+      }).catch(error => {
+        this.carderror = error.message;
+      })
 
-    const modal = await this.modalController.create({
-      component: PaymentcompletePage
-    });
-    return await modal.present();
+      const modal = await this.modalController.create({
+        component: PaymentcompletePage
+      });
+      return await modal.present();
+    } 
   }
+
+  validation_messages = {
+    'expiryDate': [
+      { type: 'required', message: 'Valid thru (MM/YY) is required.' }
+    ],
+    'securityCode': [
+      { type: 'required', message: 'Security Code is required'},
+      { type: 'maxlength', message: 'Password must be 3 characters only.' }
+    ],
+  };
 }
