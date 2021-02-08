@@ -17,14 +17,14 @@
         <ion-row>
           <ion-col size="3">
             <ion-label>
-              Errand Runner: {{name}}
+              Errand Runner: {{applicant}
             </ion-label>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="3">
             <ion-label>
-              Errand Name: <p>{{ job?.errandname }}</p>
+              Errand name: <p>{{ job?.errandname }}</p>
             </ion-label>
           </ion-col>
           <ion-col>
@@ -75,7 +75,7 @@
           Commission to Conserv:
         </ion-col>
         <ion-col class="large" style="margin-right: 1pc;">
-          {{ job?.price * 0.107 | currency }}
+          {{ job?.price * 0.1 | currency }}
         </ion-col>
       </ion-row>
 
@@ -84,7 +84,7 @@
           TOTAL
         </ion-col>
         <ion-col class="largetotal" style="margin-right: 1pc;">
-          {{ job?.price + job?.price * 0.107 | currency }}
+          {{ job?.price + job?.price * 0.1 | currency }}
         </ion-col>
       </ion-row>
   </ion-grid>
