@@ -38,28 +38,33 @@ export class CarddetailsPage implements OnInit {
 
     this.CardNoForm = new FormGroup({
       cardType: new FormControl('Visa'),
-      creditCard: new FormControl('',RxwebValidators.creditCard ({fieldName:'cardType'})),
+      creditCard: new FormControl('', RxwebValidators.creditCard({ fieldName: 'cardType' })),
       securitycode: new FormControl('', Validators.compose([
         Validators.minLength(3),
         Validators.required,
       ]))
     })
 
-    
+
   }
 
   ngOnInit() {
   }
 
   async confirm() {
-    this.jobService.createnewbill(this.bill)
-    this.jobService.changeJobsAcceptedtoJobsCompleted(this.job, this.applicant)
-    this.jobService.deletefromJobsAccepted(this.job)
-    this.modalController.dismiss();
+    const form = this.CardNoForm
 
-    const modal = await this.modalController.create({
-      component: PaymentcompletePage
-    });
-    return await modal.present();
+    if (form.valid) {
+      this.jobService.createnewbill(this.bill)
+      this.jobService.changeJobsAcceptedtoJobsCompleted(this.job, this.applicant)
+      this.jobService.deletefromJobsAccepted(this.job)
+      this.modalController.dismiss();
+
+      const modal = await this.modalController.create({
+        component: PaymentcompletePage
+      });
+      return await modal.present();
+    }
+
   }
 }
