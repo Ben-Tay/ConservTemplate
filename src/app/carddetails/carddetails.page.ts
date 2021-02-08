@@ -38,32 +38,24 @@ export class CarddetailsPage implements OnInit {
 
     this.CardNoForm = new FormGroup({
       cardType: new FormControl('Visa'),
-<<<<<<< HEAD
       creditCard: new FormControl('', RxwebValidators.creditCard ({fieldName:'cardType'})),
     })
 
     this.CardNoForm = new FormGroup({
       expiryDate: new FormControl('', [Validators.required]),
-=======
-      creditCard: new FormControl('', RxwebValidators.creditCard({ fieldName: 'cardType' })),
->>>>>>> c8aed2040b2e7bd0f1683fcdd09d71459de3a685
       securitycode: new FormControl('', Validators.compose([
         Validators.maxLength(3),
         Validators.required,
       ]))
     })
-<<<<<<< HEAD
-=======
 
 
->>>>>>> c8aed2040b2e7bd0f1683fcdd09d71459de3a685
   }
 
   ngOnInit() {
   }
 
   async confirm() {
-<<<<<<< HEAD
     if(this.CardNoForm.valid){
       this.jobService.createnewbill(this.bill)
       this.jobService.changeJobsAcceptedtoJobsCompleted(this.job, this.applicant)
@@ -78,22 +70,6 @@ export class CarddetailsPage implements OnInit {
       });
       return await modal.present();
     } 
-=======
-    const form = this.CardNoForm
-
-    if (form.valid) {
-      this.jobService.createnewbill(this.bill)
-      this.jobService.changeJobsAcceptedtoJobsCompleted(this.job, this.applicant)
-      this.jobService.deletefromJobsAccepted(this.job)
-      this.modalController.dismiss();
-
-      const modal = await this.modalController.create({
-        component: PaymentcompletePage
-      });
-      return await modal.present();
-    }
-
->>>>>>> c8aed2040b2e7bd0f1683fcdd09d71459de3a685
   }
 
   validation_messages = {
