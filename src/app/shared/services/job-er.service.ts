@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { ErrandRunner } from '../models/ErrandRunner';
 import { toDate } from 'date-fns';
 import { NotSelected } from '../models/NotSelected';
+import { Payment } from '../models/Payment';
 
 @Injectable({
   providedIn: 'root'
@@ -469,12 +470,12 @@ export class JobERService {
     });
   }
 
-  getCompletedJobs(client: string, runner: string){
+  getCompletedJobs(client: string, runner: string) {
     return new Observable(observer => {
       firebase.firestore().collection('JobsCompleted').orderBy('client').onSnapshot(collection => {
         let allData = [];
         collection.forEach(doc => {
-          if(doc.data().client == client && doc.data().runner == runner || doc.data().client == runner && doc.data().runner == client){
+          if (doc.data().client == client && doc.data().runner == runner || doc.data().client == runner && doc.data().runner == client) {
             allData.push(doc.data());
           }
         });
@@ -491,11 +492,11 @@ export class JobERService {
           // Add job into array if there's no error
           if (doc.data().applicant === errandrunner) {
             try {
-                let jobdata = doc.data()
-                const date = jobdata.erranddate.toDate()
-         
-                let unselected = new NotSelected(jobdata.errandname, date, jobdata.client, jobdata.applicant, jobdata.applicationstatus, jobdata.reason, jobdata.description)
-                array.push(unselected)
+              let jobdata = doc.data()
+              const date = jobdata.erranddate.toDate()
+
+              let unselected = new NotSelected(jobdata.errandname, date, jobdata.client, jobdata.applicant, jobdata.applicationstatus, jobdata.reason, jobdata.description)
+              array.push(unselected)
             } catch (error) { }
           }
           // Add loan into array if there's no error
@@ -503,5 +504,47 @@ export class JobERService {
         });
       });
     });
+  }
+
+  getCompletedJobsById(id: string) {
+    //read document '/JobsAvailable/<id>'
+    return firebase.firestore().collection('JobsCompleted').doc(id).get().then(doc => {
+      let jobdata = doc.data()
+      const date = jobdata.date.toDate()
+      const reportime = jobdata.time.toDate()
+      const endtime = jobdata.endtime.toDate()
+      let job = new Job(jobdata.errandname, jobdata.category, jobdata.status, jobdata.client, date, jobdata.description, reportime, endtime, doc.id, jobdata.price);
+
+      //Read subcollection '/JobsAvailable/<id>/Applicants'
+      return firebase.firestore().collection('JobsCompleted').doc(id).collection('Applicant').get().then(collection => {
+        job.applicant = [];
+        collection.forEach(doc => {
+          let applicant = new ErrandRunner(doc.data().date.toDate(), doc.id, doc.data().applicationstatus)
+          job.applicant.push(applicant)
+        })
+
+        return job;
+      })
+    })
+  }
+
+  getBillsById(id: string) {
+    //read document '/JobsAvailable/<id>'
+    return firebase.firestore().collection('Bills').where('errandId', '==', id).get().then(doc => {
+      let billarray = []
+      doc.forEach(subdoc => {
+        let bill = new Payment(subdoc.data().errandId, subdoc.data().errandamount, subdoc.data().commissionpaid, subdoc.data().fullamount, subdoc.data().paymenttype, subdoc.data().payment_status)
+        billarray.push(bill)
+      })
+      return billarray;
+    })
+  }
+
+  updatestatusCompleted(id: string){
+    const ref = firebase.firestore().collection('JobsCompleted').doc(id)
+
+    return ref.update({
+      status: 'Completed'
+    })
   }
 }
